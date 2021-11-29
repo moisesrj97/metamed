@@ -8,10 +8,6 @@ export class ProfessionalService {
     return 'This action adds a new professional';
   }
 
-  findAll() {
-    return `This action returns all professional`;
-  }
-
   findOne(id: number) {
     return `This action returns a #${id} professional`;
   }
