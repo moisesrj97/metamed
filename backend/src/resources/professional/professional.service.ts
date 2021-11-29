@@ -25,19 +25,12 @@ export class ProfessionalService {
     file: any,
   ) {
     const url = await this.s3ImageService.uploadFile(file);
-    console.log(url);
-    /* const hash = await bcrypt.hash(dto.password, 10);
+    const hash = await bcrypt.hash(password, 10);
+
     const result = await this.professionalModel.create(
-      new ProfessionalEntity(
-        dto.profilePicture,
-        dto.name,
-        dto.surname,
-        dto.businessName,
-        dto.email,
-        hash,
-      ),
-    ); */
-    return { name, email, password, surname, businessName, url };
+      new ProfessionalEntity(url, name, surname, businessName, email, hash),
+    );
+    return result;
   }
 
   findOne(id: number) {
