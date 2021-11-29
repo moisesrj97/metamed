@@ -43,7 +43,7 @@ export class ProfessionalController {
   //Get professional info, populated with patients _id, name and profilePicture
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.professionalService.findOne(+id);
+    return this.professionalService.findOne(id);
   }
 
   //Update professional info

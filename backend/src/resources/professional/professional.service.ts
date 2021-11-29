@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
-import { CreateProfessionalDto } from './dto/create-professional.dto';
 import { UpdateProfessionalDto } from './dto/update-professional.dto';
 import { ProfessionalEntity } from './entities/professional.entity';
 import { Professional, ProfessionalDocument } from './professional.schema';
@@ -33,8 +32,8 @@ export class ProfessionalService {
     return result;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} professional`;
+  async findOne(id: string) {
+    return await this.professionalModel.findById(id);
   }
 
   update(id: number, updateProfessionalDto: UpdateProfessionalDto) {
