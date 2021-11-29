@@ -23,7 +23,7 @@ export class Patient {
   @Prop({ required: true })
   birthDate: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   email: string;
 
   @Prop({ required: true })
