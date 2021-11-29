@@ -1,11 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
-import { Patient } from './patient.schema';
-import { Chat } from './chat.schema';
-import { ExerciseGroup } from './exerciseGroup.schema';
-import { MealGroup } from './mealGroup.schema';
-import { Note } from './note.schema';
+import { Patient } from '../../schemas/patient.schema';
+import { Chat } from '../../schemas/chat.schema';
+import { ExerciseGroup } from '../../schemas/exerciseGroup.schema';
+import { MealGroup } from '../../schemas/mealGroup.schema';
+import { Note } from '../../schemas/note.schema';
 
 export type ExtraDataItem = { key: string; value: string };
 
@@ -17,7 +17,7 @@ export class Professional {
   role: string;
 
   @Prop({ required: true })
-  name: number;
+  name: string;
 
   @Prop({ required: false })
   surname: string;
