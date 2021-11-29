@@ -14,6 +14,9 @@ export class Patient {
   @Prop({ required: true })
   name: string;
 
+  @Prop({ required: true })
+  profilePicture: string;
+
   @Prop({ required: false })
   surname: string;
 

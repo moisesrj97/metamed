@@ -12,6 +12,7 @@ export type patientArrayElement = {
 
 export class Professional {
   role: string;
+  profilePicture: string;
   name: string;
   surname: string;
   businessName: string;
@@ -19,6 +20,7 @@ export class Professional {
   password: string;
   patients: patientArrayElement[];
   constructor(
+    profilePicture: string,
     name: string,
     surname: string,
     businessName: string,
@@ -26,6 +28,7 @@ export class Professional {
     password: string,
   ) {
     this.role = 'Professional';
+    this.profilePicture = profilePicture;
     this.name = name;
     this.surname = surname;
     this.businessName = businessName;

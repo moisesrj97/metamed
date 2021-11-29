@@ -17,6 +17,9 @@ export class Professional {
   role: string;
 
   @Prop({ required: true })
+  profilePicture: string;
+
+  @Prop({ required: true })
   name: string;
 
   @Prop({ required: false })
