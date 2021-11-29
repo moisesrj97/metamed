@@ -6,11 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { ProfessionalService } from './professional.service';
 import { CreateProfessionalDto } from './dto/create-professional.dto';
 import { UpdateProfessionalDto } from './dto/update-professional.dto';
 import { UpdatePatientFromProfessionalDto } from './dto/update-patient-from-professional.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('professional')
 export class ProfessionalController {
@@ -18,8 +21,23 @@ export class ProfessionalController {
 
   // Create new professional
   @Post()
-  create(@Body() createProfessionalDto: CreateProfessionalDto) {
-    return this.professionalService.create(createProfessionalDto);
+  @UseInterceptors(FileInterceptor('profilePicture'))
+  create(
+    @Body('name') name: string,
+    @Body('email') email: string,
+    @Body('password') password: string,
+    @Body('surname') surname: string,
+    @Body('businessName') businessName: string,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.professionalService.create(
+      name,
+      email,
+      password,
+      surname,
+      businessName,
+      file,
+    );
   }
 
   //Get professional info, populated with patients _id, name and profilePicture

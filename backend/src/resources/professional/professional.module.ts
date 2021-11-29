@@ -3,6 +3,7 @@ import { ProfessionalService } from './professional.service';
 import { ProfessionalController } from './professional.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Professional, ProfessionalSchema } from './professional.schema';
+import { S3ImageService } from 'src/services/s3-image-service/s3-image-service.service';
 
 @Module({
   imports: [
@@ -11,6 +12,6 @@ import { Professional, ProfessionalSchema } from './professional.schema';
     ]),
   ],
   controllers: [ProfessionalController],
-  providers: [ProfessionalService],
+  providers: [ProfessionalService, S3ImageService],
 })
 export class ProfessionalModule {}

@@ -1,5 +1,5 @@
 export type CreateProfessionalDto = {
-  profilePicture: string;
+  profilePicture: any;
   name: string;
   surname: string;
   businessName: string;
