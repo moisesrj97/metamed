@@ -1,4 +1,8 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateProfessionalDto } from './create-professional.dto';
-
-export class UpdateProfessionalDto extends PartialType(CreateProfessionalDto) {}
+export type UpdateProfessionalDto = {
+  profilePicture?: string;
+  name?: string;
+  surname?: string;
+  businessName?: string;
+  email?: string;
+  password?: string;
+};

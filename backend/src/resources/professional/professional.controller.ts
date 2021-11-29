@@ -38,25 +38,25 @@ export class ProfessionalController {
   }
 
   //Add patient to professional list
-  @Post(':id/patients')
+  /* @Post(':id/patients')
   addPatient(@Param('id') id: string, @Body() patientEmail: string) {
     return this.professionalService.addPatientToProfessional(
       +id,
       +patientEmail,
     );
-  }
+  } */
 
   //Get full info of patient
-  @Get(':id/patients/:patientId')
+  /*  @Get(':id/patients/:patientId')
   findPatient(@Param('id') id: string, @Param('patientId') patientId: string) {
     return this.professionalService.findPatientFromProfessional(
       +id,
       +patientId,
     );
-  }
+  } */
 
   //Update extraData of patient
-  @Patch(':id/patients/:patientId')
+  /* @Patch(':id/patients/:patientId')
   updatePatient(
     @Param('id') id: string,
     @Param('patientId') patientId: string,
@@ -67,10 +67,10 @@ export class ProfessionalController {
       +patientId,
       updatePatientFromProfessionalDto,
     );
-  }
+  } */
 
   //Delete patient from professional list
-  @Delete(':id/patients/:patientId')
+  /* @Delete(':id/patients/:patientId')
   removePatient(
     @Param('id') id: string,
     @Param('patientId') patientId: string,
@@ -79,5 +79,5 @@ export class ProfessionalController {
       +id,
       +patientId,
     );
-  }
+  } */
 }

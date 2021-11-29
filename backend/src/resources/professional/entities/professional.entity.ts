@@ -10,7 +10,7 @@ export type patientArrayElement = {
   notes: [mongoose.Types.ObjectId];
 };
 
-export class Professional {
+export class ProfessionalEntity {
   role: string;
   profilePicture: string;
   name: string;
