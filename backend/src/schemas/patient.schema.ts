@@ -47,7 +47,7 @@ export class Patient {
     required: true,
     default: [],
   })
-  patients: [
+  professionals: [
     {
       refData: Professional;
       chatRef: Chat;
