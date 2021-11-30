@@ -40,7 +40,7 @@ export class S3ImageService {
     const params = {
       Bucket: process.env.AWS_BUCKET_NAME,
       Key: url.split('/').pop(),
-      Body: file,
+      Body: file.buffer,
       ACL: 'public-read',
       ContentType: file.mimetype,
       ContentDisposition: 'inline',

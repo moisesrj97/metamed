@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
@@ -25,10 +25,12 @@ export class ProfessionalService {
   ) {
     const url = await this.s3ImageService.uploadFile(file);
     const hash = await bcrypt.hash(password, 10);
+    console.log(url, hash);
 
     const result = await this.professionalModel.create(
       new ProfessionalEntity(url, name, surname, businessName, email, hash),
     );
+
     return result;
   }
 
@@ -45,12 +47,16 @@ export class ProfessionalService {
     file?: any,
   ) {
     if (file) {
-      await this.s3ImageService.updateFile(file, profilePicture);
+      const response = await this.s3ImageService.updateFile(
+        file,
+        profilePicture,
+      );
+      console.log({ response });
     }
-
     const result = await this.professionalModel.findByIdAndUpdate(
       { _id: id },
-      { name, surname, businessName },
+      { $set: { name, surname, businessName } },
+      { new: true },
     );
 
     return result;

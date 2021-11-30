@@ -46,12 +46,13 @@ export class ProfessionalController {
 
   //Update professional info
   @Patch(':id')
+  @UseInterceptors(FileInterceptor('file'))
   update(
-    @Param('id') id?: string,
-    @Body('name') name?: string,
-    @Body('surname') surname?: string,
-    @Body('businessName') businessName?: string,
-    @Body('profilePicture') profilePicture?: string,
+    @Param('id') id: string,
+    @Body('name') name: string,
+    @Body('surname') surname: string,
+    @Body('businessName') businessName: string,
+    @Body('profilePicture') profilePicture: string,
     @UploadedFile() file?: Express.Multer.File,
   ) {
     return this.professionalService.update(
