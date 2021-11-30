@@ -34,7 +34,15 @@ export class ProfessionalService {
   }
 
   async findOne(id: string) {
-    return await this.professionalModel.findById(id);
+    return await (
+      await this.professionalModel.findById(id)
+    ).populate({
+      path: 'patients',
+      populate: {
+        path: 'refData',
+        select: ['name', 'surname', 'profilePicture'],
+      },
+    });
   }
 
   async update(
