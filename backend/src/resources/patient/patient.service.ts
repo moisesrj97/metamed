@@ -34,12 +34,14 @@ export class PatientService {
     return result;
   }
 
-  findAll() {
-    return `This action returns all patient`;
-  }
-
-  findOne(id: string) {
-    return `This action returns a #${id} patient`;
+  async findOne(id: string) {
+    return await this.patientModel.findById(id).populate({
+      path: 'professionals',
+      populate: {
+        path: 'refData',
+        select: ['name', 'surname', 'profilePicture'],
+      },
+    });
   }
 
   update(id: string, body) {

@@ -24,7 +24,7 @@ export class PatientEntity {
     email: string,
     password: string,
   ) {
-    this.role = 'Professional';
+    this.role = 'Patient';
     this.profilePicture = profilePicture;
     this.name = name;
     this.surname = surname;

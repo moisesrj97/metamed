@@ -34,9 +34,7 @@ export class ProfessionalService {
   }
 
   async findOne(id: string) {
-    return await (
-      await this.professionalModel.findById(id)
-    ).populate({
+    return await this.professionalModel.findById(id).populate({
       path: 'patients',
       populate: {
         path: 'refData',

@@ -38,11 +38,6 @@ export class PatientController {
     );
   }
 
-  @Get()
-  findAll() {
-    return this.patientService.findAll();
-  }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.patientService.findOne(id);
@@ -51,10 +46,5 @@ export class PatientController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() body) {
     return this.patientService.update(id, body);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.patientService.remove(id);
   }
 }
