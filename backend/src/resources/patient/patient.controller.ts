@@ -6,7 +6,10 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { PatientService } from './patient.service';
 
 @Controller('patient')
@@ -14,8 +17,25 @@ export class PatientController {
   constructor(private readonly patientService: PatientService) {}
 
   @Post()
-  create(@Body() body) {
-    return this.patientService.create(body);
+  @UseInterceptors(FileInterceptor('profilePicture'))
+  create(
+    @Body('name') name: string,
+    @Body('email') email: string,
+    @Body('password') password: string,
+    @Body('surname') surname: string,
+    @Body('gender') gender: string,
+    @Body('birthDate') birthDate: string,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.patientService.create(
+      name,
+      email,
+      password,
+      surname,
+      gender,
+      birthDate,
+      file,
+    );
   }
 
   @Get()
