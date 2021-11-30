@@ -36,8 +36,24 @@ export class ProfessionalService {
     return await this.professionalModel.findById(id);
   }
 
-  update(id: number, updateProfessionalDto: UpdateProfessionalDto) {
-    return `This action updates a #${id} professional`;
+  async update(
+    id: string,
+    name: string,
+    surname: string,
+    businessName: string,
+    profilePicture: string,
+    file?: any,
+  ) {
+    if (file) {
+      await this.s3ImageService.updateFile(file, profilePicture);
+    }
+
+    const result = await this.professionalModel.findByIdAndUpdate(
+      { _id: id },
+      { name, surname, businessName },
+    );
+
+    return result;
   }
 
   remove(id: number) {

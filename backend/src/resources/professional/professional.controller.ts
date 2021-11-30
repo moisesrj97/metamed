@@ -10,8 +10,6 @@ import {
   UploadedFile,
 } from '@nestjs/common';
 import { ProfessionalService } from './professional.service';
-import { CreateProfessionalDto } from './dto/create-professional.dto';
-import { UpdateProfessionalDto } from './dto/update-professional.dto';
 import { UpdatePatientFromProfessionalDto } from './dto/update-patient-from-professional.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 
@@ -49,10 +47,21 @@ export class ProfessionalController {
   //Update professional info
   @Patch(':id')
   update(
-    @Param('id') id: string,
-    @Body() updateProfessionalDto: UpdateProfessionalDto,
+    @Param('id') id?: string,
+    @Body('name') name?: string,
+    @Body('surname') surname?: string,
+    @Body('businessName') businessName?: string,
+    @Body('profilePicture') profilePicture?: string,
+    @UploadedFile() file?: Express.Multer.File,
   ) {
-    return this.professionalService.update(+id, updateProfessionalDto);
+    return this.professionalService.update(
+      id,
+      name,
+      surname,
+      businessName,
+      profilePicture,
+      file,
+    );
   }
 
   //Add patient to professional list
