@@ -13,7 +13,6 @@ export class S3ImageService {
   });
 
   async uploadFile(file: any) {
-    const { originalname } = file;
     const { Location: url } = await this.s3_upload(
       file.buffer,
       process.env.AWS_BUCKET_NAME,
@@ -21,6 +20,41 @@ export class S3ImageService {
     );
 
     return url;
+  }
+
+  async deleteFile(url: string) {
+    const params = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: url.split('/').pop(),
+    };
+
+    try {
+      const s3Response = await this.s3.deleteObject(params).promise();
+      return s3Response;
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
+  async updateFile(file: any, url: string) {
+    const params = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: url.split('/').pop(),
+      Body: file,
+      ACL: 'public-read',
+      ContentType: file.mimetype,
+      ContentDisposition: 'inline',
+      CreateBucketConfiguration: {
+        LocationConstraint: process.env.AWS_REGION,
+      },
+    };
+
+    try {
+      const s3Response = await this.s3.upload(params).promise();
+      return s3Response;
+    } catch (e) {
+      throw new Error(e);
+    }
   }
 
   async s3_upload(file: any, bucket: string, mimetype: any) {
@@ -36,24 +70,8 @@ export class S3ImageService {
       },
     };
 
-    console.log(params);
-
     try {
       const s3Response = await this.s3.upload(params).promise();
-      return s3Response;
-    } catch (e) {
-      throw new Error(e);
-    }
-  }
-
-  async deleteFile(url: string) {
-    const params = {
-      Bucket: process.env.AWS_BUCKET_NAME,
-      Key: url.split('/').pop(),
-    };
-
-    try {
-      const s3Response = await this.s3.deleteObject(params).promise();
       return s3Response;
     } catch (e) {
       throw new Error(e);
