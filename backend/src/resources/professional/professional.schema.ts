@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
-import { Patient } from '../../schemas/patient.schema';
+import { Patient } from '../patient/patient.schema';
 import { Chat } from '../../schemas/chat.schema';
 import { ExerciseGroup } from '../../schemas/exerciseGroup.schema';
 import { MealGroup } from '../../schemas/mealGroup.schema';
