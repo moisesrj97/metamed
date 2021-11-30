@@ -1,8 +1,7 @@
-import { ConsoleLogger, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
-import { UpdateProfessionalDto } from './dto/update-professional.dto';
 import { ProfessionalEntity } from './entities/professional.entity';
 import { Professional, ProfessionalDocument } from './professional.schema';
 import { S3ImageService } from 'src/services/s3-image-service/s3-image-service.service';
@@ -60,9 +59,5 @@ export class ProfessionalService {
     );
 
     return result;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} professional`;
   }
 }
