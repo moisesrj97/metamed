@@ -45,4 +45,18 @@ export class S3ImageService {
       throw new Error(e);
     }
   }
+
+  async deleteFile(url: string) {
+    const params = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: url.split('/').pop(),
+    };
+
+    try {
+      const s3Response = await this.s3.deleteObject(params).promise();
+      return s3Response;
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
 }
