@@ -52,11 +52,28 @@ export class PatientService {
     );
   }
 
-  update(id: string, body) {
-    return `This action updates a #${id} patient`;
-  }
+  async update(
+    id: string,
+    name: string,
+    surname: string,
+    gender: string,
+    birthDate: string,
+    profilePicture: string,
+    file?: any,
+  ) {
+    if (file) {
+      const response = await this.s3ImageService.updateFile(
+        file,
+        profilePicture,
+      );
+      console.log({ response });
+    }
+    const result = await this.patientModel.findByIdAndUpdate(
+      { _id: id },
+      { $set: { name, surname, gender, birthDate } },
+      { new: true },
+    );
 
-  remove(id: string) {
-    return `This action removes a #${id} patient`;
+    return result;
   }
 }

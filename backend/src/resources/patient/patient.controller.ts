@@ -44,7 +44,24 @@ export class PatientController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() body) {
-    return this.patientService.update(id, body);
+  @UseInterceptors(FileInterceptor('file'))
+  update(
+    @Param('id') id: string,
+    @Body('name') name: string,
+    @Body('surname') surname: string,
+    @Body('gender') gender: string,
+    @Body('birthDate') birthDate: string,
+    @Body('profilePicture') profilePicture: string,
+    @UploadedFile() file?: Express.Multer.File,
+  ) {
+    return this.patientService.update(
+      id,
+      name,
+      surname,
+      gender,
+      birthDate,
+      profilePicture,
+      file,
+    );
   }
 }
