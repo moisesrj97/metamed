@@ -1,9 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import * as dotenv from 'dotenv';
 import { v4 as uuid } from 'uuid';
 import s3 from './s3.config';
-
-dotenv.config();
 
 @Injectable()
 export class S3ImageService {
