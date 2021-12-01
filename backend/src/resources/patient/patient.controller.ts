@@ -9,6 +9,8 @@ import {
   UploadedFile,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import CreatePatientDto from './dto/createPatient.dto';
+import UpdatePatientDto from './dto/updatePatient.dto';
 import { PatientService } from './patient.service';
 
 @Controller('patient')
@@ -18,23 +20,10 @@ export class PatientController {
   @Post()
   @UseInterceptors(FileInterceptor('profilePicture'))
   create(
-    @Body('name') name: string,
-    @Body('email') email: string,
-    @Body('password') password: string,
-    @Body('surname') surname: string,
-    @Body('gender') gender: string,
-    @Body('birthDate') birthDate: string,
+    @Body() createPatientDto: CreatePatientDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    return this.patientService.create(
-      name,
-      email,
-      password,
-      surname,
-      gender,
-      birthDate,
-      file,
-    );
+    return this.patientService.create(createPatientDto, file);
   }
 
   @Get(':id')
@@ -46,21 +35,9 @@ export class PatientController {
   @UseInterceptors(FileInterceptor('file'))
   update(
     @Param('id') id: string,
-    @Body('name') name: string,
-    @Body('surname') surname: string,
-    @Body('gender') gender: string,
-    @Body('birthDate') birthDate: string,
-    @Body('profilePicture') profilePicture: string,
+    @Body() updatePatientDto: UpdatePatientDto,
     @UploadedFile() file?: Express.Multer.File,
   ) {
-    return this.patientService.update(
-      id,
-      name,
-      surname,
-      gender,
-      birthDate,
-      profilePicture,
-      file,
-    );
+    return this.patientService.update(id, updatePatientDto, file);
   }
 }

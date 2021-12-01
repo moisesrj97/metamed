@@ -9,6 +9,8 @@ import {
   Professional,
   ProfessionalDocument,
 } from '../professional/professional.schema';
+import CreatePatientDto from './dto/createPatient.dto';
+import UpdatePatientDto from './dto/updatePatient.dto';
 
 @Injectable()
 export class PatientService {
@@ -20,15 +22,9 @@ export class PatientService {
     private s3ImageService: S3ImageService,
   ) {}
 
-  async create(
-    name: string,
-    email: string,
-    password: string,
-    surname: string,
-    gender: string,
-    birthDate: string,
-    file: any,
-  ) {
+  async create(createPatientDto: CreatePatientDto, file: any) {
+    const { birthDate, name, surname, email, password, gender } =
+      createPatientDto;
     const url = await this.s3ImageService.uploadFile(file);
     const hash = await bcrypt.hash(password, 10);
     console.log(url, hash);
@@ -104,15 +100,9 @@ export class PatientService {
     };
   }
 
-  async update(
-    id: string,
-    name: string,
-    surname: string,
-    gender: string,
-    birthDate: string,
-    profilePicture: string,
-    file?: any,
-  ) {
+  async update(id: string, updatePatientDto: UpdatePatientDto, file?: any) {
+    const { birthDate, gender, surname, name, profilePicture } =
+      updatePatientDto;
     if (file) {
       const response = await this.s3ImageService.updateFile(
         file,
