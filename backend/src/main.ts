@@ -1,6 +1,5 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { Logger } from 'nestjs-pino';
 import { AppModule } from './app.module';
 
 export async function bootstrap() {
@@ -10,4 +9,4 @@ export async function bootstrap() {
   return { app, server };
 }
 //! Comment this while testing!
-bootstrap();
+/* bootstrap(); */

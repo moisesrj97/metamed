@@ -8,7 +8,17 @@ describe('LoginController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [LoginController],
-      providers: [LoginService],
+      providers: [
+        {
+          provide: LoginService,
+          useValue: {
+            loginProfessionalWithToken: jest.fn(),
+            loginProfessionalWithoutToken: jest.fn(),
+            loginPatientWithToken: jest.fn(),
+            loginPatientWithoutToken: jest.fn(),
+          },
+        },
+      ],
     }).compile();
 
     controller = module.get<LoginController>(LoginController);
