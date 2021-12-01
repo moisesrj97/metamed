@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
 import { Professional } from '../professional/professional.schema';
 import { Patient } from '../patient/patient.schema';
-import { Message } from '../../schemas/message.schema';
+import { Message } from '../message/message.schema';
 
 export type ChatDocument = Chat & Document;
 

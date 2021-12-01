@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
+import { MessageEntity } from 'src/resources/message/entities/message.entity';
 
-export class Chat {
+export class ChatEntity {
   professional: mongoose.Types.ObjectId;
   patient: mongoose.Types.ObjectId;
   messages: MessageEntity[];
