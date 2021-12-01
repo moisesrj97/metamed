@@ -36,7 +36,6 @@ export class ProfessionalService {
       createProfessionalDto;
     const url = await this.s3ImageService.uploadFile(file);
     const hash = await bcrypt.hash(password, 10);
-    console.log(url, hash);
 
     const result = await this.professionalModel.create(
       new ProfessionalEntity(url, name, surname, businessName, email, hash),
@@ -75,7 +74,6 @@ export class ProfessionalService {
         file,
         profilePicture,
       );
-      console.log({ response });
     }
     const result = await this.professionalModel.findByIdAndUpdate(
       { _id: id },
@@ -130,7 +128,6 @@ export class ProfessionalService {
     patientId: string,
     allExtraDataUpdated: ExtraDataItem[],
   ): Promise<ProfessionalDocument> {
-    console.log(allExtraDataUpdated);
     const result = await this.professionalModel.findByIdAndUpdate(
       { _id: id },
       {

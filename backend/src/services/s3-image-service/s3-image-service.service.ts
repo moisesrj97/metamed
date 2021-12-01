@@ -21,7 +21,6 @@ export class S3ImageService {
       const s3Response = await s3.upload(params).promise();
       return s3Response.Location;
     } catch (e) {
-      console.log('Error from catch', e);
       throw new Error(e);
     }
   }

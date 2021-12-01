@@ -30,7 +30,6 @@ export class PatientService {
       createPatientDto;
     const url = await this.s3ImageService.uploadFile(file);
     const hash = await bcrypt.hash(password, 10);
-    console.log(url, hash);
 
     const result = await this.patientModel.create(
       new PatientEntity(url, name, surname, gender, birthDate, email, hash),
@@ -115,7 +114,6 @@ export class PatientService {
         file,
         profilePicture,
       );
-      console.log({ response });
     }
     const result = await this.patientModel.findByIdAndUpdate(
       { _id: id },
