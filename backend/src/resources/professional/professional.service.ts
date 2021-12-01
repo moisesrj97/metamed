@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import * as mongoose from 'mongoose';
 import { ProfessionalEntity } from './entities/professional.entity';
 import {
@@ -35,7 +35,7 @@ export class ProfessionalService {
     const { businessName, name, password, surname, email } =
       createProfessionalDto;
     const url = await this.s3ImageService.uploadFile(file);
-    const hash = await bcrypt.hash(password, 10);
+    const hash = bcrypt.hashSync(password, 10);
 
     const result = await this.professionalModel.create(
       new ProfessionalEntity(url, name, surname, businessName, email, hash),

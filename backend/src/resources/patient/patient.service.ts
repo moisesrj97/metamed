@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { S3ImageService } from '../../services/s3-image-service/s3-image-service.service';
 import { Patient, PatientDocument } from './patient.schema';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { PatientEntity } from './entities/patient.entity';
 import {
   Professional,
@@ -29,7 +29,7 @@ export class PatientService {
     const { birthDate, name, surname, email, password, gender } =
       createPatientDto;
     const url = await this.s3ImageService.uploadFile(file);
-    const hash = await bcrypt.hash(password, 10);
+    const hash = bcrypt.hashSync(password, 10);
 
     const result = await this.patientModel.create(
       new PatientEntity(url, name, surname, gender, birthDate, email, hash),
