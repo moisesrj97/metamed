@@ -1,18 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { S3ImageServiceService } from './s3-image-service.service';
+import { S3ImageService } from './s3-image-service.service';
 
-describe('S3ImageServiceService', () => {
-  let service: S3ImageServiceService;
+describe('Given S3ImageService', () => {
+  let service: S3ImageService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [S3ImageServiceService],
+      providers: [S3ImageService],
     }).compile();
 
-    service = module.get<S3ImageServiceService>(S3ImageServiceService);
+    service = module.get<S3ImageService>(S3ImageService);
   });
-
-  it('should be defined', () => {
-    expect(service).toBeDefined();
+  describe('When it is compiled...', () => {
+    test('It should be defined', () => {
+      expect(service).toBeDefined();
+    });
   });
 });
