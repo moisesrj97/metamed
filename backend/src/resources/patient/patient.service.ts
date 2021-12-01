@@ -4,7 +4,6 @@ import { Model } from 'mongoose';
 import { S3ImageService } from 'src/services/s3-image-service/s3-image-service.service';
 import { Patient, PatientDocument } from './patient.schema';
 import * as bcrypt from 'bcrypt';
-import * as mongoose from 'mongoose';
 import { PatientEntity } from './entities/patient.entity';
 import {
   Professional,
