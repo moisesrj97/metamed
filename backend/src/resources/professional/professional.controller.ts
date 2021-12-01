@@ -86,14 +86,14 @@ export class ProfessionalController {
   }
 
   //Delete patient from professional list
-  /* @Delete(':id/patients/:patientId')
+  @Delete(':id/patients/:patientId')
   removePatient(
     @Param('id') id: string,
     @Param('patientId') patientId: string,
   ) {
     return this.professionalService.removePatientFromProfessional(
-      +id,
-      +patientId,
+      id,
+      patientId,
     );
-  } */
+  }
 }

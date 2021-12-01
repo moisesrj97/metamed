@@ -144,4 +144,23 @@ export class ProfessionalService {
 
     return result;
   }
+
+  async removePatientFromProfessional(id: string, patientId: string) {
+    const result = await this.professionalModel.findByIdAndUpdate(
+      { _id: id },
+      {
+        $pull: {
+          patients: { refData: patientId },
+        },
+      },
+      { new: true },
+    );
+
+    await this.patientModel.findByIdAndUpdate(
+      { _id: patientId },
+      { $pull: { professionals: { refData: id } } },
+    );
+
+    return result;
+  }
 }
