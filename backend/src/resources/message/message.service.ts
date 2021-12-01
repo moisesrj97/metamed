@@ -1,10 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CreateMessageDto } from './dto/create-message.dto';
-import { UpdateMessageDto } from './dto/update-message.dto';
 
 @Injectable()
 export class MessageService {
-  create(createMessageDto: CreateMessageDto) {
+  create(body) {
     return 'This action adds a new message';
   }
 
@@ -16,7 +14,7 @@ export class MessageService {
     return `This action returns a #${id} message`;
   }
 
-  update(id: number, updateMessageDto: UpdateMessageDto) {
+  update(id: number, body) {
     return `This action updates a #${id} message`;
   }
 
