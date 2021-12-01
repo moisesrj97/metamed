@@ -4,7 +4,11 @@ import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import * as mongoose from 'mongoose';
 import { ProfessionalEntity } from './entities/professional.entity';
-import { Professional, ProfessionalDocument } from './professional.schema';
+import {
+  ExtraDataItem,
+  Professional,
+  ProfessionalDocument,
+} from './professional.schema';
 import { S3ImageService } from 'src/services/s3-image-service/s3-image-service.service';
 import { Patient, PatientDocument } from '../patient/patient.schema';
 import { Chat, ChatDocument } from '../chat/chat.schema';
@@ -114,6 +118,28 @@ export class ProfessionalService {
       { _id: id },
       { $push: { patients: newPatientToProfessional } },
       { new: true },
+    );
+
+    return result;
+  }
+
+  async updatePatientFromProfessional(
+    id: string,
+    patientId: string,
+    allExtraDataUpdated: ExtraDataItem[],
+  ) {
+    console.log(allExtraDataUpdated);
+    const result = await this.professionalModel.findByIdAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          'patients.$[elem].extraData': allExtraDataUpdated,
+        },
+      },
+      {
+        arrayFilters: [{ 'elem.refData': patientId }],
+        new: true,
+      },
     );
 
     return result;

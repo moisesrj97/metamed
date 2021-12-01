@@ -10,8 +10,8 @@ import {
   UploadedFile,
 } from '@nestjs/common';
 import { ProfessionalService } from './professional.service';
-import { UpdatePatientFromProfessionalDto } from './dto/update-patient-from-professional.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ExtraDataItem } from './professional.schema';
 
 @Controller('professional')
 export class ProfessionalController {
@@ -71,28 +71,19 @@ export class ProfessionalController {
     return this.professionalService.addPatientToProfessional(id, patientId);
   }
 
-  //Get full info of patient
-  /*  @Get(':id/patients/:patientId')
-  findPatient(@Param('id') id: string, @Param('patientId') patientId: string) {
-    return this.professionalService.findPatientFromProfessional(
-      +id,
-      +patientId,
-    );
-  } */
-
   //Update extraData of patient
-  /* @Patch(':id/patients/:patientId')
+  @Patch(':id/patients/:patientId')
   updatePatient(
     @Param('id') id: string,
     @Param('patientId') patientId: string,
-    @Body() updatePatientFromProfessionalDto: UpdatePatientFromProfessionalDto,
+    @Body('allExtraDataUpdated') allExtraDataUpdated: ExtraDataItem[],
   ) {
     return this.professionalService.updatePatientFromProfessional(
-      +id,
-      +patientId,
-      updatePatientFromProfessionalDto,
+      id,
+      patientId,
+      allExtraDataUpdated,
     );
-  } */
+  }
 
   //Delete patient from professional list
   /* @Delete(':id/patients/:patientId')
