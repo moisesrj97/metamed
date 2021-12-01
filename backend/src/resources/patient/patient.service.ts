@@ -35,21 +35,21 @@ export class PatientService {
   }
 
   async findOne(id: string) {
-    return await this.patientModel.findById(id).populate(
-      {
-        path: 'professionals',
-        populate: {
+    return await this.patientModel.findById(id).populate({
+      path: 'professionals',
+      populate: [
+        {
           path: 'refData',
           select: ['name', 'surname', 'profilePicture'],
         },
-      },
-      {
-        path: 'chatRef',
-        populate: {
-          path: 'messages',
+        {
+          path: 'chatRef',
+          populate: {
+            path: 'messages',
+          },
         },
-      },
-    );
+      ],
+    });
   }
 
   async update(

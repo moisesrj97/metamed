@@ -34,21 +34,21 @@ export class ProfessionalService {
   }
 
   async findOne(id: string) {
-    return await this.professionalModel.findById(id).populate(
-      {
-        path: 'patients',
-        populate: {
+    return await this.professionalModel.findById(id).populate({
+      path: 'patients',
+      populate: [
+        {
           path: 'refData',
           select: ['name', 'surname', 'profilePicture'],
         },
-      },
-      {
-        path: 'chatRef',
-        populate: {
-          path: 'messages',
+        {
+          path: 'chatRef',
+          populate: {
+            path: 'messages',
+          },
         },
-      },
-    );
+      ],
+    });
   }
 
   async update(
