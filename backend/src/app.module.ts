@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { LoggerModule } from 'nestjs-pino';
 import { AppController } from './app.controller';
@@ -10,13 +10,12 @@ import { ChatModule } from './resources/chat/chat.module';
 import { MessageModule } from './resources/message/message.module';
 import { ConfigModule } from '@nestjs/config';
 import { LoginModule } from './resources/login/login.module';
+import LogsMiddleware from './middleware/logger.middleware';
 
 const ENV = process.env.NODE_ENV;
 
 @Module({
   imports: [
-    LoggerModule.forRoot(),
-
     ConfigModule.forRoot({
       envFilePath: !ENV ? '.env' : `.env.${ENV}`,
     }),
@@ -30,4 +29,8 @@ const ENV = process.env.NODE_ENV;
   controllers: [AppController],
   providers: [AppService, S3ImageService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LogsMiddleware).forRoutes('*');
+  }
+}
