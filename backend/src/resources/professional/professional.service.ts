@@ -2,15 +2,23 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
+import * as mongoose from 'mongoose';
 import { ProfessionalEntity } from './entities/professional.entity';
 import { Professional, ProfessionalDocument } from './professional.schema';
 import { S3ImageService } from 'src/services/s3-image-service/s3-image-service.service';
+import { Patient, PatientDocument } from '../patient/patient.schema';
+import { Chat, ChatDocument } from '../chat/chat.schema';
+import { ChatEntity } from '../chat/entities/chat.entity';
 
 @Injectable()
 export class ProfessionalService {
   constructor(
     @InjectModel(Professional.name)
     private professionalModel: Model<ProfessionalDocument>,
+    @InjectModel(Patient.name)
+    private patientModel: Model<PatientDocument>,
+    @InjectModel(Chat.name)
+    private chatModel: Model<ChatDocument>,
     private s3ImageService: S3ImageService,
   ) {}
 
@@ -69,6 +77,42 @@ export class ProfessionalService {
     const result = await this.professionalModel.findByIdAndUpdate(
       { _id: id },
       { $set: { name, surname, businessName } },
+      { new: true },
+    );
+
+    return result;
+  }
+
+  async addPatientToProfessional(id: string, patientId: string) {
+    const newChat = await this.chatModel.create(
+      new ChatEntity(
+        new mongoose.Types.ObjectId(id),
+        new mongoose.Types.ObjectId(patientId),
+      ),
+    );
+
+    const newPatientToProfessional = {
+      refData: patientId,
+      extraData: [],
+      chatRef: newChat._id,
+      exerciseGroups: [],
+      mealGroups: [],
+      notes: [],
+    };
+
+    const newProfessionalToPatient = {
+      refData: id,
+      chatRef: newChat._id,
+    };
+
+    await this.patientModel.findByIdAndUpdate(
+      { _id: patientId },
+      { $push: { professionals: newProfessionalToPatient } },
+    );
+
+    const result = await this.professionalModel.findByIdAndUpdate(
+      { _id: id },
+      { $push: { patients: newPatientToProfessional } },
       { new: true },
     );
 

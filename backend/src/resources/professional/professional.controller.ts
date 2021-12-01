@@ -66,13 +66,10 @@ export class ProfessionalController {
   }
 
   //Add patient to professional list
-  /* @Post(':id/patients')
-  addPatient(@Param('id') id: string, @Body() patientEmail: string) {
-    return this.professionalService.addPatientToProfessional(
-      +id,
-      +patientEmail,
-    );
-  } */
+  @Post(':id/patients')
+  addPatient(@Param('id') id: string, @Body('patientId') patientId: string) {
+    return this.professionalService.addPatientToProfessional(id, patientId);
+  }
 
   //Get full info of patient
   /*  @Get(':id/patients/:patientId')
