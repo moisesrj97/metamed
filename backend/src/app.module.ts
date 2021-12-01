@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { ProfessionalModule } from './resources/professional/professional.module';
 import { S3ImageService } from './services/s3-image-service/s3-image-service.service';
 import { PatientModule } from './resources/patient/patient.module';
+import { ChatModule } from './resources/chat/chat.module';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -21,6 +22,7 @@ const uri: string =
     MongooseModule.forRoot(uri),
     ProfessionalModule,
     PatientModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService, S3ImageService],
