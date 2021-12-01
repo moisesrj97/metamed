@@ -9,6 +9,7 @@ import { PatientModule } from './resources/patient/patient.module';
 import { ChatModule } from './resources/chat/chat.module';
 import { MessageModule } from './resources/message/message.module';
 import { ConfigModule } from '@nestjs/config';
+import { LoginModule } from './resources/login/login.module';
 
 const ENV = process.env.NODE_ENV;
 
@@ -24,6 +25,7 @@ const ENV = process.env.NODE_ENV;
     PatientModule,
     ChatModule,
     MessageModule,
+    LoginModule,
   ],
   controllers: [AppController],
   providers: [AppService, S3ImageService],
