@@ -4,13 +4,20 @@ import { Model } from 'mongoose';
 import { S3ImageService } from 'src/services/s3-image-service/s3-image-service.service';
 import { Patient, PatientDocument } from './patient.schema';
 import * as bcrypt from 'bcrypt';
+import * as mongoose from 'mongoose';
 import { PatientEntity } from './entities/patient.entity';
+import {
+  Professional,
+  ProfessionalDocument,
+} from '../professional/professional.schema';
 
 @Injectable()
 export class PatientService {
   constructor(
     @InjectModel(Patient.name)
     private patientModel: Model<PatientDocument>,
+    @InjectModel(Professional.name)
+    private professionalModel: Model<ProfessionalDocument>,
     private s3ImageService: S3ImageService,
   ) {}
 
@@ -35,7 +42,7 @@ export class PatientService {
   }
 
   async findOne(id: string) {
-    return await this.patientModel.findById(id).populate({
+    const populatedData = await this.patientModel.findById(id).populate({
       path: 'professionals',
       populate: [
         {
@@ -50,6 +57,52 @@ export class PatientService {
         },
       ],
     });
+
+    const {
+      _id,
+      name,
+      surname,
+      profilePicture,
+      password,
+      role,
+      email,
+      gender,
+      birthDate,
+    } = populatedData;
+
+    const mappedPopulatedData = populatedData.professionals.map(
+      async (professional) => {
+        const professionalDocument = await this.professionalModel
+          .findById(professional.refData)
+          .populate('patients');
+        const { exerciseGroups, mealGroups, notes } =
+          professionalDocument.patients.find(
+            (patient) => patient.refData.toString() === id,
+          );
+        return {
+          refData: professional.refData,
+          chatRef: professional.chatRef,
+          exerciseGroups,
+          mealGroups,
+          notes,
+        };
+      },
+    );
+
+    const resolvedMappedPopulatedData = await Promise.all(mappedPopulatedData);
+
+    return {
+      _id,
+      name,
+      surname,
+      profilePicture,
+      password,
+      role,
+      email,
+      gender,
+      birthDate,
+      professionals: resolvedMappedPopulatedData,
+    };
   }
 
   async update(

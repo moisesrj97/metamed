@@ -6,11 +6,16 @@ import { Patient, PatientSchema } from './patient.schema';
 import { S3ImageService } from 'src/services/s3-image-service/s3-image-service.service';
 import { Chat, ChatSchema } from '../chat/chat.schema';
 import { Message, MessageSchema } from '../message/message.schema';
+import {
+  Professional,
+  ProfessionalSchema,
+} from '../professional/professional.schema';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: Patient.name, schema: PatientSchema },
+      { name: Professional.name, schema: ProfessionalSchema },
       { name: Chat.name, schema: ChatSchema },
       { name: Message.name, schema: MessageSchema },
     ]),
