@@ -1,17 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { S3 } from 'aws-sdk';
 import * as dotenv from 'dotenv';
 import { v4 as uuid } from 'uuid';
+import s3 from './s3.config';
 
 dotenv.config();
 
 @Injectable()
 export class S3ImageService {
-  s3 = new S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  });
-
   async uploadFile(file: any) {
     const params = {
       Bucket: process.env.AWS_BUCKET_NAME,
@@ -26,9 +21,10 @@ export class S3ImageService {
     };
 
     try {
-      const s3Response = await this.s3.upload(params).promise();
+      const s3Response = await s3.upload(params).promise();
       return s3Response.Location;
     } catch (e) {
+      console.log('Error from catch', e);
       throw new Error(e);
     }
   }
@@ -40,7 +36,7 @@ export class S3ImageService {
     };
 
     try {
-      const s3Response = await this.s3.deleteObject(params).promise();
+      const s3Response = await s3.deleteObject(params).promise();
       return s3Response;
     } catch (e) {
       throw new Error(e);
@@ -61,7 +57,7 @@ export class S3ImageService {
     };
 
     try {
-      const s3Response = await this.s3.upload(params).promise();
+      const s3Response = await s3.upload(params).promise();
       return s3Response;
     } catch (e) {
       throw new Error(e);
