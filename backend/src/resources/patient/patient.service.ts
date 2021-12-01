@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { S3ImageService } from 'src/services/s3-image-service/s3-image-service.service';
+import { S3ImageService } from '../../services/s3-image-service/s3-image-service.service';
 import { Patient, PatientDocument } from './patient.schema';
 import * as bcrypt from 'bcrypt';
 import { PatientEntity } from './entities/patient.entity';

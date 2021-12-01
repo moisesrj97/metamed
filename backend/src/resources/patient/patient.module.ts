@@ -3,7 +3,7 @@ import { PatientService } from './patient.service';
 import { PatientController } from './patient.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Patient, PatientSchema } from './patient.schema';
-import { S3ImageService } from 'src/services/s3-image-service/s3-image-service.service';
+import { S3ImageService } from '../../services/s3-image-service/s3-image-service.service';
 import { Chat, ChatSchema } from '../chat/chat.schema';
 import { Message, MessageSchema } from '../message/message.schema';
 import {

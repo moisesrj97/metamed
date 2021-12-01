@@ -9,7 +9,7 @@ import {
   Professional,
   ProfessionalDocument,
 } from './professional.schema';
-import { S3ImageService } from 'src/services/s3-image-service/s3-image-service.service';
+import { S3ImageService } from '../../services/s3-image-service/s3-image-service.service';
 import { Patient, PatientDocument } from '../patient/patient.schema';
 import { Chat, ChatDocument } from '../chat/chat.schema';
 import { ChatEntity } from '../chat/entities/chat.entity';
