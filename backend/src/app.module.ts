@@ -8,19 +8,18 @@ import { S3ImageService } from './services/s3-image-service/s3-image-service.ser
 import { PatientModule } from './resources/patient/patient.module';
 import { ChatModule } from './resources/chat/chat.module';
 import { MessageModule } from './resources/message/message.module';
-import * as dotenv from 'dotenv';
+import { ConfigModule } from '@nestjs/config';
 
-dotenv.config();
-
-const uri: string =
-  process.env.NODE_ENV === 'production'
-    ? process.env.MONGO_URI
-    : process.env.MONGO_URI_TEST;
+const ENV = process.env.NODE_ENV;
 
 @Module({
   imports: [
     LoggerModule.forRoot(),
-    MongooseModule.forRoot(uri),
+
+    ConfigModule.forRoot({
+      envFilePath: !ENV ? '.env' : `.env.${ENV}`,
+    }),
+    MongooseModule.forRoot(process.env.MONGO_URI),
     ProfessionalModule,
     PatientModule,
     ChatModule,
