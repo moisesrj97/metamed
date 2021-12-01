@@ -14,6 +14,7 @@ import { Patient, PatientDocument } from '../patient/patient.schema';
 import { Chat, ChatDocument } from '../chat/chat.schema';
 import { ChatEntity } from '../chat/entities/chat.entity';
 import CreateProfessionalDto from './dto/createProfessional.dto';
+import updateProfessionalDto from './dto/updateProfessional.dto';
 
 @Injectable()
 export class ProfessionalService {
@@ -61,12 +62,11 @@ export class ProfessionalService {
 
   async update(
     id: string,
-    name: string,
-    surname: string,
-    businessName: string,
-    profilePicture: string,
+    updateProfessionalDto: updateProfessionalDto,
     file?: any,
   ) {
+    const { businessName, surname, name, profilePicture } =
+      updateProfessionalDto;
     if (file) {
       const response = await this.s3ImageService.updateFile(
         file,

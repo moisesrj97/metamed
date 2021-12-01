@@ -1,8 +1,6 @@
 import {
   Controller,
   Get,
-  Req,
-  Res,
   Post,
   Body,
   Patch,
@@ -14,9 +12,8 @@ import {
 import { ProfessionalService } from './professional.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ExtraDataItem } from './professional.schema';
-import { Request, Response } from 'express';
-import { body, validationResult } from 'express-validator';
 import CreateProfessionalDto from './dto/createProfessional.dto';
+import updateProfessionalDto from './dto/updateProfessional.dto';
 
 @Controller('professional')
 export class ProfessionalController {
@@ -43,20 +40,10 @@ export class ProfessionalController {
   @UseInterceptors(FileInterceptor('file'))
   update(
     @Param('id') id: string,
-    @Body('name') name: string,
-    @Body('surname') surname: string,
-    @Body('businessName') businessName: string,
-    @Body('profilePicture') profilePicture: string,
+    @Body() updateProfessionalDto: updateProfessionalDto,
     @UploadedFile() file?: Express.Multer.File,
   ) {
-    return this.professionalService.update(
-      id,
-      name,
-      surname,
-      businessName,
-      profilePicture,
-      file,
-    );
+    return this.professionalService.update(id, updateProfessionalDto, file);
   }
 
   //Add patient to professional list
