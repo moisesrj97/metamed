@@ -1,6 +1,8 @@
 import {
   Controller,
   Get,
+  Req,
+  Res,
   Post,
   Body,
   Patch,
@@ -12,6 +14,9 @@ import {
 import { ProfessionalService } from './professional.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ExtraDataItem } from './professional.schema';
+import { Request, Response } from 'express';
+import { body, validationResult } from 'express-validator';
+import CreateProfessionalDto from './dto/createProfessional.dto';
 
 @Controller('professional')
 export class ProfessionalController {
@@ -21,21 +26,10 @@ export class ProfessionalController {
   @Post()
   @UseInterceptors(FileInterceptor('profilePicture'))
   create(
-    @Body('name') name: string,
-    @Body('email') email: string,
-    @Body('password') password: string,
-    @Body('surname') surname: string,
-    @Body('businessName') businessName: string,
+    @Body() createProfessionalDto: CreateProfessionalDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    return this.professionalService.create(
-      name,
-      email,
-      password,
-      surname,
-      businessName,
-      file,
-    );
+    return this.professionalService.create(createProfessionalDto, file);
   }
 
   //Get professional info, populated with patients _id, name and profilePicture

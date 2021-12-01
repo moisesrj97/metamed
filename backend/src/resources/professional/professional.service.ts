@@ -13,6 +13,7 @@ import { S3ImageService } from 'src/services/s3-image-service/s3-image-service.s
 import { Patient, PatientDocument } from '../patient/patient.schema';
 import { Chat, ChatDocument } from '../chat/chat.schema';
 import { ChatEntity } from '../chat/entities/chat.entity';
+import CreateProfessionalDto from './dto/createProfessional.dto';
 
 @Injectable()
 export class ProfessionalService {
@@ -26,14 +27,9 @@ export class ProfessionalService {
     private s3ImageService: S3ImageService,
   ) {}
 
-  async create(
-    name: string,
-    email: string,
-    password: string,
-    surname: string,
-    businessName: string,
-    file: any,
-  ) {
+  async create(createProfessionalDto: CreateProfessionalDto, file: any) {
+    const { businessName, name, password, surname, email } =
+      createProfessionalDto;
     const url = await this.s3ImageService.uploadFile(file);
     const hash = await bcrypt.hash(password, 10);
     console.log(url, hash);

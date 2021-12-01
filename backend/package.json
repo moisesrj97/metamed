@@ -31,6 +31,7 @@
     "bcrypt": "^5.0.1",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
+    "express-validator": "^6.13.0",
     "mongoose": "^6.0.13",
     "nestjs-pino": "^2.3.1",
     "pino-http": "^6.3.1",
