@@ -28,7 +28,10 @@ export class ProfessionalService {
     private s3ImageService: S3ImageService,
   ) {}
 
-  async create(createProfessionalDto: CreateProfessionalDto, file: any) {
+  async create(
+    createProfessionalDto: CreateProfessionalDto,
+    file: any,
+  ): Promise<ProfessionalDocument> {
     const { businessName, name, password, surname, email } =
       createProfessionalDto;
     const url = await this.s3ImageService.uploadFile(file);
@@ -42,7 +45,7 @@ export class ProfessionalService {
     return result;
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<ProfessionalDocument> {
     return await this.professionalModel.findById(id).populate({
       path: 'patients',
       populate: [
@@ -64,7 +67,7 @@ export class ProfessionalService {
     id: string,
     updateProfessionalDto: updateProfessionalDto,
     file?: any,
-  ) {
+  ): Promise<ProfessionalDocument> {
     const { businessName, surname, name, profilePicture } =
       updateProfessionalDto;
     if (file) {
@@ -83,7 +86,10 @@ export class ProfessionalService {
     return result;
   }
 
-  async addPatientToProfessional(id: string, patientId: string) {
+  async addPatientToProfessional(
+    id: string,
+    patientId: string,
+  ): Promise<ProfessionalDocument> {
     const newChat = await this.chatModel.create(
       new ChatEntity(
         new mongoose.Types.ObjectId(id),
@@ -123,7 +129,7 @@ export class ProfessionalService {
     id: string,
     patientId: string,
     allExtraDataUpdated: ExtraDataItem[],
-  ) {
+  ): Promise<ProfessionalDocument> {
     console.log(allExtraDataUpdated);
     const result = await this.professionalModel.findByIdAndUpdate(
       { _id: id },
@@ -141,7 +147,10 @@ export class ProfessionalService {
     return result;
   }
 
-  async removePatientFromProfessional(id: string, patientId: string) {
+  async removePatientFromProfessional(
+    id: string,
+    patientId: string,
+  ): Promise<ProfessionalDocument> {
     const result = await this.professionalModel.findByIdAndUpdate(
       { _id: id },
       {
