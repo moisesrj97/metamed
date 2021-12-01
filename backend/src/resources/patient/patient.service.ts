@@ -22,7 +22,10 @@ export class PatientService {
     private s3ImageService: S3ImageService,
   ) {}
 
-  async create(createPatientDto: CreatePatientDto, file: any) {
+  async create(
+    createPatientDto: CreatePatientDto,
+    file: any,
+  ): Promise<PatientDocument> {
     const { birthDate, name, surname, email, password, gender } =
       createPatientDto;
     const url = await this.s3ImageService.uploadFile(file);
@@ -100,7 +103,11 @@ export class PatientService {
     };
   }
 
-  async update(id: string, updatePatientDto: UpdatePatientDto, file?: any) {
+  async update(
+    id: string,
+    updatePatientDto: UpdatePatientDto,
+    file?: any,
+  ): Promise<PatientDocument> {
     const { birthDate, gender, surname, name, profilePicture } =
       updatePatientDto;
     if (file) {
