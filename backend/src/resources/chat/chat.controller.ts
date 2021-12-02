@@ -1,5 +1,6 @@
-import { Controller, Body, Patch, Param } from '@nestjs/common';
+import { Controller, Body, Patch, Param, Headers } from '@nestjs/common';
 import { ChatService } from './chat.service';
+import { NewMessageDto } from './dto/newMessage.dto';
 
 @Controller('chat')
 export class ChatController {
@@ -8,10 +9,9 @@ export class ChatController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body('to') to: string,
-    @Body('from') from: string,
-    @Body('text') text: string,
+    @Body() newMessageDto: NewMessageDto,
+    @Headers('authorization') token: string,
   ) {
-    return this.chatService.update(id, to, from, text);
+    return this.chatService.update(id, newMessageDto, token);
   }
 }
