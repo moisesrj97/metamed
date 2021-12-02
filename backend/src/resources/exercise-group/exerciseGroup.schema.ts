@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
-import { Professional } from '../resources/professional/professional.schema';
-import { Exercise } from './exercise.schema';
+import { Professional } from '../professional/professional.schema';
+import { Exercise } from '../../schemas/exercise.schema';
 
 export type ExerciseGroupDocument = ExerciseGroup & Document;
 

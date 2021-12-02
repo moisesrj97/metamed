@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Headers,
+} from '@nestjs/common';
 import { ExerciseGroupService } from './exercise-group.service';
 import { CreateExerciseGroupDto } from './dto/create-exercise-group.dto';
 import { UpdateExerciseGroupDto } from './dto/update-exercise-group.dto';
@@ -8,27 +16,24 @@ export class ExerciseGroupController {
   constructor(private readonly exerciseGroupService: ExerciseGroupService) {}
 
   @Post()
-  create(@Body() createExerciseGroupDto: CreateExerciseGroupDto) {
-    return this.exerciseGroupService.create(createExerciseGroupDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.exerciseGroupService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.exerciseGroupService.findOne(+id);
+  create(
+    @Body() createExerciseGroupDto: CreateExerciseGroupDto,
+    @Headers('Authorization') token: string,
+  ) {
+    return this.exerciseGroupService.create(createExerciseGroupDto, token);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateExerciseGroupDto: UpdateExerciseGroupDto) {
-    return this.exerciseGroupService.update(+id, updateExerciseGroupDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateExerciseGroupDto: UpdateExerciseGroupDto,
+    @Headers('Authorization') token: string,
+  ) {
+    return this.exerciseGroupService.update(id, updateExerciseGroupDto, token);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.exerciseGroupService.remove(+id);
+  remove(@Param('id') id: string, @Headers('Authorization') token: string) {
+    return this.exerciseGroupService.remove(id, token);
   }
 }

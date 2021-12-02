@@ -9,6 +9,7 @@ import {
 
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
+import validateJwt from '../../helpers/validateJwt';
 
 @Injectable()
 export class LoginService {
@@ -20,16 +21,7 @@ export class LoginService {
   ) {}
 
   loginProfessionalWithToken(token: string) {
-    if (!token.includes('Bearer')) {
-      throw new Error('Invalid token');
-    }
-
-    try {
-      const decoded = jwt.verify(token.split(' ')[1], process.env.JWT_SECRET);
-      return decoded;
-    } catch (err) {
-      throw new Error('Invalid token');
-    }
+    return validateJwt(token);
   }
 
   async loginProfessionalWithoutToken(email: string, password: string) {
@@ -59,16 +51,7 @@ export class LoginService {
   }
 
   loginPatientWithToken(token: string) {
-    if (!token.includes('Bearer')) {
-      throw new Error('Invalid token');
-    }
-
-    try {
-      const decoded = jwt.verify(token.split(' ')[1], process.env.JWT_SECRET);
-      return decoded;
-    } catch (err) {
-      throw new Error('Invalid token');
-    }
+    return validateJwt(token);
   }
 
   async loginPatientWithoutToken(email: string, password: string) {
