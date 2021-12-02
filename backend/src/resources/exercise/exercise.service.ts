@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { UpdateExerciseDto } from './dto/update-exercise.dto';
 import validateJwt, { JwtInterface } from '../../helpers/validateJwt';
-import { S3ImageService } from 'src/services/s3-image-service/s3-image-service.service';
+import { S3ImageService } from '../../services/s3-image-service/s3-image-service.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Mongoose } from 'mongoose';
 import * as mongoose from 'mongoose';
@@ -25,6 +25,7 @@ export class ExerciseService {
     @InjectModel(ExerciseGroup.name)
     private exerciseGroupModel: Model<ExerciseGroupDocument>,
   ) {}
+
   async create(
     token: string,
     createExerciseDto: CreateExerciseDto,

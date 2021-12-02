@@ -6,6 +6,7 @@ import {
   Param,
   Delete,
   Headers,
+  Get,
 } from '@nestjs/common';
 import { ExerciseGroupService } from './exercise-group.service';
 import { CreateExerciseGroupDto } from './dto/create-exercise-group.dto';
@@ -15,6 +16,11 @@ import { DeleteExerciseGroupDto } from './dto/delete-exercise-group.dto';
 @Controller('exercise-group')
 export class ExerciseGroupController {
   constructor(private readonly exerciseGroupService: ExerciseGroupService) {}
+
+  @Get(':id')
+  getById(@Param('id') id: string, @Headers('Authorization') token: string) {
+    return this.exerciseGroupService.getById(id, token);
+  }
 
   @Post()
   create(

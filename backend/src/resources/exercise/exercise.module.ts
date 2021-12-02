@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ExerciseService } from './exercise.service';
 import { ExerciseController } from './exercise.controller';
-import { S3ImageService } from 'src/services/s3-image-service/s3-image-service.service';
+import { S3ImageService } from '../../services/s3-image-service/s3-image-service.service';
 import { Exercise, ExerciseSchema } from './exercise.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import {

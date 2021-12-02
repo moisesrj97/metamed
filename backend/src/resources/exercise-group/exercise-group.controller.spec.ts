@@ -17,6 +17,7 @@ describe('Given ExerciseGroupController', () => {
             create: jest.fn(),
             update: jest.fn(),
             remove: jest.fn(),
+            getById: jest.fn(),
           },
         },
       ],
@@ -28,6 +29,13 @@ describe('Given ExerciseGroupController', () => {
   describe('When it is instanciated', () => {
     it('should be defined', () => {
       expect(controller).toBeDefined();
+    });
+  });
+
+  describe('When controller.getById is executed', () => {
+    it('service.getById should be called', () => {
+      controller.getById('', '');
+      expect(service.getById).toHaveBeenCalled();
     });
   });
 

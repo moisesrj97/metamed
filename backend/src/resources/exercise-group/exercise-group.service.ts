@@ -20,6 +20,16 @@ export class ExerciseGroupService {
     private exerciseGroupModel: Model<ExerciseGroupDocument>,
   ) {}
 
+  async getById(id: string, token: string) {
+    try {
+      validateJwt(token);
+    } catch (e) {
+      throw new Error('You are not authorized to perform this action');
+    }
+
+    return await this.exerciseGroupModel.findById(id).populate('exercises');
+  }
+
   async create(createExerciseGroupDto: CreateExerciseGroupDto, token: string) {
     let decodedToken: JwtInterface;
     try {

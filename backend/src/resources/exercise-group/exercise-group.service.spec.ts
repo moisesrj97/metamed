@@ -28,6 +28,11 @@ describe('Given ExerciseGroupService', () => {
     create: jest.fn().mockResolvedValue({
       _id: 'f9f9f9f9f9f9',
     }),
+    findById: jest.fn().mockReturnValue({
+      populate: jest.fn().mockResolvedValue({
+        _id: 'f9f9f9f9f9f9',
+      }),
+    }),
     findOne: jest.fn().mockResolvedValue({
       _id: 'f2f2f2f2f2f2',
       author: 'f8f8f8f8f8f8',
@@ -64,6 +69,38 @@ describe('Given ExerciseGroupService', () => {
   describe('When it is instanciated', () => {
     it('should be defined', () => {
       expect(service).toBeDefined();
+    });
+  });
+
+  describe('When service.getById is called with valid data', () => {
+    it('It not throw errors and return a professional', async () => {
+      process.env.JWT_SECRET = 'test';
+
+      const response = await service.getById(
+        '',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiJmOGY4ZjhmOGY4ZjgiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoidGVzdCIsImlhdCI6MTUxNjIzOTAyMn0.2D8RXLfMCZRovoodPQNj-XfjaLXhFTk64BlThks42As',
+      );
+
+      expect(response).toEqual({
+        _id: 'f9f9f9f9f9f9',
+      });
+    });
+  });
+
+  describe('When service.getById is called with invalid token data', () => {
+    it('It not throw errors and return a professional', async () => {
+      process.env.JWT_SECRET = 'test';
+
+      try {
+        await service.getById(
+          '',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiJmOGY4ZjhmOGY4ZjgiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoidGVzdCIsImlhdCI6MTUxNjIzOTAyMn0.2D8RXLfMCZRovoodPQNj-XfjaLXhFTk64BlThks42As',
+        );
+      } catch (e) {
+        expect(e).toEqual(
+          Error('You are not authorized to perform this action'),
+        );
+      }
     });
   });
 
