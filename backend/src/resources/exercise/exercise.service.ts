@@ -55,13 +55,38 @@ export class ExerciseService {
     );
   }
 
-  update(
+  async update(
     token: string,
     id: string,
     updateExerciseDto: UpdateExerciseDto,
     exerciseImage: Express.Multer.File,
   ) {
-    return `This action updates a #${id} exercise`;
+    const response = validateJwt(token);
+
+    if (response.role !== 'Professional') {
+      throw new Error('You are not authorized to perform this action');
+    }
+
+    const exercise = await this.exerciseModel.findById(id);
+
+    if (!exercise || exercise.author.toString() !== response.id) {
+      throw new Error('Exercise not found');
+    }
+
+    if (exerciseImage) {
+      await this.s3ImageService.updateFile(
+        exerciseImage,
+        updateExerciseDto.imageUrl,
+      );
+    }
+
+    const { amount, name } = updateExerciseDto;
+
+    return await this.exerciseModel.findByIdAndUpdate(
+      { _id: id },
+      { $set: { amount, name } },
+      { new: true },
+    );
   }
 
   remove(token: string, id: string) {
