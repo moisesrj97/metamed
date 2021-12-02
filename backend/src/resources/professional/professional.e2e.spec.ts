@@ -15,7 +15,7 @@ import { AppService } from '../../app.service';
 
 describe('Given the professional routes', () => {
   let app: INestApplication;
-  const professionalService = { findOne: () => ['test'] };
+  /* const professionalService = { findOne: () => ['test'] }; */
 
   beforeAll(async () => {
     const ENV = process.env.NODE_ENV;
@@ -36,8 +36,8 @@ describe('Given the professional routes', () => {
       controllers: [AppController],
       providers: [AppService, S3ImageService],
     })
-      .overrideProvider(ProfessionalService)
-      .useValue(professionalService)
+      /* .overrideProvider(ProfessionalService)
+      .useValue(professionalService) */
       .compile();
 
     app = moduleRef.createNestApplication();
@@ -52,6 +52,19 @@ describe('Given the professional routes', () => {
     return request(app.getHttpServer())
       .get('/professional/61a4f4a93d6cc562f1fb52a9')
       .expect(200)
-      .expect(['test']);
+      .expect({
+        _id: '61a4f4a93d6cc562f1fb52a9',
+        patients: [],
+        password:
+          '$2b$10$Mrfmlnerkvci82XjtVIr9OzHe0nlnnzWB8fq.xkn4IXDf9go8UEl.',
+        email: ' string',
+        businessName: ' stringo',
+        surname: ' stringo',
+        name: ' stringoooo',
+        profilePicture:
+          'https://metamed-images.s3.eu-west-3.amazonaws.com/7d843cfa-87ce-4213-80e1-76f47255a4f1',
+        role: 'Professional',
+        __v: 0,
+      });
   });
 });
