@@ -8,6 +8,7 @@ import {
   ProfessionalDocument,
 } from '../professional/professional.schema';
 import { CreateMealGroupDto } from './dto/create-meal-group.dto';
+import { DeleteMealGroupDto } from './dto/delete-meal-group.dto';
 import { UpdateMealGroupDto } from './dto/update-meal-group.dto';
 import { MealGroupDocument } from './mealGroup.schema';
 
@@ -70,11 +71,79 @@ export class MealGroupService {
     return await this.mealGroupModel.findById(id).populate('meals');
   }
 
-  update(id: string, updateMealGroupDto: UpdateMealGroupDto, token: string) {
-    return `This action updates a #${id} mealGroup`;
+  async update(
+    id: string,
+    updateMealGroupDto: UpdateMealGroupDto,
+    token: string,
+  ) {
+    let decodedToken: JwtInterface;
+    try {
+      decodedToken = validateJwt(token);
+    } catch (err) {
+      throw new Error('Invalid token');
+    }
+
+    if (decodedToken.role !== 'Professional') {
+      throw new Error('Invalid token');
+    }
+
+    const { name, extra } = updateMealGroupDto;
+
+    const group = await this.mealGroupModel.findOne({ _id: id });
+
+    if (!group || group.author.toString() !== decodedToken.id) {
+      throw new Error('Meal group not found');
+    }
+
+    return this.mealGroupModel.findByIdAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          name: name,
+          extra: extra,
+        },
+      },
+      { new: true },
+    );
   }
 
-  remove(id: string, token: string) {
-    return `This action removes a #${id} mealGroup`;
+  async remove(
+    id: string,
+    deleteMealGroupDto: DeleteMealGroupDto,
+    token: string,
+  ) {
+    let decodedToken: JwtInterface;
+    try {
+      decodedToken = validateJwt(token);
+    } catch (err) {
+      throw new Error('Invalid token');
+    }
+
+    if (decodedToken.role !== 'Professional') {
+      throw new Error('Invalid token');
+    }
+
+    const group = await this.mealGroupModel.findOne({ _id: id });
+
+    if (!group || group.author.toString() !== decodedToken.id) {
+      throw new Error('Meal group not found');
+    }
+
+    const { patientId } = deleteMealGroupDto;
+
+    await this.mealGroupModel.findByIdAndDelete(id);
+
+    return this.professionalModel.findByIdAndUpdate(
+      { _id: decodedToken.id },
+      {
+        $pull: {
+          'patients.$[elem].mealGroups': id,
+        },
+      },
+      {
+        arrayFilters: [{ 'elem.refData': patientId }],
+        new: true,
+      },
+    );
   }
 }
