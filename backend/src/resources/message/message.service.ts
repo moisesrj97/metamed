@@ -19,7 +19,6 @@ export class MessageService {
 
     return await this.messageModel.findByIdAndUpdate(id, {
       $set: { read: true },
-      {new: true}
     });
   }
 }
