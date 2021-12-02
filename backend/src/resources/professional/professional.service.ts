@@ -70,10 +70,7 @@ export class ProfessionalService {
     const { businessName, surname, name, profilePicture } =
       updateProfessionalDto;
     if (file) {
-      const response = await this.s3ImageService.updateFile(
-        file,
-        profilePicture,
-      );
+      await this.s3ImageService.updateFile(file, profilePicture);
     }
     const result = await this.professionalModel.findByIdAndUpdate(
       { _id: id },

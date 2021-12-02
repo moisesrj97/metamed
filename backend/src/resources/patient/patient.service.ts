@@ -110,10 +110,7 @@ export class PatientService {
     const { birthDate, gender, surname, name, profilePicture } =
       updatePatientDto;
     if (file) {
-      const response = await this.s3ImageService.updateFile(
-        file,
-        profilePicture,
-      );
+      await this.s3ImageService.updateFile(file, profilePicture);
     }
     const result = await this.patientModel.findByIdAndUpdate(
       { _id: id },

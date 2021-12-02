@@ -42,24 +42,7 @@ describe('Given LoginService', () => {
   describe('When service.loginProfessionalWithoutToken is called with invalid user', () => {
     test('It should throw an error', async () => {
       try {
-        const response = await service.loginProfessionalWithoutToken(
-          '',
-          'testaaa',
-        );
-      } catch (e) {
-        console.log(e);
-        expect(e).toEqual(Error('Incorrect email or password'));
-      }
-    });
-  });
-
-  describe('When service.loginProfessionalWithoutToken is called with invalid user', () => {
-    test('It should return token', async () => {
-      try {
-        const response = await service.loginProfessionalWithoutToken(
-          '',
-          'testaaa',
-        );
+        await service.loginProfessionalWithoutToken('', 'testaaa');
       } catch (e) {
         console.log(e);
         expect(e).toEqual(Error('Incorrect email or password'));
@@ -70,7 +53,7 @@ describe('Given LoginService', () => {
   describe('When service.loginPatientWithoutToken is called with valid user but invalid password', () => {
     test('It should throw an error', async () => {
       try {
-        const response = await service.loginPatientWithoutToken('', 'testaaa');
+        await service.loginPatientWithoutToken('', 'testaaa');
       } catch (e) {
         console.log(e);
         expect(e).toEqual(Error('Incorrect email or password'));

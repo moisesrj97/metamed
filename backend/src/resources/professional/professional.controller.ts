@@ -13,7 +13,7 @@ import { ProfessionalService } from './professional.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ExtraDataItem } from './professional.schema';
 import CreateProfessionalDto from './dto/createProfessional.dto';
-import updateProfessionalDto from './dto/updateProfessional.dto';
+import UpdateProfessionalDto from './dto/updateProfessional.dto';
 
 @Controller('professional')
 export class ProfessionalController {
@@ -40,7 +40,7 @@ export class ProfessionalController {
   @UseInterceptors(FileInterceptor('file'))
   update(
     @Param('id') id: string,
-    @Body() updateProfessionalDto: updateProfessionalDto,
+    @Body() updateProfessionalDto: UpdateProfessionalDto,
     @UploadedFile() file?: Express.Multer.File,
   ) {
     return this.professionalService.update(id, updateProfessionalDto, file);

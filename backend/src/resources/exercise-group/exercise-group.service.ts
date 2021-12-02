@@ -6,7 +6,6 @@ import validateJwt, { JwtInterface } from '../../helpers/validateJwt';
 import { ExerciseGroup, ExerciseGroupDocument } from './exerciseGroup.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Patient, PatientDocument } from '../patient/patient.schema';
 import {
   Professional,
   ProfessionalDocument,
@@ -17,8 +16,6 @@ export class ExerciseGroupService {
   constructor(
     @InjectModel(Professional.name)
     private professionalModel: Model<ProfessionalDocument>,
-    @InjectModel(Patient.name)
-    private patientModel: Model<PatientDocument>,
     @InjectModel(ExerciseGroup.name)
     private exerciseGroupModel: Model<ExerciseGroupDocument>,
   ) {}

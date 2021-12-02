@@ -2,7 +2,6 @@ import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { ProfessionalModule } from './professional.module';
-import { ProfessionalService } from './professional.service';
 import { S3ImageService } from '../../services/s3-image-service/s3-image-service.service';
 import { LoggerModule } from 'nestjs-pino';
 import { ConfigModule } from '@nestjs/config';
@@ -15,7 +14,6 @@ import { AppService } from '../../app.service';
 
 describe('Given the professional routes', () => {
   let app: INestApplication;
-  /* const professionalService = { findOne: () => ['test'] }; */
 
   beforeAll(async () => {
     const ENV = process.env.NODE_ENV;
@@ -35,10 +33,7 @@ describe('Given the professional routes', () => {
       ],
       controllers: [AppController],
       providers: [AppService, S3ImageService],
-    })
-      /* .overrideProvider(ProfessionalService)
-      .useValue(professionalService) */
-      .compile();
+    }).compile();
 
     app = moduleRef.createNestApplication();
     await app.init();

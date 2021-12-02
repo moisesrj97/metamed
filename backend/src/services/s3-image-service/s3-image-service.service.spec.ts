@@ -93,7 +93,7 @@ describe('Given S3ImageService', () => {
         }),
       });
 
-      const result = await service.deleteFile('');
+      await service.deleteFile('');
 
       expect(service.deleteFile).toBeDefined();
       expect(s3.upload).toHaveBeenCalled();

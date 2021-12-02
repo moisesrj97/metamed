@@ -1,6 +1,6 @@
-import { IsEmail, IsString, Length } from 'class-validator';
+import { IsString, Length } from 'class-validator';
 
-export default class updateProfessionalDto {
+export default class UpdateProfessionalDto {
   @IsString()
   @Length(3, 50)
   name: string;

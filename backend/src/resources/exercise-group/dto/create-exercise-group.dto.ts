@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-import { IsString, Length, IsArray } from 'class-validator';
+import { IsString, Length } from 'class-validator';
 
 export class CreateExerciseGroupDto {
   patient: mongoose.Types.ObjectId;
