@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateExerciseGroupDto } from './dto/create-exercise-group.dto';
 import { UpdateExerciseGroupDto } from './dto/update-exercise-group.dto';
+import { DeleteExerciseGroupDto } from './dto/delete-exercise-group.dto';
 import validateJwt, { JwtInterface } from '../../helpers/validateJwt';
 import { ExerciseGroup, ExerciseGroupDocument } from './exerciseGroup.schema';
 import { InjectModel } from '@nestjs/mongoose';
@@ -10,7 +11,6 @@ import {
   Professional,
   ProfessionalDocument,
 } from '../professional/professional.schema';
-import { decode } from 'punycode';
 
 @Injectable()
 export class ExerciseGroupService {
@@ -75,7 +75,6 @@ export class ExerciseGroupService {
       throw new Error('Invalid token');
     }
 
-    console.log(decodedToken.role);
     if (decodedToken.role !== 'Professional') {
       throw new Error('Invalid token');
     }
@@ -84,11 +83,7 @@ export class ExerciseGroupService {
 
     const group = await this.exerciseGroupModel.findOne({ _id: id });
 
-    if (!group) {
-      throw new Error('Exercise group not found');
-    }
-
-    if (group.author.toString() !== decodedToken.id) {
+    if (!group || group.author.toString() !== decodedToken.id) {
       throw new Error('Exercise group not found');
     }
 
@@ -104,7 +99,43 @@ export class ExerciseGroupService {
     );
   }
 
-  remove(id: string, token: string) {
-    return `This action removes a #${id} exerciseGroup`;
+  async remove(
+    id: string,
+    deleteExerciseGroupDto: DeleteExerciseGroupDto,
+    token: string,
+  ) {
+    let decodedToken: JwtInterface;
+    try {
+      decodedToken = validateJwt(token);
+    } catch (err) {
+      throw new Error('Invalid token');
+    }
+
+    if (decodedToken.role !== 'Professional') {
+      throw new Error('Invalid token');
+    }
+
+    const group = await this.exerciseGroupModel.findOne({ _id: id });
+
+    if (!group || group.author.toString() !== decodedToken.id) {
+      throw new Error('Exercise group not found');
+    }
+
+    const { patientId } = deleteExerciseGroupDto;
+
+    await this.exerciseGroupModel.findByIdAndDelete(id);
+
+    return this.professionalModel.findByIdAndUpdate(
+      { _id: decodedToken.id },
+      {
+        $pull: {
+          'patients.$[elem].exerciseGroups': id,
+        },
+      },
+      {
+        arrayFilters: [{ 'elem.refData': patientId }],
+        new: true,
+      },
+    );
   }
 }
