@@ -9,5 +9,4 @@ export async function bootstrap() {
   return { app, server };
 }
 //! Comment this while testing!
-/* bootstrap();
- */
+bootstrap();
