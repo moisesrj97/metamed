@@ -5,7 +5,7 @@ import { Patient } from '../patient/patient.schema';
 import { Chat } from '../chat/chat.schema';
 import { ExerciseGroup } from '../exercise-group/exerciseGroup.schema';
 import { MealGroup } from '../meal-group/mealGroup.schema';
-import { Note } from '../../schemas/note.schema';
+import { Note } from '../note/note.schema';
 
 export type ExtraDataItem = { key: string; value: string };
 
