@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ChatService } from './chat.service';
-import * as mongoose from 'mongoose';
 import { MongooseModule, getModelToken } from '@nestjs/mongoose';
 import { Message, MessageSchema } from '../message/message.schema';
 import { Chat, ChatSchema } from './chat.schema';
