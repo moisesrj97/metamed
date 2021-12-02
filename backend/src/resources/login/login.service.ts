@@ -58,7 +58,7 @@ export class LoginService {
     }
   }
 
-  async loginPatientWithToken(token: string) {
+  loginPatientWithToken(token: string) {
     if (!token.includes('Bearer')) {
       throw new Error('Invalid token');
     }
