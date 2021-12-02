@@ -28,7 +28,7 @@ export class MealService {
       throw new Error('You are not authorized to perform this action');
     }
 
-    const createdExercise = await this.mealModel.create({
+    const createdMeal = await this.mealModel.create({
       author: response.id,
       name: createMealDto.name,
       amount: createMealDto.amount,
@@ -38,7 +38,7 @@ export class MealService {
       createMealDto.mealGroupId,
       {
         $push: {
-          exercises: createdExercise._id,
+          meals: createdMeal._id,
         },
       },
       { new: true },
