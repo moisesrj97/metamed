@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Headers,
+} from '@nestjs/common';
 import { MealService } from './meal.service';
 import { CreateMealDto } from './dto/create-meal.dto';
 import { UpdateMealDto } from './dto/update-meal.dto';
@@ -8,27 +17,24 @@ export class MealController {
   constructor(private readonly mealService: MealService) {}
 
   @Post()
-  create(@Body() createMealDto: CreateMealDto) {
-    return this.mealService.create(createMealDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.mealService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.mealService.findOne(+id);
+  create(
+    @Body() createMealDto: CreateMealDto,
+    @Headers('Authorization') token: string,
+  ) {
+    return this.mealService.create(token, createMealDto);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMealDto: UpdateMealDto) {
-    return this.mealService.update(+id, updateMealDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateMealDto: UpdateMealDto,
+    @Headers('Authorization') token: string,
+  ) {
+    return this.mealService.update(token, id, updateMealDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.mealService.remove(+id);
+  remove(@Param('id') id: string, @Headers('Authorization') token: string) {
+    return this.mealService.remove(token, id);
   }
 }
