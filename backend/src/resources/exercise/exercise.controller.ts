@@ -1,34 +1,51 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Headers,
+  UseInterceptors,
+  UploadedFile,
+} from '@nestjs/common';
 import { ExerciseService } from './exercise.service';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { UpdateExerciseDto } from './dto/update-exercise.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('exercise')
 export class ExerciseController {
   constructor(private readonly exerciseService: ExerciseService) {}
 
   @Post()
-  create(@Body() createExerciseDto: CreateExerciseDto) {
-    return this.exerciseService.create(createExerciseDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.exerciseService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.exerciseService.findOne(+id);
+  @UseInterceptors(FileInterceptor('exerciseImage'))
+  create(
+    @Body() createExerciseDto: CreateExerciseDto,
+    @Headers('Authorization') token: string,
+    @UploadedFile() exerciseImage: Express.Multer.File,
+  ) {
+    return this.exerciseService.create(token, createExerciseDto, exerciseImage);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateExerciseDto: UpdateExerciseDto) {
-    return this.exerciseService.update(+id, updateExerciseDto);
+  @UseInterceptors(FileInterceptor('exerciseImage'))
+  update(
+    @Param('id') id: string,
+    @Body() updateExerciseDto: UpdateExerciseDto,
+    @Headers('Authorization') token: string,
+    @UploadedFile() exerciseImage?: Express.Multer.File,
+  ) {
+    return this.exerciseService.update(
+      token,
+      id,
+      updateExerciseDto,
+      exerciseImage,
+    );
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.exerciseService.remove(+id);
+  remove(@Param('id') id: string, @Headers('Authorization') token: string) {
+    return this.exerciseService.remove(token, id);
   }
 }
