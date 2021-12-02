@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import validateJwt, { JwtInterface } from 'src/helpers/validateJwt';
+import validateJwt, { JwtInterface } from '../../helpers/validateJwt';
 import { Message, MessageDocument } from '../message/message.schema';
 import { Chat, ChatDocument } from './chat.schema';
 import { NewMessageDto } from './dto/newMessage.dto';
