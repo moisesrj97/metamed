@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import validateJwt, { JwtInterface } from '../../helpers/validateJwt';
-import { ExerciseGroup } from '../exercise-group/exerciseGroup.schema';
 import {
   Professional,
   ProfessionalDocument,
@@ -10,14 +9,14 @@ import {
 import { CreateMealGroupDto } from './dto/create-meal-group.dto';
 import { DeleteMealGroupDto } from './dto/delete-meal-group.dto';
 import { UpdateMealGroupDto } from './dto/update-meal-group.dto';
-import { MealGroupDocument } from './mealGroup.schema';
+import { MealGroup, MealGroupDocument } from './mealGroup.schema';
 
 @Injectable()
 export class MealGroupService {
   constructor(
     @InjectModel(Professional.name)
     private professionalModel: Model<ProfessionalDocument>,
-    @InjectModel(ExerciseGroup.name)
+    @InjectModel(MealGroup.name)
     private mealGroupModel: Model<MealGroupDocument>,
   ) {}
 
