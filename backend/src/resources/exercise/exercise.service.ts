@@ -81,6 +81,7 @@ export class ExerciseService {
     }
 
     const exercise = await this.exerciseModel.findById(id);
+    console.log(exercise.author.toString(), response.id);
 
     if (!exercise || exercise.author.toString() !== response.id) {
       throw new Error('Exercise not found');
