@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import validateJwt, { JwtInterface } from '../../helpers/validateJwt';
 import { ExerciseGroup } from '../exercise-group/exerciseGroup.schema';
 import {
   Professional,
@@ -19,12 +20,54 @@ export class MealGroupService {
     private mealGroupModel: Model<MealGroupDocument>,
   ) {}
 
-  create(createMealGroupDto: CreateMealGroupDto, token: string) {
-    return 'This action adds a new mealGroup';
+  async create(createMealGroupDto: CreateMealGroupDto, token: string) {
+    let decodedToken: JwtInterface;
+    try {
+      decodedToken = validateJwt(token);
+    } catch (err) {
+      throw new Error(err);
+    }
+
+    if (decodedToken.role !== 'Professional') {
+      throw new Error('Invalid token');
+    }
+
+    const { name, patient } = createMealGroupDto;
+
+    const createdGroup = await this.mealGroupModel.create({
+      author: decodedToken.id,
+      name: name,
+      extra: '',
+      meals: [],
+    });
+    try {
+      const result = await this.professionalModel.findByIdAndUpdate(
+        { _id: decodedToken.id },
+        {
+          $push: {
+            'patients.$[elem].mealGroups': createdGroup._id,
+          },
+        },
+        {
+          arrayFilters: [{ 'elem.refData': patient }],
+          new: true,
+        },
+      );
+
+      return result;
+    } catch (err) {
+      throw new Error('Patient or professional not found');
+    }
   }
 
-  getById(id: string, token: string) {
-    return `This action returns a #${id} mealGroup`;
+  async getById(id: string, token: string) {
+    try {
+      validateJwt(token);
+    } catch (e) {
+      throw new Error('You are not authorized to perform this action');
+    }
+
+    return await this.mealGroupModel.findById(id).populate('meals');
   }
 
   update(id: string, updateMealGroupDto: UpdateMealGroupDto, token: string) {
