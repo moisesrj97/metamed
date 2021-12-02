@@ -6,5 +6,5 @@ export class CreateNoteDto {
 
   @IsString()
   @Length(3, 30)
-  name: string;
+  title: string;
 }

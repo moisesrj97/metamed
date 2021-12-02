@@ -4,10 +4,10 @@ export class UpdateNoteDto {
   @IsOptional()
   @IsString()
   @Length(3, 30)
-  name?: string;
+  title?: string;
 
   @IsOptional()
   @IsString()
   @Length(3, 500)
-  extra?: string;
+  description?: string;
 }

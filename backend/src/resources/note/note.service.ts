@@ -32,11 +32,11 @@ export class NoteService {
       throw new Error('Invalid token');
     }
 
-    const { name, patient } = createNoteDto;
+    const { title, patient } = createNoteDto;
 
     const createdNote = await this.noteModel.create({
       author: decodedToken.id,
-      name: name,
+      title: title,
       extra: '',
     });
     try {
@@ -81,7 +81,7 @@ export class NoteService {
       throw new Error('Invalid token');
     }
 
-    const { name, extra } = updateNoteDto;
+    const { title, description } = updateNoteDto;
 
     const group = await this.noteModel.findOne({ _id: id });
 
@@ -93,8 +93,8 @@ export class NoteService {
       { _id: id },
       {
         $set: {
-          name: name,
-          extra: extra,
+          title: title,
+          description: description,
         },
       },
       { new: true },
