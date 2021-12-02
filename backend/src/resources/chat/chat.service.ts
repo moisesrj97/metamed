@@ -24,12 +24,12 @@ export class ChatService {
 
     const { text, to } = newMessageDto;
 
-    const newMessage = this.messageModel.create({
+    const newMessage = await this.messageModel.create({
       from: response.id,
       to: to,
       text: text,
       fromRole: response.role,
-      toRole: response.role === 'Professional' ? 'Client' : 'Professional',
+      toRole: response.role === 'Professional' ? 'Patient' : 'Professional',
     });
 
     return await this.chatModel.findByIdAndUpdate(
