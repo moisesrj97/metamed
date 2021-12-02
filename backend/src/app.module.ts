@@ -12,6 +12,7 @@ import { LoginModule } from './resources/login/login.module';
 import { ExerciseGroupModule } from './resources/exercise-group/exercise-group.module';
 import { ExerciseModule } from './resources/exercise/exercise.module';
 import { MealGroupModule } from './resources/meal-group/meal-group.module';
+import { MealModule } from './resources/meal/meal.module';
 import LogsMiddleware from './middleware/logger.middleware';
 
 const ENV = process.env.NODE_ENV;
@@ -30,6 +31,7 @@ const ENV = process.env.NODE_ENV;
     ExerciseGroupModule,
     ExerciseModule,
     MealGroupModule,
+    MealModule,
   ],
   controllers: [AppController],
   providers: [AppService, S3ImageService],
