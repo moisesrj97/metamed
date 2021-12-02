@@ -25,7 +25,7 @@ export class ExerciseGroupService {
     try {
       decodedToken = validateJwt(token);
     } catch (err) {
-      throw new Error('Invalid token');
+      throw new Error(err);
     }
 
     if (decodedToken.role !== 'Professional') {
