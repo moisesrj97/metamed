@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { UpdateExerciseDto } from './dto/update-exercise.dto';
-import validateJwt from '../../helpers/validateJwt';
+import validateJwt, { JwtInterface } from '../../helpers/validateJwt';
 import { S3ImageService } from 'src/services/s3-image-service/s3-image-service.service';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Mongoose } from 'mongoose';
+import * as mongoose from 'mongoose';
 import {
   ExerciseGroup,
   ExerciseGroupDocument,
@@ -29,7 +30,12 @@ export class ExerciseService {
     createExerciseDto: CreateExerciseDto,
     exerciseImage: Express.Multer.File,
   ) {
-    const response = validateJwt(token);
+    let response: JwtInterface;
+    try {
+      response = validateJwt(token);
+    } catch (e) {
+      throw new Error('You are not authorized to perform this action');
+    }
 
     if (response.role !== 'Professional') {
       throw new Error('You are not authorized to perform this action');
@@ -61,7 +67,13 @@ export class ExerciseService {
     updateExerciseDto: UpdateExerciseDto,
     exerciseImage: Express.Multer.File,
   ) {
-    const response = validateJwt(token);
+    let response: JwtInterface;
+
+    try {
+      response = validateJwt(token);
+    } catch (e) {
+      throw new Error('You are not authorized to perform this action');
+    }
 
     if (response.role !== 'Professional') {
       throw new Error('You are not authorized to perform this action');
@@ -89,7 +101,30 @@ export class ExerciseService {
     );
   }
 
-  remove(token: string, id: string) {
-    return `This action removes a #${id} exercise`;
+  async remove(token: string, id: string) {
+    let response: JwtInterface;
+
+    try {
+      response = validateJwt(token);
+    } catch (e) {
+      throw new Error('You are not authorized to perform this action');
+    }
+
+    if (response.role !== 'Professional') {
+      throw new Error('You are not authorized to perform this action');
+    }
+
+    const exercise = await this.exerciseModel.findById(id);
+
+    if (!exercise || exercise.author.toString() !== response.id) {
+      throw new Error('Exercise not found');
+    }
+
+    await this.exerciseGroupModel.updateMany(
+      { exercises: { $elemMatch: { $eq: id } } },
+      { $pull: { exercises: id } },
+    );
+
+    return { message: 'Exercise removed successfully from groups' };
   }
 }
