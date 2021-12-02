@@ -37,11 +37,9 @@ export class ProfessionalService {
     const url = await this.s3ImageService.uploadFile(file);
     const hash = bcrypt.hashSync(password, 10);
 
-    const result = await this.professionalModel.create(
+    return await this.professionalModel.create(
       new ProfessionalEntity(url, name, surname, businessName, email, hash),
     );
-
-    return result;
   }
 
   async findOne(id: string): Promise<ProfessionalDocument> {
@@ -72,13 +70,11 @@ export class ProfessionalService {
     if (file) {
       await this.s3ImageService.updateFile(file, profilePicture);
     }
-    const result = await this.professionalModel.findByIdAndUpdate(
+    return await this.professionalModel.findByIdAndUpdate(
       { _id: id },
       { $set: { name, surname, businessName } },
       { new: true },
     );
-
-    return result;
   }
 
   async addPatientToProfessional(
@@ -111,13 +107,11 @@ export class ProfessionalService {
       { $push: { professionals: newProfessionalToPatient } },
     );
 
-    const result = await this.professionalModel.findByIdAndUpdate(
+    return await this.professionalModel.findByIdAndUpdate(
       { _id: id },
       { $push: { patients: newPatientToProfessional } },
       { new: true },
     );
-
-    return result;
   }
 
   async updatePatientFromProfessional(
@@ -125,7 +119,7 @@ export class ProfessionalService {
     patientId: string,
     allExtraDataUpdated: ExtraDataItem[],
   ): Promise<ProfessionalDocument> {
-    const result = await this.professionalModel.findByIdAndUpdate(
+    return await this.professionalModel.findByIdAndUpdate(
       { _id: id },
       {
         $set: {
@@ -137,8 +131,6 @@ export class ProfessionalService {
         new: true,
       },
     );
-
-    return result;
   }
 
   async removePatientFromProfessional(

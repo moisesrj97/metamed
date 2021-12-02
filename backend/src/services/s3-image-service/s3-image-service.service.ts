@@ -32,8 +32,7 @@ export class S3ImageService {
     };
 
     try {
-      const s3Response = await s3.deleteObject(params).promise();
-      return s3Response;
+      return await s3.deleteObject(params).promise();
     } catch (e) {
       throw new Error(e);
     }
@@ -53,8 +52,7 @@ export class S3ImageService {
     };
 
     try {
-      const s3Response = await s3.upload(params).promise();
-      return s3Response;
+      return await s3.upload(params).promise();
     } catch (e) {
       throw new Error(e);
     }

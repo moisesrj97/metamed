@@ -31,11 +31,9 @@ export class PatientService {
     const url = await this.s3ImageService.uploadFile(file);
     const hash = bcrypt.hashSync(password, 10);
 
-    const result = await this.patientModel.create(
+    return await this.patientModel.create(
       new PatientEntity(url, name, surname, gender, birthDate, email, hash),
     );
-
-    return result;
   }
 
   async findOne(id: string) {
@@ -112,12 +110,10 @@ export class PatientService {
     if (file) {
       await this.s3ImageService.updateFile(file, profilePicture);
     }
-    const result = await this.patientModel.findByIdAndUpdate(
+    return await this.patientModel.findByIdAndUpdate(
       { _id: id },
       { $set: { name, surname, gender, birthDate } },
       { new: true },
     );
-
-    return result;
   }
 }

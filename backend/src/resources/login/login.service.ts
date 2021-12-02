@@ -34,7 +34,7 @@ export class LoginService {
     }
 
     if (await bcrypt.compare(password, professional.password)) {
-      const token = jwt.sign(
+      return jwt.sign(
         {
           id: professional._id,
           email: professional.email,
@@ -43,8 +43,6 @@ export class LoginService {
         },
         process.env.JWT_SECRET,
       );
-
-      return token;
     } else {
       throw new Error('Incorrect email or password');
     }
@@ -64,7 +62,7 @@ export class LoginService {
     }
 
     if (await bcrypt.compare(password, patient.password)) {
-      const token = jwt.sign(
+      return jwt.sign(
         {
           id: patient._id,
           email: patient.email,
@@ -73,8 +71,6 @@ export class LoginService {
         },
         process.env.JWT_SECRET,
       );
-
-      return token;
     } else {
       throw new Error('Incorrect email or password');
     }

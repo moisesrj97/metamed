@@ -36,3 +36,6 @@ lerna-debug.log*
 
 .env.**
 routes.md
+
+sonar-project.properties
+.scannerwork/

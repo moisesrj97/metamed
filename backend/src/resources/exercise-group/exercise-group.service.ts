@@ -51,7 +51,7 @@ export class ExerciseGroupService {
       exercises: [],
     });
     try {
-      const result = await this.professionalModel.findByIdAndUpdate(
+      return await this.professionalModel.findByIdAndUpdate(
         { _id: decodedToken.id },
         {
           $push: {
@@ -63,8 +63,6 @@ export class ExerciseGroupService {
           new: true,
         },
       );
-
-      return result;
     } catch (err) {
       throw new Error('Patient or professional not found');
     }
