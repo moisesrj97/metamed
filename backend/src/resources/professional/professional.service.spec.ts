@@ -1,5 +1,6 @@
 import { getModelToken, MongooseModule } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
+import * as mongoose from 'mongoose';
 import { S3ImageService } from '../../services/s3-image-service/s3-image-service.service';
 import { Chat, ChatSchema } from '../chat/chat.schema';
 import { Patient, PatientSchema } from '../patient/patient.schema';
@@ -15,14 +16,33 @@ describe('Given ProfessionalService', () => {
     const mockRepository = {
       findById() {
         return {
-          populate: () => 'findById model',
+          populate: () => {
+            return {
+              patients: [
+                {
+                  refData: new mongoose.Types.ObjectId('f8f8f8f8f8f8'),
+                  chatRef: 'f9f9f9f9f9f9',
+                },
+              ],
+            };
+          },
         };
       },
       create() {
         return 'create model';
       },
       findByIdAndUpdate() {
-        return 'findByIdAndUpdate model';
+        return {
+          patients: [
+            {
+              refData: new mongoose.Types.ObjectId('f8f8f8f8f8f8'),
+              chatRef: 'f9f9f9f9f9f9',
+            },
+          ],
+        };
+      },
+      findByIdAndDelete() {
+        return [{ refData: new mongoose.Types.ObjectId('f8f8f8f8f8f8') }];
       },
     };
 
@@ -76,7 +96,14 @@ describe('Given ProfessionalService', () => {
   describe('When service.findOne is executed', () => {
     test('should call findById on model', async () => {
       const professional = await service.findOne('');
-      expect(professional).toBe('findById model');
+      expect(professional).toEqual({
+        patients: [
+          {
+            refData: new mongoose.Types.ObjectId('f8f8f8f8f8f8'),
+            chatRef: 'f9f9f9f9f9f9',
+          },
+        ],
+      });
     });
   });
 
@@ -87,7 +114,14 @@ describe('Given ProfessionalService', () => {
         { name: '', surname: '', businessName: '', profilePicture: '' },
         '' as unknown as Express.Multer.File,
       );
-      expect(professional).toBe('findByIdAndUpdate model');
+      expect(professional).toEqual({
+        patients: [
+          {
+            refData: new mongoose.Types.ObjectId('f8f8f8f8f8f8'),
+            chatRef: 'f9f9f9f9f9f9',
+          },
+        ],
+      });
     });
   });
 
@@ -98,38 +132,66 @@ describe('Given ProfessionalService', () => {
         { name: '', surname: '', businessName: '', profilePicture: '' },
         { test: 'test' } as unknown as Express.Multer.File,
       );
-      expect(professional).toBe('findByIdAndUpdate model');
+      expect(professional).toEqual({
+        patients: [
+          {
+            refData: new mongoose.Types.ObjectId('f8f8f8f8f8f8'),
+            chatRef: 'f9f9f9f9f9f9',
+          },
+        ],
+      });
     });
   });
 
   describe('When service.addPatientToProfessional is executed', () => {
     test('should call findByIdAndUpdate on model', async () => {
       const professional = await service.addPatientToProfessional(
-        '61a4f4a93d6cc562f1fb52a9',
-        '61a4f4a93d6cc562f1fb52a9',
+        'f8f8f8f8f8f8',
+        'f8f8f8f8f8f8',
       );
-      expect(professional).toBe('findByIdAndUpdate model');
+      expect(professional).toEqual({
+        patients: [
+          {
+            refData: new mongoose.Types.ObjectId('f8f8f8f8f8f8'),
+            chatRef: 'f9f9f9f9f9f9',
+          },
+        ],
+      });
     });
   });
 
   describe('When service.updatePatientFromProfessional is executed', () => {
     test('should call findByIdAndUpdate on model', async () => {
       const professional = await service.updatePatientFromProfessional(
-        '61a4f4a93d6cc562f1fb52a9',
-        '61a4f4a93d6cc562f1fb52a9',
+        'f8f8f8f8f8f8',
+        'f8f8f8f8f8f8',
         [],
       );
-      expect(professional).toBe('findByIdAndUpdate model');
+      expect(professional).toEqual({
+        patients: [
+          {
+            refData: new mongoose.Types.ObjectId('f8f8f8f8f8f8'),
+            chatRef: 'f9f9f9f9f9f9',
+          },
+        ],
+      });
     });
   });
 
   describe('When service.removePatientFromProfessional is executed', () => {
     test('should call findByIdAndUpdate on model', async () => {
       const professional = await service.removePatientFromProfessional(
-        '61a4f4a93d6cc562f1fb52a9',
-        '61a4f4a93d6cc562f1fb52a9',
+        'f8f8f8f8f8f8',
+        '663866386638663866386638',
       );
-      expect(professional).toBe('findByIdAndUpdate model');
+      expect(professional).toEqual({
+        patients: [
+          {
+            refData: new mongoose.Types.ObjectId('f8f8f8f8f8f8'),
+            chatRef: 'f9f9f9f9f9f9',
+          },
+        ],
+      });
     });
   });
 });

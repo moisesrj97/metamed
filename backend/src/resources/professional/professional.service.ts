@@ -145,6 +145,24 @@ export class ProfessionalService {
     id: string,
     patientId: string,
   ): Promise<ProfessionalDocument> {
+    const professional = await (
+      await this.professionalModel.findById(id)
+    ).populate({
+      path: 'patients',
+      populate: {
+        path: 'refData',
+        select: ['name', 'surname', 'profilePicture'],
+      },
+    });
+
+    console.log(professional, patientId);
+
+    await this.chatModel.findByIdAndDelete(
+      professional.patients.find(
+        (patient) => patient.refData.toString() === patientId,
+      ).chatRef,
+    );
+
     const result = await this.professionalModel.findByIdAndUpdate(
       { _id: id },
       {
