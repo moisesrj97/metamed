@@ -62,7 +62,7 @@ export class MealService {
     console.log(meal.author.toString(), response.id);
 
     if (!meal || meal.author.toString() !== response.id) {
-      throw new Error('Exercise not found');
+      throw new Error('Meal not found');
     }
 
     const { amount, name } = updateMealDto;
