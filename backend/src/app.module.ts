@@ -10,6 +10,7 @@ import { MessageModule } from './resources/message/message.module';
 import { ConfigModule } from '@nestjs/config';
 import { LoginModule } from './resources/login/login.module';
 import { ExerciseGroupModule } from './resources/exercise-group/exercise-group.module';
+import { ExerciseModule } from './resources/exercise/exercise.module';
 import LogsMiddleware from './middleware/logger.middleware';
 
 const ENV = process.env.NODE_ENV;
@@ -26,6 +27,7 @@ const ENV = process.env.NODE_ENV;
     MessageModule,
     LoginModule,
     ExerciseGroupModule,
+    ExerciseModule,
   ],
   controllers: [AppController],
   providers: [AppService, S3ImageService],
