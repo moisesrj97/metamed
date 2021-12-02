@@ -4,16 +4,13 @@ import { UpdateExerciseDto } from './dto/update-exercise.dto';
 import validateJwt, { JwtInterface } from '../../helpers/validateJwt';
 import { S3ImageService } from '../../services/s3-image-service/s3-image-service.service';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Mongoose } from 'mongoose';
-import * as mongoose from 'mongoose';
+import { Model } from 'mongoose';
+
 import {
   ExerciseGroup,
   ExerciseGroupDocument,
 } from '../exercise-group/exerciseGroup.schema';
-import {
-  Professional,
-  ProfessionalDocument,
-} from '../professional/professional.schema';
+
 import { Exercise, ExerciseDocument } from './exercise.schema';
 
 @Injectable()

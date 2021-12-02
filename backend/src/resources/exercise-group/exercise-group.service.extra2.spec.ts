@@ -7,7 +7,6 @@ import {
 } from '../professional/professional.schema';
 import { ExerciseGroupService } from './exercise-group.service';
 import { ExerciseGroup, ExerciseGroupSchema } from './exerciseGroup.schema';
-import * as mongoose from 'mongoose';
 
 describe('Given ExerciseGroupService', () => {
   let service: ExerciseGroupService;

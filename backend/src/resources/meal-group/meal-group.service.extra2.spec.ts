@@ -7,7 +7,6 @@ import {
 } from '../professional/professional.schema';
 import { MealGroupService } from './meal-group.service';
 import { MealGroup, MealGroupSchema } from './mealGroup.schema';
-import * as mongoose from 'mongoose';
 
 describe('Given MealGroupService', () => {
   let service: MealGroupService;
