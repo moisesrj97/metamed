@@ -5,7 +5,7 @@ import { LoginService } from './login.service';
 export class LoginController {
   constructor(private readonly loginService: LoginService) {}
 
-  @Post('professional/token')
+  @Post('token')
   loginProfessionalWithToken(@Headers('Authorization') token: string) {
     return this.loginService.loginWithToken(token);
   }
@@ -16,11 +16,6 @@ export class LoginController {
     @Body('password') password: string,
   ) {
     return this.loginService.loginWithoutToken('Professional', email, password);
-  }
-
-  @Post('patient/token')
-  loginPatientWithToken(@Headers('Authorization') token: string) {
-    return this.loginService.loginWithToken(token);
   }
 
   @Post('patient/')

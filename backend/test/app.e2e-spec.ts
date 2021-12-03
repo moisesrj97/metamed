@@ -35,9 +35,9 @@ describe('AppController (e2e)', () => {
       .expect('Hello World!');
   });
 
-  it('/login/professional/token (POST)', async () => {
+  it('/login/token (POST)', async () => {
     const response = await request(app.getHttpServer())
-      .post('/login/professional/token')
+      .post('/login/token')
       .set(
         'Authorization',
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
@@ -63,18 +63,6 @@ describe('AppController (e2e)', () => {
 
     expect(response.status).toBe(201);
     expect(response.text.length).toBeGreaterThan(1);
-  });
-
-  it('/login/patient/token (POST)', async () => {
-    const response = await request(app.getHttpServer())
-      .post('/login/professional/token')
-      .set(
-        'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUGF0aWVudCIsImlkIjoiNjFhNGY0YTkzZDZjYzU2MmYxZmI1MmE5IiwibmFtZSI6ImFhYWEiLCJlYW1pbCI6ImFhYSIsImlhdCI6MTUxNjIzOTAyMn0.ml57PoWBI1WVRZNLfAlfZt6mdD9r5T2RvKssNw5UMyg',
-      );
-
-    expect(response.status).toBe(201);
-    expect(response.body.id).toBe('61a4f4a93d6cc562f1fb52a9');
   });
 
   it('/professional/ (POST)', async () => {
