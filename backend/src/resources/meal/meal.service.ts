@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { isAuthor } from '../../helpers/isAuthor';
@@ -23,7 +23,9 @@ export class MealService {
     try {
       response = validateJwt(token);
     } catch (e) {
-      throw new Error('You are not authorized to perform this action');
+      throw new UnauthorizedException(
+        'You are not authorized to perform this action',
+      );
     }
 
     isProfessional(response);
@@ -51,7 +53,9 @@ export class MealService {
     try {
       response = validateJwt(token);
     } catch (e) {
-      throw new Error('You are not authorized to perform this action');
+      throw new UnauthorizedException(
+        'You are not authorized to perform this action',
+      );
     }
 
     isProfessional(response);
@@ -72,7 +76,9 @@ export class MealService {
     try {
       response = validateJwt(token);
     } catch (e) {
-      throw new Error('You are not authorized to perform this action');
+      throw new UnauthorizedException(
+        'You are not authorized to perform this action',
+      );
     }
 
     isProfessional(response);

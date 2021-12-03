@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Patient, PatientDocument } from '../patient/patient.schema';
 import {
@@ -38,7 +38,7 @@ export class LoginService {
     }
 
     if (!user) {
-      throw new Error('Incorrect email or password');
+      throw new UnauthorizedException('Incorrect email or password');
     }
 
     if (await bcrypt.compare(password, user.password)) {
@@ -52,7 +52,7 @@ export class LoginService {
         process.env.JWT_SECRET,
       );
     } else {
-      throw new Error('Incorrect email or password');
+      throw new UnauthorizedException('Incorrect email or password');
     }
   }
 }
