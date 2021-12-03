@@ -44,7 +44,17 @@ export interface ProfessionalModel {
   notes: string[];
 }
 
+export interface UpdateUserDataDto {
+  name: string;
+  surname: string;
+  profilePicture: string;
+  businessName?: string;
+  gender?: string;
+  birthDate?: string;
+}
+
 export interface UserStore {
+  token: string;
   _id: string;
   name: string;
   surname: string;
