@@ -55,6 +55,20 @@ describe('Given ChatService', () => {
     });
   });
 
+  describe('When service.update is executed with valid token of patient', () => {
+    it('It should return data without errors', async () => {
+      process.env.JWT_SECRET = 'test';
+
+      const response = await service.update(
+        'f8f8f8f8f8f8',
+        { to: 'f9f9f9f9f9f9', text: 'Hello test' },
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUGF0aWVudCIsImlkIjoiNjFhNGY0YTkzZDZjYzU2MmYxZmI1MmE5IiwibmFtZSI6ImFhYWEiLCJlYW1pbCI6ImFhYSIsImlhdCI6MTUxNjIzOTAyMn0.ml57PoWBI1WVRZNLfAlfZt6mdD9r5T2RvKssNw5UMyg',
+      );
+
+      expect(response).toBe('find model');
+    });
+  });
+
   describe('When service.update is executed with invalid token', () => {
     it('It should return data without errors', async () => {
       process.env.JWT_SECRET = 'test';
