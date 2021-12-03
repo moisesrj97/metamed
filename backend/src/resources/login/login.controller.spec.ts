@@ -13,10 +13,8 @@ describe('Given LoginController', () => {
         {
           provide: LoginService,
           useValue: {
-            loginProfessionalWithToken: jest.fn(),
-            loginProfessionalWithoutToken: jest.fn(),
-            loginPatientWithToken: jest.fn(),
-            loginPatientWithoutToken: jest.fn(),
+            loginWithToken: jest.fn(),
+            loginWithoutToken: jest.fn(),
           },
         },
       ],
@@ -32,30 +30,30 @@ describe('Given LoginController', () => {
   });
 
   describe('When controller.loginProfessionalWithToken is called', () => {
-    it('It should call service.loginProfessionalWithToken', () => {
+    it('It should call service.loginWithToken', () => {
       controller.loginProfessionalWithToken('');
-      expect(service.loginProfessionalWithToken).toHaveBeenCalled();
+      expect(service.loginWithToken).toHaveBeenCalled();
     });
   });
 
   describe('When controller.loginProfessionalWithoutToken is called', () => {
-    it('It should call service.loginProfessionalWithoutToken', () => {
+    it('It should call service.loginWithoutToken', () => {
       controller.loginProfessionalWithoutToken('', '');
-      expect(service.loginProfessionalWithoutToken).toHaveBeenCalled();
+      expect(service.loginWithoutToken).toHaveBeenCalled();
     });
   });
 
   describe('When controller.loginPatientWithToken is called', () => {
     it('It should call service.loginPatientWithToken', () => {
       controller.loginPatientWithToken('');
-      expect(service.loginPatientWithToken).toHaveBeenCalled();
+      expect(service.loginWithToken).toHaveBeenCalled();
     });
   });
 
   describe('When controller.loginPatientWithoutToken is called', () => {
-    it('It should call service.loginPatientWithoutToken', () => {
+    it('It should call service.loginWithoutToken', () => {
       controller.loginPatientWithoutToken('', '');
-      expect(service.loginPatientWithoutToken).toHaveBeenCalled();
+      expect(service.loginWithoutToken).toHaveBeenCalled();
     });
   });
 });

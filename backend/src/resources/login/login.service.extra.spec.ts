@@ -39,10 +39,10 @@ describe('Given LoginService', () => {
     });
   });
 
-  describe('When service.loginProfessionalWithoutToken is called with invalid user', () => {
+  describe('When service.loginWithoutToken is called with invalid user', () => {
     test('It should throw an error', async () => {
       try {
-        await service.loginProfessionalWithoutToken('', 'testaaa');
+        await service.loginWithoutToken('Professional', '', 'testaaa');
       } catch (e) {
         console.log(e);
         expect(e).toEqual(Error('Incorrect email or password'));
@@ -50,10 +50,10 @@ describe('Given LoginService', () => {
     });
   });
 
-  describe('When service.loginPatientWithoutToken is called with valid user but invalid password', () => {
+  describe('When service.loginWithoutToken is called with valid user but invalid password', () => {
     test('It should throw an error', async () => {
       try {
-        await service.loginPatientWithoutToken('', 'testaaa');
+        await service.loginWithoutToken('Patient', '', 'testaaa');
       } catch (e) {
         console.log(e);
         expect(e).toEqual(Error('Incorrect email or password'));
