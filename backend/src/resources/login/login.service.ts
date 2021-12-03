@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
 import { Patient, PatientDocument } from '../patient/patient.schema';
 import {
   Professional,
@@ -10,6 +9,7 @@ import {
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import validateJwt from '../../helpers/validateJwt';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class LoginService {
@@ -20,54 +20,34 @@ export class LoginService {
     private patientModel: Model<PatientDocument>,
   ) {}
 
-  loginProfessionalWithToken(token: string) {
+  loginWithToken(token: string) {
     return validateJwt(token);
   }
 
-  async loginProfessionalWithoutToken(email: string, password: string) {
-    const professional = await this.professionalModel.findOne({
-      email,
-    });
+  async loginWithoutToken(role: string, email: string, password: string) {
+    let user: ProfessionalDocument | PatientDocument;
 
-    if (!professional) {
-      throw new Error('Incorrect email or password');
-    }
-
-    if (await bcrypt.compare(password, professional.password)) {
-      return jwt.sign(
-        {
-          id: professional._id,
-          email: professional.email,
-          name: professional.name,
-          role: professional.role,
-        },
-        process.env.JWT_SECRET,
-      );
+    if (role === 'Professional') {
+      user = await this.professionalModel.findOne({
+        email,
+      });
     } else {
-      throw new Error('Incorrect email or password');
+      user = await this.patientModel.findOne({
+        email,
+      });
     }
-  }
 
-  loginPatientWithToken(token: string) {
-    return validateJwt(token);
-  }
-
-  async loginPatientWithoutToken(email: string, password: string) {
-    const patient = await this.patientModel.findOne({
-      email,
-    });
-
-    if (!patient) {
+    if (!user) {
       throw new Error('Incorrect email or password');
     }
 
-    if (await bcrypt.compare(password, patient.password)) {
+    if (await bcrypt.compare(password, user.password)) {
       return jwt.sign(
         {
-          id: patient._id,
-          email: patient.email,
-          name: patient.name,
-          role: patient.role,
+          id: user._id,
+          email: user.email,
+          name: user.name,
+          role: user.role,
         },
         process.env.JWT_SECRET,
       );

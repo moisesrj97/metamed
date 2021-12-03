@@ -8,7 +8,7 @@ export class LoginController {
   @Post('professional/token')
   loginProfessionalWithToken(@Headers('Authorization') token: string) {
     console.log(token);
-    return this.loginService.loginProfessionalWithToken(token);
+    return this.loginService.loginWithToken(token);
   }
 
   @Post('professional/')
@@ -16,12 +16,12 @@ export class LoginController {
     @Body('email') email: string,
     @Body('password') password: string,
   ) {
-    return this.loginService.loginProfessionalWithoutToken(email, password);
+    return this.loginService.loginWithoutToken('Professional', email, password);
   }
 
   @Post('patient/token')
   loginPatientWithToken(@Headers('Authorization') token: string) {
-    return this.loginService.loginPatientWithToken(token);
+    return this.loginService.loginWithToken(token);
   }
 
   @Post('patient/')
@@ -29,6 +29,6 @@ export class LoginController {
     @Body('email') email: string,
     @Body('password') password: string,
   ) {
-    return this.loginService.loginPatientWithoutToken(email, password);
+    return this.loginService.loginWithoutToken('Patient', email, password);
   }
 }
