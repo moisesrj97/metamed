@@ -4,6 +4,7 @@ import * as mongoose from 'mongoose';
 import { MongooseModule, getModelToken } from '@nestjs/mongoose';
 import { MealGroup, MealGroupSchema } from '../meal-group/mealGroup.schema';
 import { Meal, MealSchema } from './meal.schema';
+import { UnauthorizedException } from '@nestjs/common';
 
 describe('Given MealService', () => {
   let service: MealService;
@@ -128,7 +129,7 @@ describe('Given MealService', () => {
           },
         );
       } catch (e) {
-        expect(e).toEqual(Error('Invalid token'));
+        expect(e).toEqual(new UnauthorizedException('Invalid token'));
       }
     });
   });
@@ -184,7 +185,7 @@ describe('Given MealService', () => {
           },
         );
       } catch (e) {
-        expect(e).toEqual(Error('Invalid token'));
+        expect(e).toEqual(new UnauthorizedException('Invalid token'));
       }
     });
   });
@@ -259,7 +260,7 @@ describe('Given MealService', () => {
           'f8f8f8f8f8f8',
         );
       } catch (e) {
-        expect(e).toEqual(Error('Invalid token'));
+        expect(e).toEqual(new UnauthorizedException('Invalid token'));
       }
     });
   });

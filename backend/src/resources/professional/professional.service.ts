@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
@@ -49,11 +49,11 @@ export class ProfessionalService {
     try {
       decodedToken = validateJwt(token);
     } catch (err) {
-      throw new Error('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
     isProfessional(decodedToken);
     if (id !== decodedToken.id) {
-      throw new Error('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
 
     return await this.professionalModel.findById(id).populate({
@@ -83,13 +83,13 @@ export class ProfessionalService {
     try {
       decodedToken = validateJwt(token);
     } catch (err) {
-      throw new Error('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
 
     isProfessional(decodedToken);
 
     if (id !== decodedToken.id) {
-      throw new Error('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
 
     const { businessName, surname, name, profilePicture } =
@@ -113,13 +113,13 @@ export class ProfessionalService {
     try {
       decodedToken = validateJwt(token);
     } catch (err) {
-      throw new Error('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
 
     isProfessional(decodedToken);
 
     if (id !== decodedToken.id) {
-      throw new Error('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
 
     const newChat = await this.chatModel.create(
@@ -165,13 +165,13 @@ export class ProfessionalService {
     try {
       decodedToken = validateJwt(token);
     } catch (err) {
-      throw new Error('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
 
     isProfessional(decodedToken);
 
     if (id !== decodedToken.id) {
-      throw new Error('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
 
     return await this.professionalModel.findByIdAndUpdate(
@@ -197,13 +197,13 @@ export class ProfessionalService {
     try {
       decodedToken = validateJwt(token);
     } catch (err) {
-      throw new Error('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
 
     isProfessional(decodedToken);
 
     if (id !== decodedToken.id) {
-      throw new Error('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
 
     const professional = await (

@@ -1,3 +1,4 @@
+import { UnauthorizedException } from '@nestjs/common';
 import { getModelToken, MongooseModule } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as mongoose from 'mongoose';
@@ -119,7 +120,7 @@ describe('Given ExerciseService', () => {
           '' as unknown as Express.Multer.File,
         );
       } catch (e) {
-        expect(e).toEqual(Error('Invalid token'));
+        expect(e).toEqual(new UnauthorizedException('Invalid token'));
       }
     });
   });
@@ -139,7 +140,7 @@ describe('Given ExerciseService', () => {
           '' as unknown as Express.Multer.File,
         );
       } catch (e) {
-        expect(e).toEqual(Error('Invalid token'));
+        expect(e).toEqual(new UnauthorizedException('Invalid token'));
       }
     });
   });
@@ -179,7 +180,7 @@ describe('Given ExerciseService', () => {
           '' as unknown as Express.Multer.File,
         );
       } catch (e) {
-        expect(e).toEqual(Error('Invalid token'));
+        expect(e).toEqual(new UnauthorizedException('Invalid token'));
       }
     });
   });
@@ -199,7 +200,7 @@ describe('Given ExerciseService', () => {
           '' as unknown as Express.Multer.File,
         );
       } catch (e) {
-        expect(e).toEqual(Error('Invalid token'));
+        expect(e).toEqual(new UnauthorizedException('Invalid token'));
       }
     });
   });
@@ -246,7 +247,7 @@ describe('Given ExerciseService', () => {
           'f8f8f8f8f8f8',
         );
       } catch (e) {
-        expect(e).toEqual(Error('Invalid token'));
+        expect(e).toEqual(new UnauthorizedException('Invalid token'));
       }
     });
   });
@@ -274,7 +275,7 @@ describe('Given ExerciseService', () => {
           'f8f8f8f8f8f8',
         );
       } catch (e) {
-        expect(e).toEqual(Error('Invalid token'));
+        expect(e).toEqual(new UnauthorizedException('Invalid token'));
       }
     });
   });

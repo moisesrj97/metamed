@@ -1,3 +1,4 @@
+import { UnauthorizedException } from '@nestjs/common';
 import { getModelToken, MongooseModule } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { S3ImageService } from '../../services/s3-image-service/s3-image-service.service';
@@ -124,7 +125,7 @@ describe('Given PatientService', () => {
           'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiJmOGY4ZjhmOGY4ZjgiLCJpYXQiOjE1MTYyMzkwMjJ9.a69eQet5_gWhrp-Cbw6OtTJc_JkrTl9TD_Re-Kw5t58',
         );
       } catch (e) {
-        expect(e).toEqual(Error('Invalid token'));
+        expect(e).toEqual(new UnauthorizedException('Invalid token'));
       }
     });
   });
@@ -138,7 +139,7 @@ describe('Given PatientService', () => {
           'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUGF0aWVudCIsImlkIjoiZjhmOGY4ZjhmOGY4IiwiaWF0IjoxNTE2MjM5MDIyfQ.buuZEL-br9kMX6HvM3YH1bNYttQPKeDfwt3tuCdJxk4',
         );
       } catch (e) {
-        expect(e).toEqual(Error('Invalid token'));
+        expect(e).toEqual(new UnauthorizedException('Invalid token'));
       }
     });
   });
@@ -152,7 +153,7 @@ describe('Given PatientService', () => {
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiJmOGY4ZjhmOGY4ZjgiLCJpYXQiOjE1MTYyMzkwMjJ9.a69eQet5_gWhrp-Cbw6OtTJc_JkrTl9TD_Re-Kw5t58',
         );
       } catch (e) {
-        expect(e).toEqual(Error('Invalid token'));
+        expect(e).toEqual(new UnauthorizedException('Invalid token'));
       }
     });
   });
@@ -191,7 +192,7 @@ describe('Given PatientService', () => {
           '' as unknown as Express.Multer.File,
         );
       } catch (e) {
-        expect(e).toEqual(Error('Invalid token'));
+        expect(e).toEqual(new UnauthorizedException('Invalid token'));
       }
     });
   });
@@ -212,7 +213,7 @@ describe('Given PatientService', () => {
           '' as unknown as Express.Multer.File,
         );
       } catch (e) {
-        expect(e).toEqual(Error('Invalid token'));
+        expect(e).toEqual(new UnauthorizedException('Invalid token'));
       }
     });
   });
@@ -233,7 +234,7 @@ describe('Given PatientService', () => {
           '' as unknown as Express.Multer.File,
         );
       } catch (e) {
-        expect(e).toEqual(Error('Invalid token'));
+        expect(e).toEqual(new UnauthorizedException('Invalid token'));
       }
     });
   });
@@ -272,7 +273,7 @@ describe('Given PatientService', () => {
           { test: 'test' } as unknown as Express.Multer.File,
         );
       } catch (e) {
-        expect(e).toEqual(Error('Invalid token'));
+        expect(e).toEqual(new UnauthorizedException('Invalid token'));
       }
     });
   });
@@ -293,7 +294,7 @@ describe('Given PatientService', () => {
           { test: 'test' } as unknown as Express.Multer.File,
         );
       } catch (e) {
-        expect(e).toEqual(Error('Invalid token'));
+        expect(e).toEqual(new UnauthorizedException('Invalid token'));
       }
     });
   });
@@ -314,7 +315,7 @@ describe('Given PatientService', () => {
           { test: 'test' } as unknown as Express.Multer.File,
         );
       } catch (e) {
-        expect(e).toEqual(Error('Invalid token'));
+        expect(e).toEqual(new UnauthorizedException('Invalid token'));
       }
     });
   });

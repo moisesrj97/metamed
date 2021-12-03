@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { isProfessional } from '../../helpers/isProfessional';
@@ -74,7 +74,7 @@ export class NoteService {
     try {
       decodedToken = validateJwt(token);
     } catch (err) {
-      throw new Error('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
 
     isProfessional(decodedToken);
@@ -99,7 +99,7 @@ export class NoteService {
     try {
       decodedToken = validateJwt(token);
     } catch (err) {
-      throw new Error('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
 
     isProfessional(decodedToken);

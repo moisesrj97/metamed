@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { S3ImageService } from '../../services/s3-image-service/s3-image-service.service';
@@ -43,13 +43,13 @@ export class PatientService {
     try {
       decodedToken = validateJwt(token);
     } catch (err) {
-      throw new Error('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
 
     isPatient(decodedToken);
 
     if (id !== decodedToken.id) {
-      throw new Error('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
 
     const populatedData = await this.patientModel.findById(id).populate({
@@ -125,13 +125,13 @@ export class PatientService {
     try {
       decodedToken = validateJwt(token);
     } catch (err) {
-      throw new Error('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
 
     isPatient(decodedToken);
 
     if (id !== decodedToken.id) {
-      throw new Error('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
 
     const { birthDate, gender, surname, name, profilePicture } =
