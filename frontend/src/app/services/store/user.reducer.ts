@@ -16,15 +16,13 @@ import { addMealGroup, deleteMealGroup } from './actions/mealGroup.action';
 import { addNote, deleteNote } from './actions/note.actions';
 import {
   deleteUserFromProfessional,
-  loadToken,
   loginUser,
   logoutUser,
   updatePatientExtraDataFromProfessional,
   updateUserBasicData,
 } from './actions/user.actions';
 
-const initialState: UserStore = {
-  token: '',
+export const initialState: UserStore = {
   _id: '',
   name: '',
   surname: '',
@@ -35,15 +33,10 @@ const initialState: UserStore = {
 
 export const userReducer = createReducer(
   initialState,
-  on(loadToken, (state: UserStore, { token }) => ({
-    ...state,
-    token,
-  })),
   on(loginUser, (state: UserStore, { userInfo }) => {
-    const { token, ...user } = userInfo;
     return {
       ...state,
-      ...user,
+      ...userInfo,
     };
   }),
   on(logoutUser, (state: UserStore) => ({ ...initialState })),
@@ -60,7 +53,7 @@ export const userReducer = createReducer(
         if (patient.refData._id === patientId) {
           return {
             ...patient,
-            ...fullExtraDataUpdated,
+            extraData: [...fullExtraDataUpdated],
           };
         }
         return patient;
@@ -167,10 +160,10 @@ export const userReducer = createReducer(
           if (otherUser.refData._id === message.to) {
             return {
               ...otherUser,
-              chat: (otherUser.chatRef.messages = [
-                ...otherUser.chatRef.messages,
-                message,
-              ]),
+              chatRef: {
+                ...otherUser.chatRef,
+                messages: [...otherUser.chatRef.messages, message],
+              },
             };
           }
           return otherUser;
@@ -189,16 +182,18 @@ export const userReducer = createReducer(
           if (otherUser.refData._id === message.to) {
             return {
               ...otherUser,
-              chat: (otherUser.chatRef.messages =
-                otherUser.chatRef.messages.map((message) => {
-                  if (message._id === message._id) {
+              chatRef: {
+                ...otherUser.chatRef,
+                messages: otherUser.chatRef.messages.map((msg) => {
+                  if (msg._id === message._id) {
                     return {
-                      ...message,
+                      ...msg,
                       read: true,
                     };
                   }
-                  return message;
-                })),
+                  return msg;
+                }),
+              },
             };
           }
           return otherUser;

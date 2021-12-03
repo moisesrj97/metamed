@@ -12,11 +12,6 @@ export const loginUser = createAction(
 
 export const logoutUser = createAction('[User] Logout User');
 
-export const loadToken = createAction(
-  '[User] Load Token',
-  props<{ token: string }>()
-);
-
 export const updateUserBasicData = createAction(
   '[User] Update User Basic Data',
   props<{ fullDataUpdated: UpdateUserDataDto }>()

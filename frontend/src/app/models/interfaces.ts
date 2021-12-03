@@ -54,7 +54,6 @@ export interface UpdateUserDataDto {
 }
 
 export interface UserStore {
-  token: string;
   _id: string;
   name: string;
   surname: string;
