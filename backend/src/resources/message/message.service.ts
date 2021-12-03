@@ -17,8 +17,12 @@ export class MessageService {
       throw new Error('You are not authorized to perform this action');
     }
 
-    return await this.messageModel.findByIdAndUpdate(id, {
-      $set: { read: true },
-    });
+    return await this.messageModel.findByIdAndUpdate(
+      id,
+      {
+        $set: { read: true },
+      },
+      { new: true },
+    );
   }
 }
