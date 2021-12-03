@@ -7,7 +7,6 @@ export class LoginController {
 
   @Post('professional/token')
   loginProfessionalWithToken(@Headers('Authorization') token: string) {
-    console.log(token);
     return this.loginService.loginWithToken(token);
   }
 

@@ -90,7 +90,6 @@ describe('Given LoginService', () => {
       try {
         await service.loginWithoutToken('Professional', '', 'testaaa');
       } catch (e) {
-        console.log(e);
         expect(e).toEqual(Error('Incorrect email or password'));
       }
     });
@@ -109,7 +108,6 @@ describe('Given LoginService', () => {
       try {
         await service.loginWithoutToken('Patient', '', 'testaaa');
       } catch (e) {
-        console.log(e);
         expect(e).toEqual(Error('Incorrect email or password'));
       }
     });

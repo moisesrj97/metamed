@@ -52,7 +52,6 @@ export class ProfessionalService {
       throw new Error('Invalid token');
     }
     isProfessional(decodedToken);
-    console.log(id, decodedToken.id);
     if (id !== decodedToken.id) {
       throw new Error('Invalid token');
     }
@@ -216,8 +215,6 @@ export class ProfessionalService {
         select: ['name', 'surname', 'profilePicture'],
       },
     });
-
-    console.log(professional, patientId);
 
     await this.chatModel.findByIdAndDelete(
       professional.patients.find(
