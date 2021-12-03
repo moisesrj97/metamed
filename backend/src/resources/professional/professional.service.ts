@@ -56,7 +56,7 @@ export class ProfessionalService {
       throw new UnauthorizedException('Invalid token');
     }
 
-    return await this.professionalModel.findById(id).populate({
+    const result = await this.professionalModel.findById(id).populate({
       path: 'patients',
       populate: [
         {
@@ -71,6 +71,10 @@ export class ProfessionalService {
         },
       ],
     });
+
+    result.password = '';
+
+    return result;
   }
 
   async update(

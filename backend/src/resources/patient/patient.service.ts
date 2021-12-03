@@ -106,7 +106,6 @@ export class PatientService {
       name,
       surname,
       profilePicture,
-      password,
       role,
       email,
       gender,
