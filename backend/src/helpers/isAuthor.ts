@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { JwtInterface } from './validateJwt';
 
@@ -9,6 +10,6 @@ export async function isAuthor(
   const modelQuery = await model.findOne({ _id: modelId });
 
   if (!modelQuery || modelQuery.author.toString() !== decodedToken.id) {
-    throw new Error('Element not found');
+    throw new NotFoundException('Element not found');
   }
 }

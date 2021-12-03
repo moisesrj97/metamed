@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { CreateExerciseGroupDto } from './dto/create-exercise-group.dto';
 import { UpdateExerciseGroupDto } from './dto/update-exercise-group.dto';
 import { DeleteExerciseGroupDto } from './dto/delete-exercise-group.dto';
@@ -26,7 +30,9 @@ export class ExerciseGroupService {
     try {
       validateJwt(token);
     } catch (e) {
-      throw new Error('You are not authorized to perform this action');
+      throw new UnauthorizedException(
+        'You are not authorized to perform this action',
+      );
     }
 
     return await this.exerciseGroupModel.findById(id).populate('exercises');
@@ -64,7 +70,7 @@ export class ExerciseGroupService {
         },
       );
     } catch (err) {
-      throw new Error('Patient or professional not found');
+      throw new NotFoundException('Patient or professional not found');
     }
   }
 
