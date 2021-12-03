@@ -103,6 +103,7 @@ describe('Given ProfessionalService', () => {
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiJmOGY4ZjhmOGY4ZjgiLCJpYXQiOjE1MTYyMzkwMjJ9.a69eQet5_gWhrp-Cbw6OtTJc_JkrTl9TD_Re-Kw5t58',
       );
       expect(professional).toEqual({
+        password: '',
         patients: [
           {
             refData: new mongoose.Types.ObjectId('f8f8f8f8f8f8'),

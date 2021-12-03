@@ -99,7 +99,6 @@ describe('Given PatientService', () => {
         email: 'test',
         gender: 'test',
         name: 'Patient Name',
-        password: 'test',
         professionals: [
           {
             chatRef: undefined,
