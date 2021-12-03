@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { isAuthor } from '../../helpers/isAuthor';
@@ -54,7 +58,7 @@ export class MealGroupService {
         },
       );
     } catch (err) {
-      throw new Error('Patient or professional not found');
+      throw new NotFoundException('Patient or professional not found');
     }
   }
 
@@ -62,7 +66,9 @@ export class MealGroupService {
     try {
       validateJwt(token);
     } catch (e) {
-      throw new Error('You are not authorized to perform this action');
+      throw new UnauthorizedException(
+        'You are not authorized to perform this action',
+      );
     }
 
     return await this.mealGroupModel.findById(id).populate('meals');
@@ -77,7 +83,7 @@ export class MealGroupService {
     try {
       decodedToken = validateJwt(token);
     } catch (err) {
-      throw new Error('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
 
     isProfessional(decodedToken);
@@ -106,7 +112,7 @@ export class MealGroupService {
     try {
       decodedToken = validateJwt(token);
     } catch (err) {
-      throw new Error('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
 
     isProfessional(decodedToken);

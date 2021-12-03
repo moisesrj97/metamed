@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { UpdateExerciseDto } from './dto/update-exercise.dto';
 import validateJwt, { JwtInterface } from '../../helpers/validateJwt';
@@ -34,7 +34,7 @@ export class ExerciseService {
     try {
       response = validateJwt(token);
     } catch (e) {
-      throw new Error('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
 
     isProfessional(response);
@@ -70,7 +70,7 @@ export class ExerciseService {
     try {
       response = validateJwt(token);
     } catch (e) {
-      throw new Error('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
 
     isProfessional(response);
@@ -98,7 +98,7 @@ export class ExerciseService {
     try {
       response = validateJwt(token);
     } catch (e) {
-      throw new Error('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
 
     isProfessional(response);

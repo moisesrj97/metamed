@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import validateJwt from '../../helpers/validateJwt';
@@ -14,7 +14,9 @@ export class MessageService {
     try {
       validateJwt(token);
     } catch (e) {
-      throw new Error('You are not authorized to perform this action');
+      throw new UnauthorizedException(
+        'You are not authorized to perform this action',
+      );
     }
 
     return await this.messageModel.findByIdAndUpdate(
