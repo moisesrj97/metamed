@@ -18,7 +18,7 @@ describe('Given PatientService', () => {
         return {
           populate: () => {
             return {
-              _id: '5e8f8f8f8f8f8f8f8f8f8f8',
+              _id: 'f8f8f8f8f8f8',
               name: 'Patient Name',
               email: 'test',
               surname: 'Patient Surname',
@@ -28,7 +28,7 @@ describe('Given PatientService', () => {
               profilePicture: 'test',
               professionals: [{}],
               password: 'test',
-              patients: [{ refData: '5e8f8f8f8f8f8f8f8f8f8f8' }],
+              patients: [{ refData: 'f8f8f8f8f8f8' }],
             };
           },
         };
@@ -84,11 +84,16 @@ describe('Given PatientService', () => {
     });
   });
 
-  describe('When service.findOne is executed', () => {
+  describe('When service.findOne is executed with valid token and role', () => {
     test('should call findById on model', async () => {
-      const patient = await service.findOne('5e8f8f8f8f8f8f8f8f8f8f8');
+      process.env.JWT_SECRET = 'test';
+
+      const patient = await service.findOne(
+        'f8f8f8f8f8f8',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUGF0aWVudCIsImlkIjoiZjhmOGY4ZjhmOGY4IiwiaWF0IjoxNTE2MjM5MDIyfQ.buuZEL-br9kMX6HvM3YH1bNYttQPKeDfwt3tuCdJxk4',
+      );
       expect(patient).toEqual({
-        _id: '5e8f8f8f8f8f8f8f8f8f8f8',
+        _id: 'f8f8f8f8f8f8',
         birthDate: 'test',
         email: 'test',
         gender: 'test',
@@ -110,10 +115,52 @@ describe('Given PatientService', () => {
     });
   });
 
-  describe('When service.update is executed', () => {
+  describe('When service.findOne is executed with valid token and different role', () => {
+    test('should call findById on model', async () => {
+      process.env.JWT_SECRET = 'test';
+      try {
+        await service.findOne(
+          'f8f8f8f8f8f8',
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiJmOGY4ZjhmOGY4ZjgiLCJpYXQiOjE1MTYyMzkwMjJ9.a69eQet5_gWhrp-Cbw6OtTJc_JkrTl9TD_Re-Kw5t58',
+        );
+      } catch (e) {
+        expect(e).toEqual(Error('Invalid token'));
+      }
+    });
+  });
+
+  describe('When service.findOne is executed with valid token and role but not matching ids', () => {
+    test('should call findById on model', async () => {
+      process.env.JWT_SECRET = 'test';
+      try {
+        await service.findOne(
+          'f8f8f8f8f8f9',
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUGF0aWVudCIsImlkIjoiZjhmOGY4ZjhmOGY4IiwiaWF0IjoxNTE2MjM5MDIyfQ.buuZEL-br9kMX6HvM3YH1bNYttQPKeDfwt3tuCdJxk4',
+        );
+      } catch (e) {
+        expect(e).toEqual(Error('Invalid token'));
+      }
+    });
+  });
+
+  describe('When service.findOne is executed with invalid token', () => {
+    test('should call findById on model', async () => {
+      process.env.JWT_SECRET = 'test';
+      try {
+        await service.findOne(
+          'f8f8f8f8f8f8',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiJmOGY4ZjhmOGY4ZjgiLCJpYXQiOjE1MTYyMzkwMjJ9.a69eQet5_gWhrp-Cbw6OtTJc_JkrTl9TD_Re-Kw5t58',
+        );
+      } catch (e) {
+        expect(e).toEqual(Error('Invalid token'));
+      }
+    });
+  });
+
+  describe('When service.update is executed with valid token and role', () => {
     test('should call findByIdAndUpdate on model', async () => {
       const patient = await service.update(
-        '',
+        'f8f8f8f8f8f8',
         {
           name: '',
           surname: '',
@@ -121,16 +168,80 @@ describe('Given PatientService', () => {
           birthDate: '',
           profilePicture: '',
         },
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUGF0aWVudCIsImlkIjoiZjhmOGY4ZjhmOGY4IiwiaWF0IjoxNTE2MjM5MDIyfQ.buuZEL-br9kMX6HvM3YH1bNYttQPKeDfwt3tuCdJxk4',
         '' as unknown as Express.Multer.File,
       );
       expect(patient).toBe('findByIdAndUpdate model');
     });
   });
 
-  describe('When service.update is executed with a file', () => {
+  describe('When service.update is executed with valid token and different role', () => {
+    test('should call findByIdAndUpdate on model', async () => {
+      try {
+        await service.update(
+          'f8f8f8f8f8f8',
+          {
+            name: '',
+            surname: '',
+            gender: '',
+            birthDate: '',
+            profilePicture: '',
+          },
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiJmOGY4ZjhmOGY4ZjgiLCJpYXQiOjE1MTYyMzkwMjJ9.a69eQet5_gWhrp-Cbw6OtTJc_JkrTl9TD_Re-Kw5t58',
+          '' as unknown as Express.Multer.File,
+        );
+      } catch (e) {
+        expect(e).toEqual(Error('Invalid token'));
+      }
+    });
+  });
+
+  describe('When service.update is executed with valid token and role but not matching ids', () => {
+    test('should call findByIdAndUpdate on model', async () => {
+      try {
+        await service.update(
+          'f8f8f8f8f8f9',
+          {
+            name: '',
+            surname: '',
+            gender: '',
+            birthDate: '',
+            profilePicture: '',
+          },
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUGF0aWVudCIsImlkIjoiZjhmOGY4ZjhmOGY4IiwiaWF0IjoxNTE2MjM5MDIyfQ.buuZEL-br9kMX6HvM3YH1bNYttQPKeDfwt3tuCdJxk4',
+          '' as unknown as Express.Multer.File,
+        );
+      } catch (e) {
+        expect(e).toEqual(Error('Invalid token'));
+      }
+    });
+  });
+
+  describe('When service.update is executed with invalid token', () => {
+    test('should call findByIdAndUpdate on model', async () => {
+      try {
+        await service.update(
+          'f8f8f8f8f8f9',
+          {
+            name: '',
+            surname: '',
+            gender: '',
+            birthDate: '',
+            profilePicture: '',
+          },
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUGF0aWVudCIsImlkIjoiZjhmOGY4ZjhmOGY4IiwiaWF0IjoxNTE2MjM5MDIyfQ.buuZEL-br9kMX6HvM3YH1bNYttQPKeDfwt3tuCdJxk4',
+          '' as unknown as Express.Multer.File,
+        );
+      } catch (e) {
+        expect(e).toEqual(Error('Invalid token'));
+      }
+    });
+  });
+
+  describe('When service.update is executed with a file with valid token and role', () => {
     test('should call findByIdAndUpdate on model', async () => {
       const patient = await service.update(
-        '',
+        'f8f8f8f8f8f8',
         {
           name: '',
           surname: '',
@@ -138,9 +249,73 @@ describe('Given PatientService', () => {
           birthDate: '',
           profilePicture: '',
         },
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUGF0aWVudCIsImlkIjoiZjhmOGY4ZjhmOGY4IiwiaWF0IjoxNTE2MjM5MDIyfQ.buuZEL-br9kMX6HvM3YH1bNYttQPKeDfwt3tuCdJxk4',
         { test: 'test' } as unknown as Express.Multer.File,
       );
       expect(patient).toBe('findByIdAndUpdate model');
+    });
+  });
+
+  describe('When service.update is executed with a file with valid token and different role', () => {
+    test('should call findByIdAndUpdate on model', async () => {
+      try {
+        await service.update(
+          'f8f8f8f8f8f8',
+          {
+            name: '',
+            surname: '',
+            gender: '',
+            birthDate: '',
+            profilePicture: '',
+          },
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiJmOGY4ZjhmOGY4ZjgiLCJpYXQiOjE1MTYyMzkwMjJ9.a69eQet5_gWhrp-Cbw6OtTJc_JkrTl9TD_Re-Kw5t58',
+          { test: 'test' } as unknown as Express.Multer.File,
+        );
+      } catch (e) {
+        expect(e).toEqual(Error('Invalid token'));
+      }
+    });
+  });
+
+  describe('When service.update is executed with a file with valid token and role but not matching ids', () => {
+    test('should call findByIdAndUpdate on model', async () => {
+      try {
+        await service.update(
+          'f8f8f8f8f8f9',
+          {
+            name: '',
+            surname: '',
+            gender: '',
+            birthDate: '',
+            profilePicture: '',
+          },
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUGF0aWVudCIsImlkIjoiZjhmOGY4ZjhmOGY4IiwiaWF0IjoxNTE2MjM5MDIyfQ.buuZEL-br9kMX6HvM3YH1bNYttQPKeDfwt3tuCdJxk4',
+          { test: 'test' } as unknown as Express.Multer.File,
+        );
+      } catch (e) {
+        expect(e).toEqual(Error('Invalid token'));
+      }
+    });
+  });
+
+  describe('When service.update is executed with a file with invalid token', () => {
+    test('should call findByIdAndUpdate on model', async () => {
+      try {
+        await service.update(
+          'f8f8f8f8f8f9',
+          {
+            name: '',
+            surname: '',
+            gender: '',
+            birthDate: '',
+            profilePicture: '',
+          },
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUGF0aWVudCIsImlkIjoiZjhmOGY4ZjhmOGY4IiwiaWF0IjoxNTE2MjM5MDIyfQ.buuZEL-br9kMX6HvM3YH1bNYttQPKeDfwt3tuCdJxk4',
+          { test: 'test' } as unknown as Express.Multer.File,
+        );
+      } catch (e) {
+        expect(e).toEqual(Error('Invalid token'));
+      }
     });
   });
 });

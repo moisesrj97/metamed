@@ -64,7 +64,7 @@ describe('Given MealGroupService', () => {
           'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiJmOGY4ZjhmOGY4ZjgiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoidGVzdCIsImlhdCI6MTUxNjIzOTAyMn0.2D8RXLfMCZRovoodPQNj-XfjaLXhFTk64BlThks42As',
         );
       } catch (e) {
-        expect(e.message).toEqual('Meal group not found');
+        expect(e.message).toEqual('Element not found');
       }
     });
   });
@@ -79,7 +79,7 @@ describe('Given MealGroupService', () => {
           'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiJmOGY4ZjhmOGY4ZjgiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoidGVzdCIsImlhdCI6MTUxNjIzOTAyMn0.2D8RXLfMCZRovoodPQNj-XfjaLXhFTk64BlThks42As',
         );
       } catch (e) {
-        expect(e.message).toEqual('Meal group not found');
+        expect(e.message).toEqual('Element not found');
       }
     });
   });

@@ -8,6 +8,7 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
+  Headers,
 } from '@nestjs/common';
 import { ProfessionalService } from './professional.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -31,8 +32,8 @@ export class ProfessionalController {
 
   //Get professional info, populated with patients _id, name and profilePicture
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.professionalService.findOne(id);
+  findOne(@Param('id') id: string, @Headers('authorization') token: string) {
+    return this.professionalService.findOne(id, token);
   }
 
   //Update professional info
@@ -41,15 +42,29 @@ export class ProfessionalController {
   update(
     @Param('id') id: string,
     @Body() updateProfessionalDto: UpdateProfessionalDto,
+    @Headers('authorization') token: string,
     @UploadedFile() file?: Express.Multer.File,
   ) {
-    return this.professionalService.update(id, updateProfessionalDto, file);
+    return this.professionalService.update(
+      id,
+      updateProfessionalDto,
+      token,
+      file,
+    );
   }
 
   //Add patient to professional list
   @Post(':id/patients')
-  addPatient(@Param('id') id: string, @Body('patientId') patientId: string) {
-    return this.professionalService.addPatientToProfessional(id, patientId);
+  addPatient(
+    @Param('id') id: string,
+    @Body('patientId') patientId: string,
+    @Headers('authorization') token: string,
+  ) {
+    return this.professionalService.addPatientToProfessional(
+      id,
+      patientId,
+      token,
+    );
   }
 
   //Update extraData of patient
@@ -58,11 +73,13 @@ export class ProfessionalController {
     @Param('id') id: string,
     @Param('patientId') patientId: string,
     @Body('allExtraDataUpdated') allExtraDataUpdated: ExtraDataItem[],
+    @Headers('authorization') token: string,
   ) {
     return this.professionalService.updatePatientFromProfessional(
       id,
       patientId,
       allExtraDataUpdated,
+      token,
     );
   }
 
@@ -71,10 +88,12 @@ export class ProfessionalController {
   removePatient(
     @Param('id') id: string,
     @Param('patientId') patientId: string,
+    @Headers('authorization') token: string,
   ) {
     return this.professionalService.removePatientFromProfessional(
       id,
       patientId,
+      token,
     );
   }
 }

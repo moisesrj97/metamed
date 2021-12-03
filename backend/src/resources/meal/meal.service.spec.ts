@@ -128,9 +128,7 @@ describe('Given MealService', () => {
           },
         );
       } catch (e) {
-        expect(e).toEqual(
-          Error('You are not authorized to perform this action'),
-        );
+        expect(e).toEqual(Error('Invalid token'));
       }
     });
   });
@@ -186,9 +184,7 @@ describe('Given MealService', () => {
           },
         );
       } catch (e) {
-        expect(e).toEqual(
-          Error('You are not authorized to perform this action'),
-        );
+        expect(e).toEqual(Error('Invalid token'));
       }
     });
   });
@@ -206,7 +202,7 @@ describe('Given MealService', () => {
           },
         );
       } catch (e) {
-        expect(e).toEqual(Error('Meal not found'));
+        expect(e).toEqual(Error('Element not found'));
       }
     });
   });
@@ -249,7 +245,7 @@ describe('Given MealService', () => {
           'f8f8f8f8f8f8',
         );
       } catch (e) {
-        expect(e).toEqual(Error('Meal not found'));
+        expect(e).toEqual(Error('Element not found'));
       }
     });
   });
@@ -263,9 +259,7 @@ describe('Given MealService', () => {
           'f8f8f8f8f8f8',
         );
       } catch (e) {
-        expect(e).toEqual(
-          Error('You are not authorized to perform this action'),
-        );
+        expect(e).toEqual(Error('Invalid token'));
       }
     });
   });

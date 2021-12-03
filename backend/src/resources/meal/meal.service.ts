@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { isAuthor } from '../../helpers/isAuthor';
+import { isProfessional } from '../../helpers/isProfessional';
 import validateJwt, { JwtInterface } from '../../helpers/validateJwt';
 import { MealGroup, MealGroupDocument } from '../meal-group/mealGroup.schema';
 import { CreateMealDto } from './dto/create-meal.dto';
@@ -24,9 +26,7 @@ export class MealService {
       throw new Error('You are not authorized to perform this action');
     }
 
-    if (response.role !== 'Professional') {
-      throw new Error('You are not authorized to perform this action');
-    }
+    isProfessional(response);
 
     const createdMeal = await this.mealModel.create({
       author: response.id,
@@ -54,16 +54,8 @@ export class MealService {
       throw new Error('You are not authorized to perform this action');
     }
 
-    if (response.role !== 'Professional') {
-      throw new Error('You are not authorized to perform this action');
-    }
-
-    const meal = await this.mealModel.findById(id);
-    console.log(meal.author.toString(), response.id);
-
-    if (!meal || meal.author.toString() !== response.id) {
-      throw new Error('Meal not found');
-    }
+    isProfessional(response);
+    await isAuthor(response, id, this.mealModel);
 
     const { amount, name } = updateMealDto;
 
@@ -83,15 +75,8 @@ export class MealService {
       throw new Error('You are not authorized to perform this action');
     }
 
-    if (response.role !== 'Professional') {
-      throw new Error('You are not authorized to perform this action');
-    }
-
-    const meal = await this.mealModel.findById(id);
-
-    if (!meal || meal.author.toString() !== response.id) {
-      throw new Error('Meal not found');
-    }
+    isProfessional(response);
+    await isAuthor(response, id, this.mealModel);
 
     await this.mealGroupModel.updateMany(
       { meals: { $elemMatch: { $eq: id } } },

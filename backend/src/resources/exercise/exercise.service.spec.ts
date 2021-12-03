@@ -119,9 +119,7 @@ describe('Given ExerciseService', () => {
           '' as unknown as Express.Multer.File,
         );
       } catch (e) {
-        expect(e).toEqual(
-          Error('You are not authorized to perform this action'),
-        );
+        expect(e).toEqual(Error('Invalid token'));
       }
     });
   });
@@ -141,9 +139,7 @@ describe('Given ExerciseService', () => {
           '' as unknown as Express.Multer.File,
         );
       } catch (e) {
-        expect(e).toEqual(
-          Error('You are not authorized to perform this action'),
-        );
+        expect(e).toEqual(Error('Invalid token'));
       }
     });
   });
@@ -183,9 +179,7 @@ describe('Given ExerciseService', () => {
           '' as unknown as Express.Multer.File,
         );
       } catch (e) {
-        expect(e).toEqual(
-          Error('You are not authorized to perform this action'),
-        );
+        expect(e).toEqual(Error('Invalid token'));
       }
     });
   });
@@ -205,9 +199,7 @@ describe('Given ExerciseService', () => {
           '' as unknown as Express.Multer.File,
         );
       } catch (e) {
-        expect(e).toEqual(
-          Error('You are not authorized to perform this action'),
-        );
+        expect(e).toEqual(Error('Invalid token'));
       }
     });
   });
@@ -227,7 +219,7 @@ describe('Given ExerciseService', () => {
           '' as unknown as Express.Multer.File,
         );
       } catch (e) {
-        expect(e).toEqual(Error('Exercise not found'));
+        expect(e).toEqual(Error('Element not found'));
       }
     });
   });
@@ -254,9 +246,7 @@ describe('Given ExerciseService', () => {
           'f8f8f8f8f8f8',
         );
       } catch (e) {
-        expect(e).toEqual(
-          Error('You are not authorized to perform this action'),
-        );
+        expect(e).toEqual(Error('Invalid token'));
       }
     });
   });
@@ -270,7 +260,7 @@ describe('Given ExerciseService', () => {
           'f8f8f8f8f8f8',
         );
       } catch (e) {
-        expect(e).toEqual(Error('Exercise not found'));
+        expect(e).toEqual(Error('Element not found'));
       }
     });
   });
@@ -284,9 +274,7 @@ describe('Given ExerciseService', () => {
           'f8f8f8f8f8f8',
         );
       } catch (e) {
-        expect(e).toEqual(
-          Error('You are not authorized to perform this action'),
-        );
+        expect(e).toEqual(Error('Invalid token'));
       }
     });
   });

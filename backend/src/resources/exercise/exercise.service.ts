@@ -12,6 +12,8 @@ import {
 } from '../exercise-group/exerciseGroup.schema';
 
 import { Exercise, ExerciseDocument } from './exercise.schema';
+import { isProfessional } from '../../helpers/isProfessional';
+import { isAuthor } from '../../helpers/isAuthor';
 
 @Injectable()
 export class ExerciseService {
@@ -32,12 +34,10 @@ export class ExerciseService {
     try {
       response = validateJwt(token);
     } catch (e) {
-      throw new Error('You are not authorized to perform this action');
+      throw new Error('Invalid token');
     }
 
-    if (response.role !== 'Professional') {
-      throw new Error('You are not authorized to perform this action');
-    }
+    isProfessional(response);
 
     const imageUrl = await this.s3ImageService.uploadFile(exerciseImage);
 
@@ -70,19 +70,11 @@ export class ExerciseService {
     try {
       response = validateJwt(token);
     } catch (e) {
-      throw new Error('You are not authorized to perform this action');
+      throw new Error('Invalid token');
     }
 
-    if (response.role !== 'Professional') {
-      throw new Error('You are not authorized to perform this action');
-    }
-
-    const exercise = await this.exerciseModel.findById(id);
-    console.log(exercise.author.toString(), response.id);
-
-    if (!exercise || exercise.author.toString() !== response.id) {
-      throw new Error('Exercise not found');
-    }
+    isProfessional(response);
+    await isAuthor(response, id, this.exerciseModel);
 
     if (exerciseImage) {
       await this.s3ImageService.updateFile(
@@ -106,18 +98,11 @@ export class ExerciseService {
     try {
       response = validateJwt(token);
     } catch (e) {
-      throw new Error('You are not authorized to perform this action');
+      throw new Error('Invalid token');
     }
 
-    if (response.role !== 'Professional') {
-      throw new Error('You are not authorized to perform this action');
-    }
-
-    const exercise = await this.exerciseModel.findById(id);
-
-    if (!exercise || exercise.author.toString() !== response.id) {
-      throw new Error('Exercise not found');
-    }
+    isProfessional(response);
+    await isAuthor(response, id, this.exerciseModel);
 
     await this.exerciseGroupModel.updateMany(
       { exercises: { $elemMatch: { $eq: id } } },

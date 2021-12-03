@@ -11,6 +11,8 @@ import {
 } from '../professional/professional.schema';
 import CreatePatientDto from './dto/createPatient.dto';
 import UpdatePatientDto from './dto/updatePatient.dto';
+import validateJwt, { JwtInterface } from '../../helpers/validateJwt';
+import { isPatient } from '../../helpers/isPatient';
 
 @Injectable()
 export class PatientService {
@@ -36,7 +38,20 @@ export class PatientService {
     );
   }
 
-  async findOne(id: string) {
+  async findOne(id: string, token: string) {
+    let decodedToken: JwtInterface;
+    try {
+      decodedToken = validateJwt(token);
+    } catch (err) {
+      throw new Error('Invalid token');
+    }
+
+    isPatient(decodedToken);
+
+    if (id !== decodedToken.id) {
+      throw new Error('Invalid token');
+    }
+
     const populatedData = await this.patientModel.findById(id).populate({
       path: 'professionals',
       populate: [
@@ -103,8 +118,22 @@ export class PatientService {
   async update(
     id: string,
     updatePatientDto: UpdatePatientDto,
+    token: string,
     file?: any,
   ): Promise<PatientDocument> {
+    let decodedToken: JwtInterface;
+    try {
+      decodedToken = validateJwt(token);
+    } catch (err) {
+      throw new Error('Invalid token');
+    }
+
+    isPatient(decodedToken);
+
+    if (id !== decodedToken.id) {
+      throw new Error('Invalid token');
+    }
+
     const { birthDate, gender, surname, name, profilePicture } =
       updatePatientDto;
     if (file) {

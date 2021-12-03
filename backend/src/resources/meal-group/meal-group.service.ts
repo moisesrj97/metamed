@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { isAuthor } from '../../helpers/isAuthor';
+import { isProfessional } from '../../helpers/isProfessional';
 import validateJwt, { JwtInterface } from '../../helpers/validateJwt';
 import {
   Professional,
@@ -28,9 +30,7 @@ export class MealGroupService {
       throw new Error(err);
     }
 
-    if (decodedToken.role !== 'Professional') {
-      throw new Error('Invalid token');
-    }
+    isProfessional(decodedToken);
 
     const { name, patient } = createMealGroupDto;
 
@@ -80,17 +80,10 @@ export class MealGroupService {
       throw new Error('Invalid token');
     }
 
-    if (decodedToken.role !== 'Professional') {
-      throw new Error('Invalid token');
-    }
+    isProfessional(decodedToken);
+    await isAuthor(decodedToken, id, this.mealGroupModel);
 
     const { name, extra } = updateMealGroupDto;
-
-    const group = await this.mealGroupModel.findOne({ _id: id });
-
-    if (!group || group.author.toString() !== decodedToken.id) {
-      throw new Error('Meal group not found');
-    }
 
     return this.mealGroupModel.findByIdAndUpdate(
       { _id: id },
@@ -116,15 +109,8 @@ export class MealGroupService {
       throw new Error('Invalid token');
     }
 
-    if (decodedToken.role !== 'Professional') {
-      throw new Error('Invalid token');
-    }
-
-    const group = await this.mealGroupModel.findOne({ _id: id });
-
-    if (!group || group.author.toString() !== decodedToken.id) {
-      throw new Error('Meal group not found');
-    }
+    isProfessional(decodedToken);
+    await isAuthor(decodedToken, id, this.mealGroupModel);
 
     const { patientId } = deleteMealGroupDto;
 

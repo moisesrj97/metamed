@@ -15,6 +15,8 @@ import { Chat, ChatDocument } from '../chat/chat.schema';
 import { ChatEntity } from '../chat/entities/chat.entity';
 import CreateProfessionalDto from './dto/createProfessional.dto';
 import updateProfessionalDto from './dto/updateProfessional.dto';
+import { isProfessional } from '../../helpers/isProfessional';
+import validateJwt, { JwtInterface } from '../../helpers/validateJwt';
 
 @Injectable()
 export class ProfessionalService {
@@ -42,7 +44,19 @@ export class ProfessionalService {
     );
   }
 
-  async findOne(id: string): Promise<ProfessionalDocument> {
+  async findOne(id: string, token: string): Promise<ProfessionalDocument> {
+    let decodedToken: JwtInterface;
+    try {
+      decodedToken = validateJwt(token);
+    } catch (err) {
+      throw new Error('Invalid token');
+    }
+    isProfessional(decodedToken);
+    console.log(id, decodedToken.id);
+    if (id !== decodedToken.id) {
+      throw new Error('Invalid token');
+    }
+
     return await this.professionalModel.findById(id).populate({
       path: 'patients',
       populate: [
@@ -63,8 +77,22 @@ export class ProfessionalService {
   async update(
     id: string,
     updateProfessionalDto: updateProfessionalDto,
+    token: string,
     file?: any,
   ): Promise<ProfessionalDocument> {
+    let decodedToken: JwtInterface;
+    try {
+      decodedToken = validateJwt(token);
+    } catch (err) {
+      throw new Error('Invalid token');
+    }
+
+    isProfessional(decodedToken);
+
+    if (id !== decodedToken.id) {
+      throw new Error('Invalid token');
+    }
+
     const { businessName, surname, name, profilePicture } =
       updateProfessionalDto;
     if (file) {
@@ -80,7 +108,21 @@ export class ProfessionalService {
   async addPatientToProfessional(
     id: string,
     patientId: string,
+    token: string,
   ): Promise<ProfessionalDocument> {
+    let decodedToken: JwtInterface;
+    try {
+      decodedToken = validateJwt(token);
+    } catch (err) {
+      throw new Error('Invalid token');
+    }
+
+    isProfessional(decodedToken);
+
+    if (id !== decodedToken.id) {
+      throw new Error('Invalid token');
+    }
+
     const newChat = await this.chatModel.create(
       new ChatEntity(
         new mongoose.Types.ObjectId(id),
@@ -118,7 +160,21 @@ export class ProfessionalService {
     id: string,
     patientId: string,
     allExtraDataUpdated: ExtraDataItem[],
+    token: string,
   ): Promise<ProfessionalDocument> {
+    let decodedToken: JwtInterface;
+    try {
+      decodedToken = validateJwt(token);
+    } catch (err) {
+      throw new Error('Invalid token');
+    }
+
+    isProfessional(decodedToken);
+
+    if (id !== decodedToken.id) {
+      throw new Error('Invalid token');
+    }
+
     return await this.professionalModel.findByIdAndUpdate(
       { _id: id },
       {
@@ -136,7 +192,21 @@ export class ProfessionalService {
   async removePatientFromProfessional(
     id: string,
     patientId: string,
+    token: string,
   ): Promise<ProfessionalDocument> {
+    let decodedToken: JwtInterface;
+    try {
+      decodedToken = validateJwt(token);
+    } catch (err) {
+      throw new Error('Invalid token');
+    }
+
+    isProfessional(decodedToken);
+
+    if (id !== decodedToken.id) {
+      throw new Error('Invalid token');
+    }
+
     const professional = await (
       await this.professionalModel.findById(id)
     ).populate({

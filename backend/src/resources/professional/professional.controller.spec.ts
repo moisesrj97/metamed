@@ -51,7 +51,7 @@ describe('Given ProfessionalController...', () => {
 
   describe('When controller.findOne is executed', () => {
     it('Service.findOne is called', () => {
-      controller.findOne('');
+      controller.findOne('', '');
 
       expect(service.findOne).toHaveBeenCalled();
     });
@@ -62,6 +62,7 @@ describe('Given ProfessionalController...', () => {
       controller.update(
         '',
         new updateProfessionalDto(),
+        '',
         '' as unknown as Express.Multer.File,
       );
 
@@ -71,7 +72,7 @@ describe('Given ProfessionalController...', () => {
 
   describe('When controller.addPatient is executed', () => {
     it('Service.addPatientToProfessional is called', () => {
-      controller.addPatient('', '');
+      controller.addPatient('', '', '');
 
       expect(service.addPatientToProfessional).toHaveBeenCalled();
     });
@@ -79,7 +80,7 @@ describe('Given ProfessionalController...', () => {
 
   describe('When controller.updatePatient is executed', () => {
     it('Service.updatePatientFromProfessional is called', () => {
-      controller.updatePatient('', '', []);
+      controller.updatePatient('', '', [], '');
 
       expect(service.updatePatientFromProfessional).toHaveBeenCalled();
     });
@@ -87,7 +88,7 @@ describe('Given ProfessionalController...', () => {
 
   describe('When controller.removePatient is executed', () => {
     it('Service.removePatient is called', () => {
-      controller.removePatient('', '');
+      controller.removePatient('', '', '');
 
       expect(service.removePatientFromProfessional).toHaveBeenCalled();
     });

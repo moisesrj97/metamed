@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { isProfessional } from '../../helpers/isProfessional';
+import { isAuthor } from '../../helpers/isAuthor';
 import validateJwt, { JwtInterface } from '../../helpers/validateJwt';
 import {
   Professional,
@@ -28,9 +30,7 @@ export class NoteService {
       throw new Error(err);
     }
 
-    if (decodedToken.role !== 'Professional') {
-      throw new Error('Invalid token');
-    }
+    isProfessional(decodedToken);
 
     const { title, patient } = createNoteDto;
 
@@ -77,17 +77,10 @@ export class NoteService {
       throw new Error('Invalid token');
     }
 
-    if (decodedToken.role !== 'Professional') {
-      throw new Error('Invalid token');
-    }
+    isProfessional(decodedToken);
+    await isAuthor(decodedToken, id, this.noteModel);
 
     const { title, description } = updateNoteDto;
-
-    const group = await this.noteModel.findOne({ _id: id });
-
-    if (!group || group.author.toString() !== decodedToken.id) {
-      throw new Error('Note not found');
-    }
 
     return this.noteModel.findByIdAndUpdate(
       { _id: id },
@@ -109,15 +102,8 @@ export class NoteService {
       throw new Error('Invalid token');
     }
 
-    if (decodedToken.role !== 'Professional') {
-      throw new Error('Invalid token');
-    }
-
-    const note = await this.noteModel.findOne({ _id: id });
-
-    if (!note || note.author.toString() !== decodedToken.id) {
-      throw new Error('Note not found');
-    }
+    isProfessional(decodedToken);
+    await isAuthor(decodedToken, id, this.noteModel);
 
     const { patientId } = deleteNoteDto;
 

@@ -7,6 +7,7 @@ import {
   Param,
   UseInterceptors,
   UploadedFile,
+  Headers,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import CreatePatientDto from './dto/createPatient.dto';
@@ -27,8 +28,8 @@ export class PatientController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.patientService.findOne(id);
+  findOne(@Param('id') id: string, @Headers('authorization') token: string) {
+    return this.patientService.findOne(id, token);
   }
 
   @Patch(':id')
@@ -36,8 +37,9 @@ export class PatientController {
   update(
     @Param('id') id: string,
     @Body() updatePatientDto: UpdatePatientDto,
+    @Headers('authorization') token: string,
     @UploadedFile() file?: Express.Multer.File,
   ) {
-    return this.patientService.update(id, updatePatientDto, file);
+    return this.patientService.update(id, updatePatientDto, token, file);
   }
 }

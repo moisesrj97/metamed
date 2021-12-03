@@ -45,7 +45,7 @@ describe('Given the PatientController', () => {
 
   describe('When controller.findOne is executed', () => {
     it('Service.findOne is called', () => {
-      controller.findOne('');
+      controller.findOne('', '');
 
       expect(service.findOne).toHaveBeenCalled();
     });
@@ -56,6 +56,7 @@ describe('Given the PatientController', () => {
       controller.update(
         '',
         new UpdatePatientDto(),
+        '',
         '' as unknown as Express.Multer.File,
       );
 

@@ -10,6 +10,8 @@ import {
   Professional,
   ProfessionalDocument,
 } from '../professional/professional.schema';
+import { isProfessional } from '../../helpers/isProfessional';
+import { isAuthor } from '../../helpers/isAuthor';
 
 @Injectable()
 export class ExerciseGroupService {
@@ -38,9 +40,7 @@ export class ExerciseGroupService {
       throw new Error(err);
     }
 
-    if (decodedToken.role !== 'Professional') {
-      throw new Error('Invalid token');
-    }
+    isProfessional(decodedToken);
 
     const { name, patient } = createExerciseGroupDto;
 
@@ -80,17 +80,10 @@ export class ExerciseGroupService {
       throw new Error('Invalid token');
     }
 
-    if (decodedToken.role !== 'Professional') {
-      throw new Error('Invalid token');
-    }
+    isProfessional(decodedToken);
+    await isAuthor(decodedToken, id, this.exerciseGroupModel);
 
     const { name, extra } = updateExerciseGroupDto;
-
-    const group = await this.exerciseGroupModel.findOne({ _id: id });
-
-    if (!group || group.author.toString() !== decodedToken.id) {
-      throw new Error('Exercise group not found');
-    }
 
     return this.exerciseGroupModel.findByIdAndUpdate(
       { _id: id },
@@ -116,15 +109,8 @@ export class ExerciseGroupService {
       throw new Error('Invalid token');
     }
 
-    if (decodedToken.role !== 'Professional') {
-      throw new Error('Invalid token');
-    }
-
-    const group = await this.exerciseGroupModel.findOne({ _id: id });
-
-    if (!group || group.author.toString() !== decodedToken.id) {
-      throw new Error('Exercise group not found');
-    }
+    isProfessional(decodedToken);
+    await isAuthor(decodedToken, id, this.exerciseGroupModel);
 
     const { patientId } = deleteExerciseGroupDto;
 
