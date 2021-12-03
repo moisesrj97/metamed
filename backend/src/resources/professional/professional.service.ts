@@ -218,7 +218,7 @@ export class ProfessionalService {
 
     await this.chatModel.findByIdAndDelete(
       professional.patients.find(
-        (patient) => patient.refData.toString() === patientId,
+        (patient) => patient.refData._id.toString() === patientId,
       ).chatRef,
     );
 

@@ -56,6 +56,7 @@ export class Patient {
       chatRef: Chat;
     },
   ];
+  _id: any;
 }
 
 export const PatientSchema = SchemaFactory.createForClass(Patient);
