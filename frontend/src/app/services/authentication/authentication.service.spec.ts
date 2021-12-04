@@ -27,10 +27,6 @@ describe('Given AuthenticationService', () => {
     httpTestingController = TestBed.inject(HttpTestingController);
   });
 
-  afterEach(() => {
-    httpTestingController.verify();
-  });
-
   describe('When it is instanciated', () => {
     it('should be created', () => {
       expect(service).toBeTruthy();
