@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { mergeMap, Observable } from 'rxjs';
 import { JwtModel, UserStore } from 'src/app/models/interfaces';
+import { TokenService } from '../token/token.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import { JwtModel, UserStore } from 'src/app/models/interfaces';
 export class AuthenticationService {
   baseUrl: string = 'http://localhost:3000/login/';
   getUrl: string = 'http://localhost:3000/';
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private tokenService: TokenService) {}
 
   loginWithoutToken(
     email: string,
@@ -17,7 +18,6 @@ export class AuthenticationService {
     role: string
   ): Observable<string> {
     let fetchedToken: string;
-
     return this.http
       .post(
         this.baseUrl + role,
@@ -30,6 +30,7 @@ export class AuthenticationService {
       .pipe(
         mergeMap((token: any) => {
           fetchedToken = token;
+          this.tokenService.loadTokenToLocalStorage(fetchedToken);
           return this.http.post(
             `${this.baseUrl}token`,
             {},
