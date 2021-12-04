@@ -31,7 +31,7 @@ describe('Given LoginController', () => {
 
   describe('When controller.loginProfessionalWithToken is called', () => {
     it('It should call service.loginWithToken', () => {
-      controller.loginProfessionalWithToken('');
+      controller.loginWithToken('');
       expect(service.loginWithToken).toHaveBeenCalled();
     });
   });
@@ -45,7 +45,7 @@ describe('Given LoginController', () => {
 
   describe('When controller.loginPatientWithToken is called', () => {
     it('It should call service.loginPatientWithToken', () => {
-      controller.loginPatientWithToken('');
+      controller.loginWithToken('');
       expect(service.loginWithToken).toHaveBeenCalled();
     });
   });

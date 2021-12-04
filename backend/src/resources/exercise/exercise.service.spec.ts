@@ -231,6 +231,7 @@ describe('Given ExerciseService', () => {
       const response = await service.remove(
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiJmOGY4ZjhmOGY4ZjgiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoidGVzdCIsImlhdCI6MTUxNjIzOTAyMn0.2D8RXLfMCZRovoodPQNj-XfjaLXhFTk64BlThks42As',
         'f8f8f8f8f8f8',
+        '',
       );
       expect(response).toEqual({
         message: 'Exercise removed successfully from groups',
@@ -245,6 +246,7 @@ describe('Given ExerciseService', () => {
         await service.remove(
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiJmOGY4ZjhmOGY4ZjkiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoidGVzdCIsImlhdCI6MTUxNjIzOTAyMn0.jYXlg2_VxJ3WpmNPywOlNgmQZNP0q6qA8qf7vNZKM0k',
           'f8f8f8f8f8f8',
+          '',
         );
       } catch (e) {
         expect(e).toEqual(new UnauthorizedException('Invalid token'));
@@ -259,6 +261,7 @@ describe('Given ExerciseService', () => {
         await service.remove(
           'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiJmOGY4ZjhmOGY4ZjkiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoidGVzdCIsImlhdCI6MTUxNjIzOTAyMn0.jYXlg2_VxJ3WpmNPywOlNgmQZNP0q6qA8qf7vNZKM0k',
           'f8f8f8f8f8f8',
+          '',
         );
       } catch (e) {
         expect(e).toEqual(Error('Element not found'));
@@ -273,6 +276,7 @@ describe('Given ExerciseService', () => {
         await service.remove(
           'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUGF0aWVudCIsImlkIjoiZjhmOGY4ZjhmOGY5IiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwibmFtZSI6InRlc3QiLCJpYXQiOjE1MTYyMzkwMjJ9.8CsYY9ILF2ZRCaVqBDx64W3NJ2-JMDC37FPYwHnxSGA',
           'f8f8f8f8f8f8',
+          '',
         );
       } catch (e) {
         expect(e).toEqual(new UnauthorizedException('Invalid token'));

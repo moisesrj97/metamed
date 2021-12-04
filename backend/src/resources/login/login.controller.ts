@@ -6,7 +6,7 @@ export class LoginController {
   constructor(private readonly loginService: LoginService) {}
 
   @Post('token')
-  loginProfessionalWithToken(@Headers('Authorization') token: string) {
+  loginWithToken(@Headers('Authorization') token: string) {
     return this.loginService.loginWithToken(token);
   }
 

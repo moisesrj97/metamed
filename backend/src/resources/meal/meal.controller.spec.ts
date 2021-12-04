@@ -65,7 +65,7 @@ describe('Given MealController', () => {
 
   describe('When controller.remove is executed', () => {
     it('Service.remove is called', () => {
-      controller.remove('', '');
+      controller.remove('', '', '');
 
       expect(service.remove).toHaveBeenCalled();
     });
