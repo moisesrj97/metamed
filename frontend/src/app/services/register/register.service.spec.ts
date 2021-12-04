@@ -49,9 +49,10 @@ describe('Given RegisterService', () => {
           );
         });
 
-      const req = httpTestingController.expectOne(
-        'http://localhost:3000/professional'
-      );
+      const req = httpTestingController.expectOne({
+        method: 'POST',
+        url: 'http://localhost:3000/professional',
+      });
 
       req.flush(mockResponse);
     });
@@ -76,9 +77,10 @@ describe('Given RegisterService', () => {
           );
         });
 
-      const req = httpTestingController.expectOne(
-        'http://localhost:3000/patient'
-      );
+      const req = httpTestingController.expectOne({
+        method: 'POST',
+        url: 'http://localhost:3000/patient',
+      });
 
       req.flush(mockResponse);
     });

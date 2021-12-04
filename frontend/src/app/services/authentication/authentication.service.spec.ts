@@ -40,9 +40,10 @@ describe('Given AuthenticationService', () => {
         expect(JSON.stringify(response)).toEqual(JSON.stringify(mockResponse));
       });
 
-      const req = httpTestingController.expectOne(
-        'http://localhost:3000/login/token'
-      );
+      const req = httpTestingController.expectOne({
+        method: 'POST',
+        url: 'http://localhost:3000/login/token',
+      });
 
       req.flush(mockResponse);
     });
@@ -59,15 +60,17 @@ describe('Given AuthenticationService', () => {
           );
         });
 
-      const req = httpTestingController.expectOne(
-        'http://localhost:3000/login/professional'
-      );
+      const req = httpTestingController.expectOne({
+        method: 'POST',
+        url: 'http://localhost:3000/login/professional',
+      });
 
       req.flush(mockResponse);
 
-      const req2 = httpTestingController.expectOne(
-        'http://localhost:3000/login/token'
-      );
+      const req2 = httpTestingController.expectOne({
+        method: 'POST',
+        url: 'http://localhost:3000/login/token',
+      });
 
       req2.flush(mockResponse);
     });
