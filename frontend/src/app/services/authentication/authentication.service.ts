@@ -44,7 +44,7 @@ export class AuthenticationService {
         }),
         mergeMap((tokenObject: any) => {
           return this.http.get(
-            `${this.getUrl}${tokenObject.role.toLowerCase()}/${tokenObject.id}`,
+            `${this.getUrl}${tokenObject.role}/${tokenObject.id}`,
             {
               headers: new HttpHeaders().set(
                 'Authorization',
@@ -68,7 +68,7 @@ export class AuthenticationService {
       .pipe(
         mergeMap((tokenObject: any) => {
           return this.http.get(
-            `${this.getUrl}${tokenObject.role.toLowerCase()}/${tokenObject.id}`,
+            `${this.getUrl}${tokenObject.role}/${tokenObject.id}`,
             {
               headers: new HttpHeaders().set(
                 'Authorization',
