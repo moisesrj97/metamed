@@ -66,3 +66,10 @@ export interface UserStore {
   patients?: PatientModel[];
   professionals?: ProfessionalModel[];
 }
+
+export interface JwtModel {
+  id: string;
+  role: string;
+  name: string;
+  email: string;
+}
