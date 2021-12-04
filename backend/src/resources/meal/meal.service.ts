@@ -70,7 +70,7 @@ export class MealService {
     );
   }
 
-  async remove(token: string, id: string) {
+  async remove(token: string, id: string, groupId: string) {
     let response: JwtInterface;
 
     try {
@@ -84,10 +84,11 @@ export class MealService {
     isProfessional(response);
     await isAuthor(response, id, this.mealModel);
 
-    await this.mealGroupModel.updateMany(
-      { meals: { $elemMatch: { $eq: id } } },
-      { $pull: { meals: id } },
-    );
+    await this.mealModel.findByIdAndUpdate(groupId, {
+      $pull: {
+        meals: id,
+      },
+    });
 
     return { message: 'Meal removed successfully from groups' };
   }

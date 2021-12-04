@@ -45,7 +45,11 @@ export class ExerciseController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string, @Headers('Authorization') token: string) {
-    return this.exerciseService.remove(token, id);
+  remove(
+    @Param('id') id: string,
+    @Param('groupId') groupId: string,
+    @Headers('Authorization') token: string,
+  ) {
+    return this.exerciseService.remove(token, id, groupId);
   }
 }

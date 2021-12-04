@@ -104,11 +104,6 @@ export class ExerciseService {
     isProfessional(response);
     await isAuthor(response, id, this.exerciseModel);
 
-    await this.exerciseGroupModel.updateMany(
-      { exercises: { $elemMatch: { $eq: id } } },
-      { $pull: { exercises: id } },
-    );
-
     await this.exerciseModel.findByIdAndUpdate(
       exerciseGroupId,
       { $pull: { exercises: id } },
