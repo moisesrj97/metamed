@@ -20,13 +20,19 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    this.authService
+    /* this.authService
       .loginWithToken(
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxYTdiMDU3NTQ0NzY4MjVmYjkzYmQzZiIsImVtYWlsIjoiZmFrZUB0ZXN0LmNvbSIsIm5hbWUiOiIgc3V1dXV1Iiwicm9sZSI6IlByb2Zlc3Npb25hbCIsImlhdCI6MTYzODUxNjQxN30.q25xktvuiMHX6VgKIx7jlhe9uTeiXVNQmVxlmoTAdQ4'
       )
       .subscribe((data: UserStore): void => {
         this.userInfo = data;
         this.store.dispatch(loginUser({ userInfo: { ...data } }));
-      });
+      }); */
+    /* this.authService
+      .loginWithoutToken('fake@test.com', 'password', 'professional')
+      .subscribe((data: any) => {
+        this.userInfo = data;
+        this.store.dispatch(loginUser({ userInfo: { ...data } }));
+      }); */
   }
 }

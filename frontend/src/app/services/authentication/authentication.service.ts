@@ -8,26 +8,51 @@ import { JwtModel, UserStore } from 'src/app/models/interfaces';
 })
 export class AuthenticationService {
   baseUrl: string = 'http://localhost:3000/login/';
+  getUrl: string = 'http://localhost:3000/';
   constructor(private http: HttpClient) {}
 
-  loginProfessionalWithoutToken(
+  loginWithoutToken(
     email: string,
-    password: string
-  ): Observable<Object> {
-    return this.http.post(this.baseUrl + 'professional', {
-      email,
-      password,
-    });
-  }
+    password: string,
+    role: string
+  ): Observable<string> {
+    let fetchedToken: string;
 
-  loginPatientWithoutToken(
-    email: string,
-    password: string
-  ): Observable<Object> {
-    return this.http.post(this.baseUrl + 'patient', {
-      email,
-      password,
-    });
+    return this.http
+      .post(
+        this.baseUrl + role,
+        {
+          email,
+          password,
+        },
+        { responseType: 'text' }
+      )
+      .pipe(
+        mergeMap((token: any) => {
+          fetchedToken = token;
+          return this.http.post(
+            `${this.baseUrl}token`,
+            {},
+            {
+              headers: new HttpHeaders().set(
+                'Authorization',
+                `Bearer ${token}`
+              ),
+            }
+          );
+        }),
+        mergeMap((tokenObject: any) => {
+          return this.http.get(
+            `${this.getUrl}${tokenObject.role.toLowerCase()}/${tokenObject.id}`,
+            {
+              headers: new HttpHeaders().set(
+                'Authorization',
+                `Bearer ${fetchedToken}`
+              ),
+            }
+          );
+        })
+      ) as Observable<string>;
   }
 
   loginWithToken(token: string): Observable<UserStore> {
@@ -40,17 +65,17 @@ export class AuthenticationService {
         }
       )
       .pipe(
-        mergeMap((tokenObject: any) =>
-          this.http.get(
-            'http://localhost:3000/professional/' + tokenObject.id,
+        mergeMap((tokenObject: any) => {
+          return this.http.get(
+            `${this.getUrl}${tokenObject.role.toLowerCase()}/${tokenObject.id}`,
             {
               headers: new HttpHeaders().set(
                 'Authorization',
                 `Bearer ${token}`
               ),
             }
-          )
-        )
+          );
+        })
       ) as Observable<UserStore>;
   }
 }
