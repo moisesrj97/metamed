@@ -1,0 +1,22 @@
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 20px;
+  padding-right: 20px;
+  &__address {
+    font-size: 1rem;
+    font-style: normal;
+    &--accent {
+      color: #2e21ff;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .footer {
+    padding: 0;
+    justify-content: center;
+    font-size: 0.8rem;
+  }
+}
