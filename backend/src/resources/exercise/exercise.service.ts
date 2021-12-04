@@ -92,7 +92,7 @@ export class ExerciseService {
     );
   }
 
-  async remove(token: string, id: string) {
+  async remove(token: string, id: string, exerciseGroupId: string) {
     let response: JwtInterface;
 
     try {
@@ -107,6 +107,12 @@ export class ExerciseService {
     await this.exerciseGroupModel.updateMany(
       { exercises: { $elemMatch: { $eq: id } } },
       { $pull: { exercises: id } },
+    );
+
+    await this.exerciseModel.findByIdAndUpdate(
+      exerciseGroupId,
+      { $pull: { exercises: id } },
+      { new: true },
     );
 
     return { message: 'Exercise removed successfully from groups' };
