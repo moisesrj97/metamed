@@ -3,12 +3,21 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { provideMockStore } from '@ngrx/store/testing';
+import { CoreModule } from './core/core.module';
+import { NavbarComponent } from './core/navbar/navbar.component';
+import { FooterComponent } from './core/footer/footer.component';
+import { LayoutComponent } from './core/layout/layout.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule],
-      declarations: [AppComponent],
+      imports: [RouterTestingModule, HttpClientTestingModule, CoreModule],
+      declarations: [
+        AppComponent,
+        NavbarComponent,
+        FooterComponent,
+        LayoutComponent,
+      ],
       providers: [provideMockStore()],
     }).compileComponents();
   });
@@ -29,8 +38,8 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain(
-      'frontend app is running!'
-    );
+    expect(
+      compiled.querySelector('.navbar__header-group-title')?.textContent
+    ).toContain('MetaMed');
   });
 });
