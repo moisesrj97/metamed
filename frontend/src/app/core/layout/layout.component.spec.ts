@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FooterComponent } from '../footer/footer.component';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { SideNavComponent } from '../side-nav/side-nav.component';
 
 import { LayoutComponent } from './layout.component';
 
@@ -10,7 +11,12 @@ describe('LayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LayoutComponent, NavbarComponent, FooterComponent],
+      declarations: [
+        LayoutComponent,
+        NavbarComponent,
+        FooterComponent,
+        SideNavComponent,
+      ],
     }).compileComponents();
   });
 
