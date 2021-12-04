@@ -28,12 +28,14 @@ export class ExerciseGroupService {
   updateExerciseGroupName(
     exerciseGroupId: string,
     newExerciseGroupName: string,
+    newExerciseExtraInfo: string,
     token: string
   ): Observable<UserStore> {
     return this.httpClient.patch(
       `${this.baseUrl}/${exerciseGroupId}`,
       {
         name: newExerciseGroupName,
+        extra: newExerciseExtraInfo,
       },
       { headers: new HttpHeaders().set('Authorization', 'Bearer ' + token) }
     ) as Observable<UserStore>;

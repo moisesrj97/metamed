@@ -28,12 +28,14 @@ export class MealGroupService {
   updateMealGroupName(
     mealGroupId: string,
     newMealGroupName: string,
+    newMealExtraInfo: string,
     token: string
   ): Observable<UserStore> {
     return this.httpClient.patch(
       `${this.baseUrl}/${mealGroupId}`,
       {
         name: newMealGroupName,
+        extra: newMealExtraInfo,
       },
       { headers: new HttpHeaders().set('Authorization', 'Bearer ' + token) }
     ) as Observable<UserStore>;

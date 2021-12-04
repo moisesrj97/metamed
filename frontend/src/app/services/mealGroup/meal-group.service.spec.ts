@@ -54,7 +54,7 @@ describe('Given MealGroupService', () => {
   describe('When updateMealGroupName is called', () => {
     it('httpClient should be called', () => {
       service
-        .updateMealGroupName('test', 'test', 'test')
+        .updateMealGroupName('test', 'test', 'test', 'test')
         .subscribe((response: any) => {
           expect(response).not.toBe(null);
           expect(JSON.stringify(response)).toEqual(

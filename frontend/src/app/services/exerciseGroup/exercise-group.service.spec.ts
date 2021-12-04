@@ -54,7 +54,7 @@ describe('Given ExerciseGroupService', () => {
   describe('When updateExerciseGroupName is called', () => {
     it('httpClient should be called', () => {
       service
-        .updateExerciseGroupName('test', 'test', 'test')
+        .updateExerciseGroupName('test', 'test', 'test', 'test')
         .subscribe((response: any) => {
           expect(response).not.toBe(null);
           expect(JSON.stringify(response)).toEqual(
