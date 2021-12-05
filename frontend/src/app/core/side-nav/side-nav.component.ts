@@ -54,7 +54,6 @@ export class SideNavComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(window.location.pathname.substring(1));
     this.router.events.subscribe(() => {
       this.menuItems.forEach((item) => {
         item.match = item.route === window.location.pathname.substring(1);
