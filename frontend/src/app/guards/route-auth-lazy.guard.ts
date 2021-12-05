@@ -18,7 +18,7 @@ export class RouteAuthLazyGuard implements CanLoad {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    /* let result;
+    let result;
     if (['', 'auth'].includes(route.path as string)) {
       if (this.tokenService.getTokenFromLocalStorage()) {
         this.router.navigate(['/dashboard']);
@@ -33,7 +33,6 @@ export class RouteAuthLazyGuard implements CanLoad {
       result = true;
     }
 
-    return result as boolean; */
-    return true;
+    return result as boolean;
   }
 }
