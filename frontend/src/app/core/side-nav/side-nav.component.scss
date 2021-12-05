@@ -113,12 +113,12 @@
         margin-right: 10px;
       }
     }
+    &__list {
+      flex-grow: 1;
+    }
   }
   .side-nav__item-label,
   .side-nav__logout-label {
     font-size: 1rem;
-  }
-  .side-nav__list {
-    margin-top: 50px;
   }
 }
