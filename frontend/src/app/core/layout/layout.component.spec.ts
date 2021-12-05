@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { FooterComponent } from '../footer/footer.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SideNavComponent } from '../side-nav/side-nav.component';
@@ -17,6 +18,7 @@ describe('LayoutComponent', () => {
         FooterComponent,
         SideNavComponent,
       ],
+      imports: [RouterTestingModule],
     }).compileComponents();
   });
 
@@ -28,5 +30,12 @@ describe('LayoutComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('When calling toggleNav', () => {
+    it('should update sideBarOpen', () => {
+      component.toggleNav(false);
+      expect(component.sideBarOpen).toBeFalsy();
+    });
   });
 });
