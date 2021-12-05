@@ -7,6 +7,7 @@ import { CoreModule } from './core/core.module';
 import { NavbarComponent } from './core/navbar/navbar.component';
 import { FooterComponent } from './core/footer/footer.component';
 import { LayoutComponent } from './core/layout/layout.component';
+import { routes } from './app-routing.module';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -41,5 +42,15 @@ describe('AppComponent', () => {
     expect(
       compiled.querySelector('.navbar__header-group-title')?.textContent
     ).toContain('MetaMed');
+  });
+
+  describe('Testing asynchronous routes', () => {
+    it('Testing asynchronous routes', () => {
+      routes.forEach((route, index) => {
+        if (index < routes.length - 1) {
+          expect(route.loadChildren?.()).toBeDefined();
+        }
+      });
+    });
   });
 });
