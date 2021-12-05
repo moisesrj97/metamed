@@ -7,6 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { TokenService } from 'src/app/services/token/token.service';
 
 @Component({
   selector: 'app-side-nav',
@@ -14,7 +15,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./side-nav.component.scss'],
 })
 export class SideNavComponent implements OnInit {
-  wasInside = false;
+  wasInside: boolean = false;
+  isRendered: boolean;
 
   menuItems: {
     imagePath: string;
@@ -25,7 +27,7 @@ export class SideNavComponent implements OnInit {
   @Input() open!: boolean;
   @Output() toggleNav: EventEmitter<boolean>;
 
-  constructor(public router: Router) {
+  constructor(public router: Router, private tokenService: TokenService) {
     this.toggleNav = new EventEmitter<boolean>();
     this.menuItems = [
       {
@@ -47,13 +49,18 @@ export class SideNavComponent implements OnInit {
         match: false,
       },
     ];
+    this.isRendered = false;
   }
 
   closeNav() {
     this.toggleNav.next(false);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.tokenService.getTokenFromLocalStorage()) {
+      this.isRendered = true;
+    }
+  }
 
   @HostListener('document:click', ['$event'])
   onGlobalClick(event: any): void {

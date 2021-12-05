@@ -15,15 +15,67 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   &__img {
-    width: 90%;
+    width: 70%;
   }
   &__title {
     font-size: 2.5rem;
     font-weight: normal;
+    margin-bottom: 80px;
+    text-align: center;
     &--highlight {
       color: #2e21ff;
     }
+  }
+}
+
+.image-fill {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    height: 100%;
+    box-shadow: none;
+    border-radius: none;
+    padding: 60px 0;
+    &__title {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    &__img {
+      display: none;
+    }
+    &__start-button {
+      color: #2e21ff;
+      border: 2px solid #2e21ff;
+      background-color: white;
+      box-sizing: border-box;
+      border-radius: 20px;
+      padding: 15px 30px;
+      font-size: 1.8rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      &:hover {
+        background-color: #2e21ff;
+        color: white;
+      }
+    }
+  }
+
+  .image-fill {
+    background-image: url("../../assets/images/landing-image-mobile.png");
+    background-size: cover;
+    background-position: center;
+    background-origin: border-box;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
   }
 }

@@ -1,4 +1,8 @@
-<div class="side-nav" [ngClass]="{ 'side-nav--closed': !open }">
+<div
+  class="side-nav"
+  [ngClass]="{ 'side-nav--closed': !open }"
+  *ngIf="isRendered"
+>
   <div class="side-nav__close">
     <img
       class="side-nav__close-icon"
