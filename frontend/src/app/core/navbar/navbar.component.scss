@@ -7,9 +7,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 80px;
+  height: 60px;
   width: 100%;
-  padding: 0 80px;
+  padding: 0 40px;
   background-color: #fff;
   &__mobile-toggle {
     display: none;
@@ -22,12 +22,12 @@
     padding: 0 20px;
     cursor: pointer;
     &-logo {
-      height: 46px;
+      height: 40px;
       aspect-ratio: 1;
     }
     &-title {
       font-weight: 300;
-      font-size: 2rem;
+      font-size: 1.8rem;
       letter-spacing: -0.2rem;
       &--accent {
         color: #2e21ff;
@@ -43,7 +43,7 @@
         list-style-type: none;
       }
       &-item {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         cursor: pointer;
       }
     }
