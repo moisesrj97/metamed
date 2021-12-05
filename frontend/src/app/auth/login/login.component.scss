@@ -1,7 +1,49 @@
+:host {
+  width: 100%;
+}
+
 .form {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100%;
+  width: 100%;
+  &__roles {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+  }
+  &__label {
+    text-transform: capitalize;
+    font-size: 1.2rem;
+    padding-right: 10px;
+  }
+  &__input {
+    background-color: white;
+    padding: 5px 20px;
+    font-size: 1rem;
+    border: 1px solid #2e21ff;
+    border-radius: 25px;
+  }
+  &__group {
+    margin: 10px 0;
+  }
+  &__button {
+    margin-top: 20px;
+    color: #2e21ff;
+    border: 2px solid #2e21ff;
+    background-color: white;
+    box-sizing: border-box;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    cursor: pointer;
+    &:hover {
+      background-color: #2e21ff;
+      color: white;
+    }
+  }
 }
