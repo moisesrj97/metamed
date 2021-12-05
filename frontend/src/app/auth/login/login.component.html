@@ -1,1 +1,18 @@
-<p>login works!</p>
+<form class="form" (submit)="submitForm()">
+  <div *ngFor="let role of roles">
+    <label for="{{ role + 'role' }}">{{ role }}</label>
+    <input
+      type="radio"
+      value="{{ selectedRole }}"
+      id="{{ role + 'role' }}"
+      name="role"
+      (click)="selectedRole = role"
+      [defaultChecked]="role === 'professional'"
+    />
+  </div>
+  <label for="email">Email:</label>
+  <input type="text" id="email" name="email" [(ngModel)]="email" />
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password" [(ngModel)]="password" />
+  <button type="submit">Log in</button>
+</form>
