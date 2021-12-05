@@ -30,7 +30,7 @@
     margin: 10px 0;
   }
   &__button {
-    margin-top: 20px;
+    margin: 20px 0;
     color: #2e21ff;
     border: 2px solid #2e21ff;
     background-color: white;
@@ -45,5 +45,14 @@
       background-color: #2e21ff;
       color: white;
     }
+  }
+  &__popup {
+    background-color: rgb(255, 117, 117);
+    color: black;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    font-weight: 400;
+    text-align: center;
+    border-radius: 20px;
   }
 }

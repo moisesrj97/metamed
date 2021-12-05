@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { catchError } from 'rxjs';
 import { UserStore } from 'src/app/models/interfaces';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { loginUser } from 'src/app/services/store/actions/user.actions';
@@ -15,6 +16,7 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;
   selectedRole: string;
+  badAuthPopup: boolean;
 
   constructor(
     private authService: AuthenticationService,
@@ -24,14 +26,22 @@ export class LoginComponent implements OnInit {
     this.email = '';
     this.password = '';
     this.selectedRole = 'professional';
+    this.badAuthPopup = false;
   }
 
   submitForm(): void {
     this.authService
-      .loginWithoutToken('fake@test.com', 'password', 'professional')
-      .subscribe((data: any) => {
-        this.store.dispatch(loginUser({ userInfo: { ...data } }));
-        this.router.navigate(['/dashboard']);
+      .loginWithoutToken(this.email, this.password, this.selectedRole)
+      .subscribe({
+        next: (data: any) => {
+          this.store.dispatch(loginUser({ userInfo: { ...data } }));
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error) => {
+          this.badAuthPopup = true;
+          this.email = '';
+          this.password = '';
+        },
       });
   }
 

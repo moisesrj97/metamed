@@ -1,18 +1,41 @@
 <form class="form" (submit)="submitForm()">
-  <div *ngFor="let role of roles">
-    <label for="{{ role + 'role' }}">{{ role }}</label>
+  <div class="form__roles">
+    <div *ngFor="let role of roles">
+      <label class="form__label" for="{{ role + 'role' }}">{{ role }}</label>
+      <input
+        type="radio"
+        value="{{ selectedRole }}"
+        id="{{ role + 'role' }}"
+        name="role"
+        (click)="selectedRole = role"
+        [defaultChecked]="role === 'professional'"
+      />
+    </div>
+  </div>
+  <div class="form__group">
+    <label class="form__label" for="email">Email:</label>
     <input
-      type="radio"
-      value="{{ selectedRole }}"
-      id="{{ role + 'role' }}"
-      name="role"
-      (click)="selectedRole = role"
-      [defaultChecked]="role === 'professional'"
+      class="form__input"
+      type="text"
+      id="email"
+      name="email"
+      [(ngModel)]="email"
+      required
     />
   </div>
-  <label for="email">Email:</label>
-  <input type="text" id="email" name="email" [(ngModel)]="email" />
-  <label for="password">Password:</label>
-  <input type="password" id="password" name="password" [(ngModel)]="password" />
-  <button type="submit">Log in</button>
+  <div class="form__group">
+    <label class="form__label" for="password">Password:</label>
+    <input
+      class="form__input"
+      type="password"
+      id="password"
+      name="password"
+      [(ngModel)]="password"
+      required
+    />
+  </div>
+
+  <button class="form__button" type="submit">Log in</button>
+  <div class="form__popup" *ngIf="badAuthPopup">Wrong email or password</div>
+  <p>{{ selectedRole }}</p>
 </form>
