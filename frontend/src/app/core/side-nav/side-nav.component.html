@@ -8,29 +8,18 @@
     />
   </div>
   <ul class="side-nav__list">
-    <li class="side-nav__item">
+    <li
+      *ngFor="let item of menuItems"
+      class="side-nav__item"
+      routerLink="{{ item.route }}"
+      [ngClass]="{ 'side-nav__item--active': item.match }"
+    >
       <img
         class="side-nav__item-img"
-        src="../../../assets/images/user.png"
-        alt="My info"
+        src="{{ item.imagePath }}"
+        alt="{{ item.label }}"
       />
-      <p class="side-nav__item-label">My info</p>
-    </li>
-    <li class="side-nav__item">
-      <img
-        class="side-nav__item-img side-nav__item-img--bigger"
-        src="../../../assets/images/userGroup.png"
-        alt="My patients"
-      />
-      <p class="side-nav__item-label">My patients</p>
-    </li>
-    <li class="side-nav__item">
-      <img
-        class="side-nav__item-img"
-        src="../../../assets/images/messagesNotification.png"
-        alt="My messages"
-      />
-      <p class="side-nav__item-label">My messages</p>
+      <p class="side-nav__item-label">{{ item.label }}</p>
     </li>
   </ul>
   <div class="side-nav__logout">
