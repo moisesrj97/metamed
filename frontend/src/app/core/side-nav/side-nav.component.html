@@ -13,6 +13,7 @@
       class="side-nav__item"
       routerLink="{{ item.route }}"
       [ngClass]="{ 'side-nav__item--active': item.match }"
+      (click)="closeNav()"
     >
       <img
         class="side-nav__item-img"

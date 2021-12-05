@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,6 +14,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./side-nav.component.scss'],
 })
 export class SideNavComponent implements OnInit {
+  wasInside = false;
+
   menuItems: {
     imagePath: string;
     label: string;
@@ -18,7 +27,6 @@ export class SideNavComponent implements OnInit {
 
   constructor(private router: Router) {
     this.toggleNav = new EventEmitter<boolean>();
-    this.open = true;
     this.menuItems = [
       {
         imagePath: '../../../assets/images/user.png',
@@ -52,5 +60,15 @@ export class SideNavComponent implements OnInit {
         item.match = item.route === window.location.pathname.substring(1);
       });
     });
+  }
+
+  @HostListener('document:click', ['$event'])
+  onGlobalClick(event: any): void {
+    if (
+      !event.target.className.match(/side-nav/i) &&
+      !event.target.className.match(/toggle/i)
+    ) {
+      this.closeNav();
+    }
   }
 }
