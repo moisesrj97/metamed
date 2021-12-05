@@ -24,7 +24,7 @@ export class AppComponent {
   ngOnInit(): void {
     const token = this.tokenService.getTokenFromLocalStorage();
 
-    /* if (token) {
+    if (token) {
       this.authService
         .loginWithToken(token)
         .subscribe((data: UserStore): void => {
@@ -38,8 +38,8 @@ export class AppComponent {
           this.userInfo = data;
           this.store.dispatch(loginUser({ userInfo: { ...data } }));
         });
-    } */
+    }
 
-    this.tokenService.deleteTokenFromLocalStorage();
+    /* this.tokenService.deleteTokenFromLocalStorage(); */
   }
 }

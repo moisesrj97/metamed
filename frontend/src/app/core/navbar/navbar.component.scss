@@ -11,6 +11,9 @@
   width: 100%;
   padding: 0 80px;
   background-color: #fff;
+  &__mobile-toggle {
+    display: none;
+  }
   &__header-group {
     display: flex;
     align-items: center;
@@ -71,6 +74,9 @@
   .navbar {
     padding: 0 15px;
     height: 50px;
+    &__mobile-toggle {
+      display: none;
+    }
     &__header-group {
       padding: 0;
       &-logo {
@@ -92,6 +98,15 @@
         &-access {
           display: block;
         }
+      }
+    }
+    &--logged .navbar__header-group {
+      display: none;
+    }
+    &--logged .navbar__mobile-toggle {
+      display: block;
+      &-icon {
+        height: 20px;
       }
     }
   }

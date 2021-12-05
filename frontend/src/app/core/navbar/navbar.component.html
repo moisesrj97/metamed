@@ -1,4 +1,11 @@
-<div class="navbar">
+<div class="navbar" [ngClass]="{ 'navbar--logged': loggedIn }">
+  <div class="navbar__mobile-toggle">
+    <img
+      src="../../../assets/images/hamburguer.png"
+      alt="Toggle"
+      class="navbar__mobile-toggle-icon"
+    />
+  </div>
   <div class="navbar__header-group" routerLink="">
     <img
       src="../../../assets/images/logo.png"
