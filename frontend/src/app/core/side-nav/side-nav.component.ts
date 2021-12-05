@@ -7,6 +7,9 @@ import {
   Output,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { UserStore } from 'src/app/models/interfaces';
+import { logoutUser } from 'src/app/services/store/actions/user.actions';
 import { TokenService } from 'src/app/services/token/token.service';
 
 @Component({
@@ -27,7 +30,11 @@ export class SideNavComponent implements OnInit {
   @Input() open!: boolean;
   @Output() toggleNav: EventEmitter<boolean>;
 
-  constructor(public router: Router, private tokenService: TokenService) {
+  constructor(
+    public router: Router,
+    private tokenService: TokenService,
+    private store: Store<{ user: UserStore }>
+  ) {
     this.toggleNav = new EventEmitter<boolean>();
     this.menuItems = [
       {
@@ -56,10 +63,22 @@ export class SideNavComponent implements OnInit {
     this.toggleNav.next(false);
   }
 
+  logout() {
+    this.tokenService.deleteTokenFromLocalStorage();
+    this.store.dispatch(logoutUser());
+    this.router.navigate(['']);
+    window.location.reload();
+  }
+
   ngOnInit(): void {
-    if (this.tokenService.getTokenFromLocalStorage()) {
-      this.isRendered = true;
-    }
+    this.store
+      .select((state) => state.user._id)
+      .subscribe((id) => {
+        console.log(id);
+        if (id !== '') {
+          this.isRendered = true;
+        }
+      });
   }
 
   @HostListener('document:click', ['$event'])

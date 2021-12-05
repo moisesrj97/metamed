@@ -24,22 +24,13 @@ export class AppComponent {
   ngOnInit(): void {
     const token = this.tokenService.getTokenFromLocalStorage();
 
-    /* if (token) {
+    if (token) {
       this.authService
         .loginWithToken(token)
         .subscribe((data: UserStore): void => {
           this.userInfo = data;
           this.store.dispatch(loginUser({ userInfo: { ...data } }));
         });
-    } else {
-      this.authService
-        .loginWithoutToken('fake@test.com', 'password', 'professional')
-        .subscribe((data: any) => {
-          this.userInfo = data;
-          this.store.dispatch(loginUser({ userInfo: { ...data } }));
-        });
-    } */
-
-    this.tokenService.deleteTokenFromLocalStorage();
+    }
   }
 }
