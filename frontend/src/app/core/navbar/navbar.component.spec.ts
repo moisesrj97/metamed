@@ -24,6 +24,12 @@ describe('NavbarComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  beforeEach(() => {
+    spyOn(component.tokenService, 'getTokenFromLocalStorage').and.returnValue(
+      '123'
+    );
+  });
+
   describe('When clicking openNav', () => {
     it('It should call toggleNav', () => {
       spyOn(component.toggleNav, 'next');

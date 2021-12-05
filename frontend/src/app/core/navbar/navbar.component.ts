@@ -9,7 +9,7 @@ import { TokenService } from 'src/app/services/token/token.service';
 export class NavbarComponent implements OnInit {
   loggedIn: boolean;
   @Output() toggleNav: EventEmitter<boolean>;
-  constructor(private tokenService: TokenService) {
+  constructor(public tokenService: TokenService) {
     this.loggedIn = false;
     this.toggleNav = new EventEmitter<boolean>();
   }
