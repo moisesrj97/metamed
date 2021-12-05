@@ -20,9 +20,10 @@
       id="email"
       name="email"
       [(ngModel)]="email"
-      required
+      required="{{ true }}"
     />
   </div>
+  <div class="form__popup" *ngIf="errorsPopup.email">Email can´t be empty</div>
   <div class="form__group">
     <label class="form__label" for="password">Password:</label>
     <input
@@ -31,11 +32,14 @@
       id="password"
       name="password"
       [(ngModel)]="password"
-      required
     />
+  </div>
+  <div class="form__popup" *ngIf="errorsPopup.password">
+    Password can´t be empty
   </div>
 
   <button class="form__button" type="submit">Log in</button>
-  <div class="form__popup" *ngIf="badAuthPopup">Wrong email or password</div>
-  <p>{{ selectedRole }}</p>
+  <div class="form__popup" *ngIf="errorsPopup.auth">
+    Wrong email or password
+  </div>
 </form>

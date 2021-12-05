@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;
   selectedRole: string;
-  badAuthPopup: boolean;
+  errorsPopup: { email: boolean; password: boolean; auth: boolean };
 
   constructor(
     private authService: AuthenticationService,
@@ -26,23 +26,35 @@ export class LoginComponent implements OnInit {
     this.email = '';
     this.password = '';
     this.selectedRole = 'professional';
-    this.badAuthPopup = false;
+    this.errorsPopup = {
+      email: false,
+      password: false,
+      auth: false,
+    };
   }
 
   submitForm(): void {
-    this.authService
-      .loginWithoutToken(this.email, this.password, this.selectedRole)
-      .subscribe({
-        next: (data: any) => {
-          this.store.dispatch(loginUser({ userInfo: { ...data } }));
-          this.router.navigate(['/dashboard']);
-        },
-        error: (error) => {
-          this.badAuthPopup = true;
-          this.email = '';
-          this.password = '';
-        },
-      });
+    this.errorsPopup.email = this.email.length < 1;
+    this.errorsPopup.password = this.password.length < 1;
+
+    if (!this.errorsPopup.email && !this.errorsPopup.password) {
+      this.authService
+        .loginWithoutToken(this.email, this.password, this.selectedRole)
+        .subscribe({
+          next: (data: any) => {
+            this.store.dispatch(loginUser({ userInfo: { ...data } }));
+            this.router.navigate(['/dashboard']);
+          },
+          error: () => {
+            this.errorsPopup.auth = true;
+            this.email = '';
+            this.password = '';
+            setTimeout(() => {
+              this.errorsPopup.auth = false;
+            }, 2000);
+          },
+        });
+    }
   }
 
   ngOnInit(): void {}
