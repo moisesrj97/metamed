@@ -38,4 +38,12 @@ describe('NavbarComponent', () => {
       expect(component.toggleNav.next).toHaveBeenCalled();
     });
   });
+
+  describe('When token exists in local storage', () => {
+    it('LoggedIn should be true', () => {
+      localStorage.clear();
+      localStorage.setItem('token', '123');
+      expect(component.loggedIn).toBeTruthy();
+    });
+  });
 });
