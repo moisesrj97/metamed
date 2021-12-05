@@ -12,7 +12,7 @@
       *ngFor="let item of menuItems"
       class="side-nav__item"
       routerLink="{{ item.route }}"
-      [ngClass]="{ 'side-nav__item--active': item.match }"
+      routerLinkActive="side-nav__item--active"
       (click)="closeNav()"
     >
       <img

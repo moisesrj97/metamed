@@ -25,7 +25,7 @@ export class SideNavComponent implements OnInit {
   @Input() open!: boolean;
   @Output() toggleNav: EventEmitter<boolean>;
 
-  constructor(private router: Router) {
+  constructor(public router: Router) {
     this.toggleNav = new EventEmitter<boolean>();
     this.menuItems = [
       {
@@ -53,13 +53,7 @@ export class SideNavComponent implements OnInit {
     this.toggleNav.next(false);
   }
 
-  ngOnInit(): void {
-    this.router.events.subscribe(() => {
-      this.menuItems.forEach((item) => {
-        item.match = item.route === window.location.pathname.substring(1);
-      });
-    });
-  }
+  ngOnInit(): void {}
 
   @HostListener('document:click', ['$event'])
   onGlobalClick(event: any): void {
