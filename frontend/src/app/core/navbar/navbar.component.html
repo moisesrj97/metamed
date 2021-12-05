@@ -1,5 +1,5 @@
 <div class="navbar" [ngClass]="{ 'navbar--logged': loggedIn }">
-  <div class="navbar__mobile-toggle">
+  <div class="navbar__mobile-toggle" (click)="openNav()">
     <img
       src="../../../assets/images/hamburguer.png"
       alt="Toggle"

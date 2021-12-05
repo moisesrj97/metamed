@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,15 +7,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./side-nav.component.scss'],
 })
 export class SideNavComponent implements OnInit {
-  open: boolean;
   menuItems: {
     imagePath: string;
     label: string;
     route: string;
     match: boolean;
   }[];
+  @Input() open!: boolean;
+  @Output() toggleNav: EventEmitter<boolean>;
 
   constructor(private router: Router) {
+    this.toggleNav = new EventEmitter<boolean>();
     this.open = true;
     this.menuItems = [
       {
@@ -37,6 +39,10 @@ export class SideNavComponent implements OnInit {
         match: false,
       },
     ];
+  }
+
+  closeNav() {
+    this.toggleNav.next(false);
   }
 
   ngOnInit(): void {
