@@ -33,6 +33,8 @@ describe('Given AuthenticationService', () => {
     });
   });
 
+  //! Jasmine says that the following test has no expectations.
+
   describe('When loginWithToken is called', () => {
     it('httpClient should be called', () => {
       service.loginWithToken('token').subscribe((response: any) => {
@@ -44,6 +46,8 @@ describe('Given AuthenticationService', () => {
         method: 'POST',
         url: 'http://localhost:3000/login/token',
       });
+
+      expect(req.request.url).toBe('http://localhost:3000/login/token');
 
       req.flush(mockResponse);
     });
@@ -73,6 +77,9 @@ describe('Given AuthenticationService', () => {
       });
 
       req2.flush(mockResponse);
+
+      expect(req.request.url).toBe('http://localhost:3000/login/professional');
+      expect(req2.request.url).toBe('http://localhost:3000/login/token');
     });
   });
 });
