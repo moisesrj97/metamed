@@ -1,0 +1,29 @@
+:host {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  width: 90%;
+  height: 90%;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  &__img {
+    width: 90%;
+  }
+  &__title {
+    font-size: 2.5rem;
+    font-weight: normal;
+    &--highlight {
+      color: #2e21ff;
+    }
+  }
+}
