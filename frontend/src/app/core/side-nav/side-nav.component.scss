@@ -25,6 +25,9 @@
   &:hover {
     width: 250px;
   }
+  &__close {
+    display: none;
+  }
   &__list {
     width: 100%;
     display: flex;
@@ -86,11 +89,24 @@
     z-index: 5;
     width: 70%;
     height: 100%;
+    padding-bottom: 20px;
+    padding-top: 10px;
     &:hover {
       width: 70%;
     }
     &--closed {
       transform: translate(-100%);
+    }
+    &__close {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: flex-end;
+      &-icon {
+        height: 40px;
+        aspect-ratio: 1;
+        margin-right: 10px;
+      }
     }
   }
   .side-nav__item-label,

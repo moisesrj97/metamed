@@ -1,4 +1,12 @@
 <div class="side-nav" [ngClass]="{ 'side-nav--closed': !open }">
+  <div class="side-nav__close">
+    <img
+      class="side-nav__close-icon"
+      src="../../../assets/images/close-icon.png"
+      alt="Close icon"
+      (click)="open = false"
+    />
+  </div>
   <ul class="side-nav__list">
     <li class="side-nav__item">
       <img
