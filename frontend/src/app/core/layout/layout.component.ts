@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
 })
-export class LayoutComponent implements OnInit {
+export class LayoutComponent {
   sideBarOpen: boolean;
   constructor() {
     this.sideBarOpen = false;
@@ -14,6 +14,4 @@ export class LayoutComponent implements OnInit {
   toggleNav(value: boolean) {
     this.sideBarOpen = value;
   }
-
-  ngOnInit(): void {}
 }

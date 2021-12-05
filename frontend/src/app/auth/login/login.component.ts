@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { catchError } from 'rxjs';
 import { UserStore } from 'src/app/models/interfaces';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { loginUser } from 'src/app/services/store/actions/user.actions';
@@ -11,7 +10,7 @@ import { loginUser } from 'src/app/services/store/actions/user.actions';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   roles: string[] = ['professional', 'patient'];
   email: string;
   password: string;
@@ -56,6 +55,4 @@ export class LoginComponent implements OnInit {
         });
     }
   }
-
-  ngOnInit(): void {}
 }

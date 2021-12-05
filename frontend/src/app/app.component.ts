@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { UserStore } from './models/interfaces';
 import { AuthenticationService } from './services/authentication/authentication.service';
@@ -10,7 +10,7 @@ import { TokenService } from './services/token/token.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'frontend';
   userInfo: any;
   constructor(
