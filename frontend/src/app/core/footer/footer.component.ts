@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { UserStore } from 'src/app/models/interfaces';
 import { TokenService } from 'src/app/services/token/token.service';
 
 @Component({
@@ -8,12 +10,22 @@ import { TokenService } from 'src/app/services/token/token.service';
 })
 export class FooterComponent implements OnInit {
   isLoggedIn: boolean;
-  constructor(public tokenService: TokenService) {
+  constructor(
+    public tokenService: TokenService,
+    public store: Store<{ user: UserStore }>
+  ) {
     this.isLoggedIn = false;
   }
+
   ngOnInit(): void {
-    if (this.tokenService.getTokenFromLocalStorage()) {
-      this.isLoggedIn = true;
-    }
+    this.store
+      .select((state) => state.user._id)
+      .subscribe((id) => {
+        if (id !== '') {
+          this.isLoggedIn = true;
+        } else {
+          this.isLoggedIn = false;
+        }
+      });
   }
 }
