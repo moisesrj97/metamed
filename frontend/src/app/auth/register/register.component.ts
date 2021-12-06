@@ -27,8 +27,8 @@ export class RegisterComponent implements OnInit {
   registerError: boolean = false;
 
   constructor(
-    private registerService: RegisterService,
-    private authService: AuthenticationService,
+    public registerService: RegisterService,
+    public authService: AuthenticationService,
     private tokenService: TokenService,
     private store: Store<{ user: UserStore }>,
     private router: Router,
@@ -72,7 +72,14 @@ export class RegisterComponent implements OnInit {
       profilePicture: ['', [Validators.required]],
       gender: '',
       birthDate: '',
-      businessName: '',
+      businessName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+        ],
+      ],
     });
   }
 
@@ -114,7 +121,6 @@ export class RegisterComponent implements OnInit {
 
   submitForm() {
     if (this.formGroup.valid && !this.fileError) {
-      console.log('VALID');
       if (this.formGroup.value['role'] === 'Professional') {
         this.registerService
           .registerProfessional({
