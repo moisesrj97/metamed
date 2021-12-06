@@ -40,10 +40,19 @@
     font-size: 1.2rem;
     font-weight: 400;
     text-transform: uppercase;
-    cursor: pointer;
     &:hover {
       background-color: #2e21ff;
       color: white;
+    }
+    &--disabled {
+      background-color: #ebebeb;
+      color: black;
+      border-color: black;
+      &:hover {
+        background-color: #e2e2e2;
+        color: black;
+        border-color: black;
+      }
     }
   }
   &__popup {

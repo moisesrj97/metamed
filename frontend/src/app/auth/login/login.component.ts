@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { UserStore } from 'src/app/models/interfaces';
@@ -10,46 +11,45 @@ import { loginUser } from 'src/app/services/store/actions/user.actions';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  formGroup: FormGroup;
   roles: string[] = ['professional', 'patient'];
-  email: string;
-  password: string;
-  selectedRole: string;
-  errorsPopup: { email: boolean; password: boolean; auth: boolean };
+  authPopup: boolean = false;
 
   constructor(
     private authService: AuthenticationService,
     private store: Store<{ userStore: UserStore }>,
-    private router: Router
+    private router: Router,
+    private fb: FormBuilder
   ) {
-    this.email = '';
-    this.password = '';
-    this.selectedRole = 'professional';
-    this.errorsPopup = {
-      email: false,
-      password: false,
-      auth: false,
-    };
+    this.formGroup = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+      role: ['professional', [Validators.required]],
+    });
   }
 
-  submitForm(): void {
-    this.errorsPopup.email = this.email.length < 1;
-    this.errorsPopup.password = this.password.length < 1;
+  ngOnInit(): void {}
 
-    if (!this.errorsPopup.email && !this.errorsPopup.password) {
+  submitForm(): void {
+    if (this.formGroup.valid) {
       this.authService
-        .loginWithoutToken(this.email, this.password, this.selectedRole)
+        .loginWithoutToken(
+          this.formGroup.value.email,
+          this.formGroup.value.password,
+          this.formGroup.value.role
+        )
         .subscribe({
           next: (data: any) => {
             this.store.dispatch(loginUser({ userInfo: { ...data } }));
             this.router.navigate(['/dashboard']);
           },
           error: () => {
-            this.errorsPopup.auth = true;
-            this.email = '';
-            this.password = '';
+            this.authPopup = true;
+            this.formGroup.reset();
+
             setTimeout(() => {
-              this.errorsPopup.auth = false;
+              this.authPopup = false;
             }, 2000);
           },
         });

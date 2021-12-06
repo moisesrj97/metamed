@@ -1,45 +1,54 @@
-<form class="form" (submit)="submitForm()">
+<form class="form" [formGroup]="formGroup" (submit)="submitForm()">
   <div class="form__roles">
     <div *ngFor="let role of roles">
       <label class="form__label" for="{{ role + 'role' }}">{{ role }}</label>
       <input
         type="radio"
-        value="{{ selectedRole }}"
+        value="{{ role }}"
         id="{{ role + 'role' }}"
         name="role"
-        (click)="selectedRole = role"
-        [defaultChecked]="role === 'professional'"
+        formControlName="role"
       />
     </div>
   </div>
   <div class="form__group">
     <label class="form__label" for="email">Email:</label>
-    <input
-      class="form__input"
-      type="text"
-      id="email"
-      name="email"
-      [(ngModel)]="email"
-      required="{{ true }}"
-    />
+    <input class="form__input" type="text" id="email" formControlName="email" />
   </div>
-  <div class="form__popup" *ngIf="errorsPopup.email">Email can´t be empty</div>
+  <div
+    class="form__popup"
+    *ngIf="
+      formGroup.controls['email'].invalid && formGroup.controls['email'].touched
+    "
+  >
+    Email can´t be empty and must be an email
+  </div>
   <div class="form__group">
     <label class="form__label" for="password">Password:</label>
     <input
       class="form__input"
       type="password"
       id="password"
-      name="password"
-      [(ngModel)]="password"
+      formControlName="password"
     />
   </div>
-  <div class="form__popup" *ngIf="errorsPopup.password">
+  <div
+    class="form__popup"
+    *ngIf="
+      formGroup.controls['password'].invalid &&
+      formGroup.controls['password'].touched
+    "
+  >
     Password can´t be empty
   </div>
 
-  <button class="form__button" type="submit">Log in</button>
-  <div class="form__popup" *ngIf="errorsPopup.auth">
-    Wrong email or password
-  </div>
+  <button
+    class="form__button"
+    [ngClass]="{ 'form__button--disabled': formGroup.invalid }"
+    type="submit"
+    [disabled]="formGroup.invalid"
+  >
+    Log in
+  </button>
+  <div class="form__popup" *ngIf="authPopup">Wrong email or password</div>
 </form>
