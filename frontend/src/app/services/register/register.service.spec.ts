@@ -40,7 +40,7 @@ describe('Given RegisterService', () => {
           name: '',
           surname: '',
           password: '',
-          profilePicture: { test: 'test' } as unknown as File,
+          profilePicture: 'asadsdasd',
         })
         .subscribe((response: any) => {
           expect(response).not.toBe(null);
@@ -68,7 +68,7 @@ describe('Given RegisterService', () => {
           name: '',
           surname: '',
           password: '',
-          profilePicture: { test: 'test' } as unknown as File,
+          profilePicture: 'adsads',
         })
         .subscribe((response: any) => {
           expect(response).not.toBe(null);

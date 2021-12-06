@@ -7,6 +7,14 @@ import { of, throwError } from 'rxjs';
 
 import { RegisterComponent } from './register.component';
 
+const myWindow = {
+  location: {
+    reload() {
+      return 'something';
+    },
+  },
+};
+
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
@@ -28,6 +36,7 @@ describe('RegisterComponent', () => {
     fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    component.compWindow = myWindow as unknown as Window;
     jasmine.clock().install();
   });
 
@@ -61,6 +70,8 @@ describe('RegisterComponent', () => {
 
   describe('When submitForm is called with professional Role', () => {
     it('register should be called', () => {
+      spyOn(component.compWindow.location, 'reload').and.callFake(() => {});
+
       component.formGroup.controls['role'].setValue('Professional');
 
       component.formGroup.controls['name'].setValue('test');
@@ -107,6 +118,8 @@ describe('RegisterComponent', () => {
 
   describe('When submitForm is called with professional Role and throws error', () => {
     it('register should be called', () => {
+      spyOn(component.compWindow.location, 'reload').and.callFake(() => {});
+
       component.formGroup.controls['role'].setValue('Professional');
 
       component.formGroup.controls['name'].setValue('test');
@@ -149,6 +162,8 @@ describe('RegisterComponent', () => {
 
   describe('When submitForm is called with professional Patient', () => {
     it('register should be called', () => {
+      spyOn(component.compWindow.location, 'reload').and.callFake(() => {});
+
       component.formGroup.controls['role'].setValue('Patient');
 
       component.formGroup.controls['name'].setValue('test');
@@ -197,6 +212,8 @@ describe('RegisterComponent', () => {
 
   describe('When submitForm is called with professional Patient and throws error', () => {
     it('register should be called', () => {
+      spyOn(component.compWindow.location, 'reload').and.callFake(() => {});
+
       component.formGroup.controls['role'].setValue('Patient');
 
       component.formGroup.controls['name'].setValue('test');
@@ -241,7 +258,7 @@ describe('RegisterComponent', () => {
   describe('When FileChecker is called with valid file', () => {
     it('fileError should be false ', () => {
       component.fileChecker({
-        target: { files: [{ type: 'image/png', size: 2 }] },
+        target: { files: [new File([], 'aadad', { type: 'image/png' })] },
       });
       expect(component.fileError).toBeFalse();
     });
@@ -250,7 +267,7 @@ describe('RegisterComponent', () => {
   describe('When FileChecker is called with invalid file', () => {
     it('fileError should be false ', () => {
       component.fileChecker({
-        target: { files: [{ type: 'image/pnga', size: 2 }] },
+        target: { files: [new File([], 'aadad', { type: 'image/asdasd' })] },
       });
       expect(component.fileError).toBeTrue();
     });
