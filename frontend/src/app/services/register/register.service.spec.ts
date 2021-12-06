@@ -40,7 +40,9 @@ describe('Given RegisterService', () => {
           name: '',
           surname: '',
           password: '',
-          profilePicture: 'asadsdasd',
+          profilePicture: new File([], 'test.jpg', {
+            type: 'image/jpeg',
+          }) as unknown as string,
         })
         .subscribe((response: any) => {
           expect(response).not.toBe(null);
@@ -68,7 +70,9 @@ describe('Given RegisterService', () => {
           name: '',
           surname: '',
           password: '',
-          profilePicture: 'adsads',
+          profilePicture: new File([], 'test.jpg', {
+            type: 'image/jpeg',
+          }) as unknown as string,
         })
         .subscribe((response: any) => {
           expect(response).not.toBe(null);
