@@ -43,15 +43,18 @@
     &:hover {
       background-color: #2e21ff;
       color: white;
+      cursor: pointer;
     }
     &--disabled {
       background-color: #ebebeb;
       color: black;
       border-color: black;
+
       &:hover {
         background-color: #e2e2e2;
         color: black;
         border-color: black;
+        cursor: not-allowed;
       }
     }
   }
