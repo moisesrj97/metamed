@@ -25,6 +25,7 @@ export class RegisterComponent implements OnInit {
   roles: string[] = ['Professional', 'Patient'];
   fileError: boolean = false;
   registerError: boolean = false;
+  imageSrc!: string;
 
   constructor(
     public registerService: RegisterService,
@@ -128,7 +129,7 @@ export class RegisterComponent implements OnInit {
             surname: this.formGroup.value['surname'],
             email: this.formGroup.value['email'],
             password: this.formGroup.value['password'],
-            profilePicture: this.formGroup.value['profilePicture'],
+            profilePicture: this.imageSrc,
             businessName: this.formGroup.value['businessName'],
           })
           .subscribe({
@@ -164,7 +165,7 @@ export class RegisterComponent implements OnInit {
             surname: this.formGroup.value['surname'],
             email: this.formGroup.value['email'],
             password: this.formGroup.value['password'],
-            profilePicture: this.formGroup.value['profilePicture'],
+            profilePicture: this.imageSrc,
             birthDate: this.formGroup.value['birthDate'],
             gender: this.formGroup.value['gender'],
           })
@@ -200,7 +201,6 @@ export class RegisterComponent implements OnInit {
 
   fileChecker(fileEvent: any) {
     const file = fileEvent.target.files[0];
-    console.log(file);
     if (
       !['image/jpeg', 'image/png'].includes(file.type) ||
       file.size > 10000000
@@ -208,6 +208,17 @@ export class RegisterComponent implements OnInit {
       this.fileError = true;
     } else {
       this.fileError = false;
+    }
+
+    const reader = new FileReader();
+
+    if (fileEvent.target.files && fileEvent.target.files.length) {
+      const [file] = fileEvent.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.imageSrc = file;
+      };
     }
   }
 }

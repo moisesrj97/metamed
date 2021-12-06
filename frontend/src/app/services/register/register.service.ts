@@ -11,7 +11,7 @@ export interface RegisterProfessionalFormData {
   businessName: string;
   email: string;
   password: string;
-  profilePicture: File;
+  profilePicture: string;
 }
 
 export interface RegisterPatientFormData {
@@ -21,7 +21,7 @@ export interface RegisterPatientFormData {
   birthDate: string;
   email: string;
   password: string;
-  profilePicture: File;
+  profilePicture: string;
 }
 
 @Injectable({
@@ -41,15 +41,16 @@ export class RegisterService {
     multipartFormData.set('password', formData.password);
     multipartFormData.append(
       'profilePicture',
-      new Blob([formData.profilePicture]),
-      formData.profilePicture.name
+      formData.profilePicture,
+      'image'
     );
+
+    console.log(formData.profilePicture);
 
     return this.httpClient.post(
       'http://localhost:3000/professional',
       multipartFormData
     ) as Observable<UserStore>;
-    //! Remember to call loginWithoutToken after this in order to get the token
   }
 
   registerPatient(formData: RegisterPatientFormData): Observable<UserStore> {
@@ -62,14 +63,13 @@ export class RegisterService {
     multipartFormData.set('password', formData.password);
     multipartFormData.append(
       'profilePicture',
-      new Blob([formData.profilePicture]),
-      formData.profilePicture.name
+      formData.profilePicture,
+      'image'
     );
 
     return this.httpClient.post(
       'http://localhost:3000/patient',
       multipartFormData
     ) as Observable<UserStore>;
-    //! Remember to call loginWithoutToken after this in order to get the token
   }
 }
