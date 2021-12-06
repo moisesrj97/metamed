@@ -21,11 +21,9 @@ export class RouteAuthGuard implements CanActivate {
     | UrlTree {
     let result: boolean;
     if (this.tokenService.getTokenFromLocalStorage()) {
-      console.log('false');
       this.router.navigate(['/dashboard']);
       result = false;
     } else {
-      console.log('true');
       result = true;
     }
 

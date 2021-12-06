@@ -11,8 +11,7 @@ import { TokenService } from '../services/token/token.service';
 export class RouteAuthLazyGuard implements CanLoad {
   constructor(private router: Router, private tokenService: TokenService) {}
   canLoad(
-    route: Route,
-    segments: UrlSegment[]
+    route: Route
   ):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
@@ -23,14 +22,16 @@ export class RouteAuthLazyGuard implements CanLoad {
       if (this.tokenService.getTokenFromLocalStorage()) {
         this.router.navigate(['/dashboard']);
         result = false;
+      } else {
+        result = true;
       }
-      result = true;
     } else {
       if (!this.tokenService.getTokenFromLocalStorage()) {
         this.router.navigate(['/']);
         result = false;
+      } else {
+        result = true;
       }
-      result = true;
     }
 
     return result as boolean;
