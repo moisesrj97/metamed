@@ -73,7 +73,6 @@ export class SideNavComponent implements OnInit {
     this.store
       .select((state) => state.user._id)
       .subscribe((id) => {
-        console.log(id);
         if (id !== '') {
           this.isRendered = true;
         }

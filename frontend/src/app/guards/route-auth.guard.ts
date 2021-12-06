@@ -13,21 +13,22 @@ import { TokenService } from '../services/token/token.service';
   providedIn: 'root',
 })
 export class RouteAuthGuard implements CanActivate {
-  constructor(private tokenService: TokenService, private router: Router) {}
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
+  constructor(public tokenService: TokenService, private router: Router) {}
+  canActivate():
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
     let result: boolean;
     if (this.tokenService.getTokenFromLocalStorage()) {
+      console.log('false');
       this.router.navigate(['/dashboard']);
       result = false;
+    } else {
+      console.log('true');
+      result = true;
     }
-    result = true;
+
     return result;
   }
 }
