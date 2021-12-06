@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { FooterComponent } from '../footer/footer.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SideNavComponent } from '../side-nav/side-nav.component';
@@ -19,6 +20,7 @@ describe('LayoutComponent', () => {
         SideNavComponent,
       ],
       imports: [RouterTestingModule],
+      providers: [provideMockStore()],
     }).compileComponents();
   });
 

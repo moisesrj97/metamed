@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 
 import { NavbarComponent } from './navbar.component';
 
@@ -11,6 +12,7 @@ describe('NavbarComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [NavbarComponent],
       imports: [RouterTestingModule],
+      providers: [provideMockStore()],
     }).compileComponents();
   });
 
@@ -22,12 +24,6 @@ describe('NavbarComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  beforeEach(() => {
-    spyOn(component.tokenService, 'getTokenFromLocalStorage').and.returnValue(
-      '123'
-    );
   });
 
   describe('When clicking openNav', () => {

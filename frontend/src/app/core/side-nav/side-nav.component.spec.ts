@@ -5,6 +5,7 @@ import { SideNavComponent } from './side-nav.component';
 
 import { routes } from '../../app-routing.module';
 import { Router } from '@angular/router';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('SideNavComponent', () => {
   let component: SideNavComponent;
@@ -15,6 +16,7 @@ describe('SideNavComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [SideNavComponent],
       imports: [RouterTestingModule.withRoutes(routes)],
+      providers: [provideMockStore()],
     }).compileComponents();
 
     router = TestBed.inject(Router);
