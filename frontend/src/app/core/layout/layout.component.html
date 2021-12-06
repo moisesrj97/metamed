@@ -4,6 +4,8 @@
     [open]="sideBarOpen"
     (toggleNav)="toggleNav($event)"
   ></app-side-nav>
-  <ng-content #name></ng-content>
+  <div class="frame">
+    <ng-content></ng-content>
+  </div>
 </main>
 <app-footer></app-footer>
