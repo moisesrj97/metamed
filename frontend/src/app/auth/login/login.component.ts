@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   authPopup: boolean = false;
 
   constructor(
-    private authService: AuthenticationService,
+    public authService: AuthenticationService,
     private store: Store<{ userStore: UserStore }>,
     private router: Router,
     private fb: FormBuilder
