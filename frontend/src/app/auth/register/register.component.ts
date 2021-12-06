@@ -21,6 +21,7 @@ import { TokenService } from 'src/app/services/token/token.service';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
+  myWindow: Window = window;
   formGroup: FormGroup;
   roles: string[] = ['Professional', 'Patient'];
   fileError: boolean = false;
@@ -143,10 +144,7 @@ export class RegisterComponent implements OnInit {
                     this.formGroup.value['password'],
                     this.formGroup.value['role']
                   )
-                  .subscribe((token) => {
-                    this.tokenService.loadTokenToLocalStorage(token);
-                    this.router.navigate(['/']);
-                  });
+                  .subscribe(() => this.myWindow.location.reload());
               }
             ),
             error: () => {
@@ -180,10 +178,7 @@ export class RegisterComponent implements OnInit {
                     this.formGroup.value['password'],
                     this.formGroup.value['role']
                   )
-                  .subscribe((token) => {
-                    this.tokenService.loadTokenToLocalStorage(token);
-                    this.router.navigate(['/']);
-                  });
+                  .subscribe(() => this.myWindow.location.reload());
               }
             ),
             error: () => {
