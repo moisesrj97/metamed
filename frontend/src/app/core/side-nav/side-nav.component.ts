@@ -6,7 +6,6 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { UserStore } from 'src/app/models/interfaces';
 import { logoutUser } from 'src/app/services/store/actions/user.actions';
@@ -20,6 +19,7 @@ import { TokenService } from 'src/app/services/token/token.service';
 export class SideNavComponent implements OnInit {
   wasInside: boolean = false;
   isRendered: boolean;
+  compWindow: Window;
 
   menuItems: {
     imagePath: string;
@@ -31,9 +31,8 @@ export class SideNavComponent implements OnInit {
   @Output() toggleNav: EventEmitter<boolean>;
 
   constructor(
-    public router: Router,
-    private tokenService: TokenService,
-    private store: Store<{ user: UserStore }>
+    public tokenService: TokenService,
+    public store: Store<{ user: UserStore }>
   ) {
     this.toggleNav = new EventEmitter<boolean>();
     this.menuItems = [
@@ -57,6 +56,7 @@ export class SideNavComponent implements OnInit {
       },
     ];
     this.isRendered = false;
+    this.compWindow = window;
   }
 
   closeNav() {
@@ -66,8 +66,7 @@ export class SideNavComponent implements OnInit {
   logout() {
     this.tokenService.deleteTokenFromLocalStorage();
     this.store.dispatch(logoutUser());
-    this.router.navigate(['']);
-    window.location.reload();
+    this.compWindow.location.reload();
   }
 
   ngOnInit(): void {

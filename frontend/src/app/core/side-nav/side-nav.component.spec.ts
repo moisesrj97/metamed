@@ -5,18 +5,28 @@ import { SideNavComponent } from './side-nav.component';
 
 import { routes } from '../../app-routing.module';
 import { Router } from '@angular/router';
-import { provideMockStore } from '@ngrx/store/testing';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+
+const myWindow = {
+  location: {
+    reload() {
+      return 'something';
+    },
+  },
+};
 
 describe('SideNavComponent', () => {
   let component: SideNavComponent;
   let fixture: ComponentFixture<SideNavComponent>;
   let router: Router;
+  let store: MockStore;
+  let initialState = { user: { _id: '123' } };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [SideNavComponent],
       imports: [RouterTestingModule.withRoutes(routes)],
-      providers: [provideMockStore()],
+      providers: [provideMockStore({ initialState })],
     }).compileComponents();
 
     router = TestBed.inject(Router);
@@ -25,6 +35,7 @@ describe('SideNavComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SideNavComponent);
     component = fixture.componentInstance;
+    component.compWindow = myWindow as unknown as Window;
     fixture.detectChanges();
   });
 
@@ -52,9 +63,20 @@ describe('SideNavComponent', () => {
     });
   });
 
-  /* describe('Router thing', () => {
-    it('Router thing', () => {
-      router.navigate(['/']);
+  describe('When store has a valid _id', () => {
+    it('isRendered should be true', () => {
+      expect(component.isRendered).toBe(true);
     });
-  }); */
+  });
+
+  describe('When logout is called', () => {
+    it('Token service, store and window should be called', () => {
+      spyOn(component.tokenService, 'deleteTokenFromLocalStorage');
+      spyOn(component.compWindow.location, 'reload').and.callFake(() => {});
+      component.logout();
+      expect(
+        component.tokenService.deleteTokenFromLocalStorage
+      ).toHaveBeenCalled();
+    });
+  });
 });
