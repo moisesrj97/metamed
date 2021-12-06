@@ -8,6 +8,8 @@ import { NavbarComponent } from './core/navbar/navbar.component';
 import { FooterComponent } from './core/footer/footer.component';
 import { LayoutComponent } from './core/layout/layout.component';
 import { routes } from './app-routing.module';
+import { of, Subscription } from 'rxjs';
+import { UserStore } from './models/interfaces';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -21,6 +23,9 @@ describe('AppComponent', () => {
       ],
       providers: [provideMockStore()],
     }).compileComponents();
+
+    localStorage.clear();
+    localStorage.setItem('token', 'token');
   });
 
   it('should create the app', () => {
@@ -51,6 +56,30 @@ describe('AppComponent', () => {
           expect(route.loadChildren?.()).toBeDefined();
         }
       });
+    });
+  });
+
+  describe('If token exists', () => {
+    it('Auth service should be called', () => {
+      const fixture = TestBed.createComponent(AppComponent);
+      spyOn(
+        fixture.componentInstance.authService,
+        'loginWithToken'
+      ).and.returnValue(
+        of({
+          _id: 'aaa',
+          name: 'aaa',
+          surname: 'aaa',
+          role: 'aaa',
+          email: 'aaa',
+          profilePicture: 'aaa',
+        })
+      );
+
+      fixture.detectChanges();
+      expect(
+        fixture.componentInstance.authService.loginWithToken
+      ).toHaveBeenCalled();
     });
   });
 });

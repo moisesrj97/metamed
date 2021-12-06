@@ -14,8 +14,8 @@ export class AppComponent implements OnInit {
   title = 'frontend';
   userInfo: any;
   constructor(
-    private authService: AuthenticationService,
-    private store: Store<{ userStore: UserStore }>,
+    public authService: AuthenticationService,
+    public store: Store<{ userStore: UserStore }>,
     private tokenService: TokenService
   ) {
     this.userInfo = undefined;
