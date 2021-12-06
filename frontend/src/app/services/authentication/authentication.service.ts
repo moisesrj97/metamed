@@ -30,7 +30,6 @@ export class AuthenticationService {
       .pipe(
         mergeMap((token: any) => {
           fetchedToken = token;
-          console.log(fetchedToken);
           this.tokenService.loadTokenToLocalStorage(fetchedToken);
           return this.http.post(
             `${this.baseUrl}token`,

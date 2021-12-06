@@ -107,8 +107,6 @@ describe('RegisterComponent', () => {
       component.formGroup.clearValidators();
       component.formGroup.updateValueAndValidity();
 
-      console.log(component.formGroup.status);
-
       component.submitForm();
 
       expect(component.registerService.registerProfessional).toHaveBeenCalled();
@@ -146,8 +144,6 @@ describe('RegisterComponent', () => {
 
       component.formGroup.clearValidators();
       component.formGroup.updateValueAndValidity();
-
-      console.log(component.formGroup.status);
 
       component.submitForm();
 
@@ -201,8 +197,6 @@ describe('RegisterComponent', () => {
       component.formGroup.clearValidators();
       component.formGroup.updateValueAndValidity();
 
-      console.log(component.formGroup.status);
-
       component.submitForm();
 
       expect(component.registerService.registerPatient).toHaveBeenCalled();
@@ -241,8 +235,6 @@ describe('RegisterComponent', () => {
 
       component.formGroup.clearValidators();
       component.formGroup.updateValueAndValidity();
-
-      console.log(component.formGroup.status);
 
       component.submitForm();
 
