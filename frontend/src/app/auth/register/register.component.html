@@ -1,1 +1,170 @@
-<p>register works!</p>
+<form class="form" [formGroup]="formGroup" (submit)="submitForm()">
+  <div class="form__group">
+    <label class="form__label" for="name">Name:</label>
+    <input class="form__input" type="text" id="name" formControlName="name" />
+  </div>
+  <div
+    class="form__popup"
+    *ngIf="
+      formGroup.controls['name'].invalid && formGroup.controls['name'].touched
+    "
+  >
+    Name can´t be empty and must be at least 3 characters long
+  </div>
+  <div class="form__group">
+    <label class="form__label" for="surname">Surname:</label>
+    <input
+      class="form__input"
+      type="text"
+      id="surname"
+      formControlName="surname"
+    />
+  </div>
+  <div
+    class="form__popup"
+    *ngIf="
+      formGroup.controls['surname'].invalid &&
+      formGroup.controls['surname'].touched
+    "
+  >
+    Surname can´t be empty and must be at least 3 characters long
+  </div>
+  <div class="form__group">
+    <label class="form__label" for="profilePicture">ProfilePicture:</label>
+    <input
+      class="form__input"
+      type="file"
+      id="profilePicture"
+      formControlName="profilePicture"
+      (change)="fileChecker($event)"
+    />
+  </div>
+  <div
+    class="form__popup"
+    *ngIf="
+      (formGroup.controls['profilePicture'].invalid &&
+        formGroup.controls['profilePicture'].touched) ||
+      fileError
+    "
+  >
+    File extension must be jpg, jpeg or png and size must be less than 10MB
+  </div>
+  <div class="form__group">
+    <label class="form__label" for="email">Email:</label>
+    <input class="form__input" type="text" id="email" formControlName="email" />
+  </div>
+  <div
+    class="form__popup"
+    *ngIf="
+      formGroup.controls['email'].invalid && formGroup.controls['email'].touched
+    "
+  >
+    Email can´t be empty and must be an email
+  </div>
+  <div class="form__group">
+    <label class="form__label" for="password">Password:</label>
+    <input
+      class="form__input"
+      type="password"
+      id="password"
+      formControlName="password"
+    />
+  </div>
+  <div
+    class="form__popup"
+    *ngIf="
+      formGroup.controls['password'].invalid &&
+      formGroup.controls['password'].touched
+    "
+  >
+    Password can´t be empty
+  </div>
+  <div class="form__roles">
+    <div *ngFor="let role of roles">
+      <label class="form__label" for="{{ role + 'role' }}">{{ role }}</label>
+      <input
+        type="radio"
+        value="{{ role }}"
+        id="{{ role + 'role' }}"
+        name="role"
+        formControlName="role"
+      />
+    </div>
+  </div>
+
+  <div *ngIf="formGroup.value.role === 'Professional'">
+    <div class="form__group">
+      <label class="form__label" for="password">BusinessName:</label>
+      <input
+        class="form__input"
+        type="businessName"
+        id="businessName"
+        formControlName="businessName"
+      />
+    </div>
+    <div
+      class="form__popup"
+      *ngIf="
+        formGroup.controls['businessName'].invalid &&
+        formGroup.controls['businessName'].touched
+      "
+    >
+      Password can´t be empty and must be at least 3 characters long
+    </div>
+  </div>
+
+  <div *ngIf="formGroup.value.role === 'Patient'">
+    <div class="form__group">
+      <label class="form__label" for="password">Gender:</label>
+      <input
+        class="form__input"
+        type="gender"
+        id="gender"
+        formControlName="gender"
+      />
+    </div>
+    <div
+      class="form__popup"
+      *ngIf="
+        formGroup.controls['gender'].invalid &&
+        formGroup.controls['gender'].touched
+      "
+    >
+      Password can´t be empty and must be at least 3 characters long
+    </div>
+  </div>
+
+  <div *ngIf="formGroup.value.role === 'Patient'">
+    <div class="form__group">
+      <label class="form__label" for="password">BirthDate:</label>
+      <input
+        class="form__input"
+        type="birthDate"
+        id="birthDate"
+        formControlName="birthDate"
+      />
+    </div>
+    <div
+      class="form__popup"
+      *ngIf="
+        formGroup.controls['birthDate'].invalid &&
+        formGroup.controls['birthDate'].touched
+      "
+    >
+      Password can´t be empty and must be at least 3 characters long
+    </div>
+  </div>
+
+  <button
+    class="form__button"
+    [ngClass]="{ 'form__button--disabled': formGroup.invalid || fileError }"
+    type="submit"
+    [disabled]="formGroup.invalid"
+  >
+    Log in
+  </button>
+</form>
+
+<p class="form__popup" *ngIf="registerError">
+  Sorry, that email already exists
+</p>

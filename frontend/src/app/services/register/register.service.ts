@@ -28,32 +28,48 @@ export interface RegisterPatientFormData {
   providedIn: 'root',
 })
 export class RegisterService {
-  constructor(
-    private httpClient: HttpClient,
-    private tokenService: TokenService
-  ) {}
+  constructor(private httpClient: HttpClient) {}
 
   registerProfessional(
     formData: RegisterProfessionalFormData
   ): Observable<UserStore> {
+    const multipartFormData = new FormData();
+    multipartFormData.set('name', formData.name);
+    multipartFormData.set('surname', formData.surname);
+    multipartFormData.set('businessName', formData.businessName);
+    multipartFormData.set('email', formData.email);
+    multipartFormData.set('password', formData.password);
+    multipartFormData.append(
+      'profilePicture',
+      new Blob([formData.profilePicture]),
+      formData.profilePicture.name
+    );
+
     return this.httpClient.post(
       'http://localhost:3000/professional',
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }
+      multipartFormData
     ) as Observable<UserStore>;
     //! Remember to call loginWithoutToken after this in order to get the token
   }
 
   registerPatient(formData: RegisterPatientFormData): Observable<UserStore> {
-    return this.httpClient.post('http://localhost:3000/patient', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    }) as Observable<UserStore>;
+    const multipartFormData = new FormData();
+    multipartFormData.set('name', formData.name);
+    multipartFormData.set('surname', formData.surname);
+    multipartFormData.set('gender', formData.gender);
+    multipartFormData.set('birthDate', formData.birthDate);
+    multipartFormData.set('email', formData.email);
+    multipartFormData.set('password', formData.password);
+    multipartFormData.append(
+      'profilePicture',
+      new Blob([formData.profilePicture]),
+      formData.profilePicture.name
+    );
+
+    return this.httpClient.post(
+      'http://localhost:3000/patient',
+      multipartFormData
+    ) as Observable<UserStore>;
     //! Remember to call loginWithoutToken after this in order to get the token
   }
 }
