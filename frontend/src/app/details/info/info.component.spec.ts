@@ -2,13 +2,17 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { of } from 'rxjs';
+import { UserStore } from 'src/app/models/interfaces';
 
 import { InfoComponent } from './info.component';
 
 describe('InfoComponent', () => {
   let component: InfoComponent;
   let fixture: ComponentFixture<InfoComponent>;
-  let initialState = { user: { _id: '' } };
+  let initialState = {
+    user: { _id: '', patients: [{ refData: { _id: 'test' }, extraData: [] }] },
+  };
   let store: MockStore;
 
   beforeEach(async () => {
@@ -29,5 +33,62 @@ describe('InfoComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('When addExtraData is called', () => {
+    it('PAtient managment service should be called', () => {
+      component.data.extraData = [{ key: 'test', value: 'test' }];
+      spyOn(component.tokenService, 'getTokenFromLocalStorage').and.returnValue(
+        'test'
+      );
+      spyOn(
+        component.patientManageService,
+        'updateExtraDataFromPatient'
+      ).and.returnValue(of({} as unknown as UserStore));
+
+      component.addExtraData();
+
+      expect(
+        component.patientManageService.updateExtraDataFromPatient
+      ).toHaveBeenCalled();
+    });
+  });
+
+  describe('When deleteXtraData is called', () => {
+    it('PAtient managment service should be called', () => {
+      component.data.extraData = [{ key: 'test', value: 'test' }];
+      spyOn(component.tokenService, 'getTokenFromLocalStorage').and.returnValue(
+        'test'
+      );
+      spyOn(
+        component.patientManageService,
+        'updateExtraDataFromPatient'
+      ).and.returnValue(of({} as unknown as UserStore));
+
+      component.deleteExtraData(1);
+
+      expect(
+        component.patientManageService.updateExtraDataFromPatient
+      ).toHaveBeenCalled();
+    });
+  });
+
+  describe('When deletePatient is called', () => {
+    it('PAtient managment service should be called', () => {
+      component.data.extraData = [{ key: 'test', value: 'test' }];
+      spyOn(component.tokenService, 'getTokenFromLocalStorage').and.returnValue(
+        'test'
+      );
+      spyOn(
+        component.patientManageService,
+        'removePatientFromList'
+      ).and.returnValue(of({} as unknown as UserStore));
+
+      component.deletePatient();
+
+      expect(
+        component.patientManageService.removePatientFromList
+      ).toHaveBeenCalled();
+    });
   });
 });

@@ -34,7 +34,7 @@ export class InfoComponent implements OnInit {
   value: string = '';
 
   constructor(
-    private route: ActivatedRoute,
+    public route: ActivatedRoute,
     private router: Router,
     private store: Store<{ user: UserStore }>,
     public patientManageService: PatientManagmentService,
