@@ -14,6 +14,9 @@ import {
 export class DashboardComponent implements OnInit {
   usersDataInfo: PatientModel[] | ProfessionalModel[] = [];
   filteredUsersDataInfo: PatientModel[] | ProfessionalModel[] = [];
+
+  isModalOpen: boolean = false;
+
   constructor(private store: Store<{ user: UserStore }>) {}
 
   ngOnInit(): void {

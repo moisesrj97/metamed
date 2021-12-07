@@ -1,1 +1,9 @@
-<p>add-modal works!</p>
+<div class="container" *ngIf="modalOpen">
+  <div class="modal">
+    <div class="modal__form">
+      <label for="text" class="modal__form__label">Patient ID:</label>
+      <input type="text" name="text" id="text" class="modal__form__input" />
+      <button type="submit" class="modal__form__button">Add patient</button>
+    </div>
+  </div>
+</div>

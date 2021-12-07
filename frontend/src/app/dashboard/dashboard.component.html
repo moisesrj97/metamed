@@ -1,5 +1,17 @@
+<div class="modal-open">
+  <img
+    src="../../assets/images/plus.png"
+    alt="plus icon"
+    class="modal-open__button-icon"
+    (click)="isModalOpen = true"
+  />
+  <p class="modal-open__button" (click)="isModalOpen = true">Add patient</p>
+</div>
 <app-search (search)="filterUsers($event)"></app-search>
 <div class="main-container">
   <app-card *ngFor="let item of filteredUsersDataInfo" [data]="item"></app-card>
 </div>
-<app-add-modal></app-add-modal>
+<app-add-modal
+  (closeModal)="isModalOpen = $event"
+  [modalOpen]="isModalOpen"
+></app-add-modal>
