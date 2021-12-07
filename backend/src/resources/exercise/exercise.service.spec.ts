@@ -101,7 +101,7 @@ describe('Given ExerciseService', () => {
         },
         '' as unknown as Express.Multer.File,
       );
-      expect(response).toEqual({ _id: 'f2f2f2f2f2f2', author: 'f8f8f8f8f8f8' });
+      expect(response).toEqual({ _id: 'f9f9f9f9f9f9' });
     });
   });
 

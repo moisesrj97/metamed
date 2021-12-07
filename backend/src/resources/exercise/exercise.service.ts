@@ -48,7 +48,7 @@ export class ExerciseService {
       image: imageUrl,
     });
 
-    return await this.exerciseGroupModel.findByIdAndUpdate(
+    await this.exerciseGroupModel.findByIdAndUpdate(
       createExerciseDto.exerciseGroupId,
       {
         $push: {
@@ -57,6 +57,8 @@ export class ExerciseService {
       },
       { new: true },
     );
+
+    return createdExercise;
   }
 
   async update(
