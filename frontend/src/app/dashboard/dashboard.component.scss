@@ -36,3 +36,10 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .main-container {
+    gap: 5px;
+    flex-direction: column;
+  }
+}

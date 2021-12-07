@@ -22,3 +22,16 @@
     font-size: 1.1rem;
   }
 }
+
+@media (max-width: 768px) {
+  .card {
+    flex-direction: row;
+    width: 100%;
+    height: 80px;
+    padding: 0 10px;
+    &__img {
+      height: 70px;
+      width: 70px;
+    }
+  }
+}
