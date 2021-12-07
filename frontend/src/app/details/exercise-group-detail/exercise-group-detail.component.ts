@@ -55,10 +55,8 @@ export class ExerciseGroupDetailComponent implements OnInit {
   }
 
   addExercise() {
-    console.log(this.newExercise);
     if (!this.fileError && this.newExercise.name && this.newExercise.amount) {
       const token = this.tokenService.getTokenFromLocalStorage() as string;
-      console.log(this.newExercise);
       this.exerciseService
         .createExerciseInExerciseGroup(
           {
@@ -70,7 +68,6 @@ export class ExerciseGroupDetailComponent implements OnInit {
           token
         )
         .subscribe((data) => {
-          console.log(data);
           this.data.exercises.push(data);
           this.newExercise.name = '';
           this.newExercise.amount = '';
