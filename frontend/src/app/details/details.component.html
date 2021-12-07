@@ -7,7 +7,12 @@
         class="details__nav-item"
         routerLinkActive="details__nav-item--active"
       >
-        {{ item.label }}
+        <img
+          class="details__nav-item-img"
+          src="{{ item.icon }}"
+          alt="{{ item.label }}"
+        />
+        <p>{{ item.label }}</p>
       </li>
     </ul>
   </nav>

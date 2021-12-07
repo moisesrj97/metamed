@@ -17,22 +17,27 @@ export class DetailsComponent implements OnInit {
     {
       label: 'Patient data',
       route: 'info',
+      icon: '../../assets/images/user.png',
     },
     {
       label: 'Exercise table',
       route: 'exercise-groups',
+      icon: '../../assets/images/details-exercise.png',
     },
     {
       label: 'Meal plans',
       route: 'meal-groups',
+      icon: '../../assets/images/detailes-meals.png',
     },
     {
       label: 'Notes',
       route: 'notes',
+      icon: '../../assets/images/details-notes.png',
     },
     {
       label: 'Messages',
       route: 'messages',
+      icon: '../../assets/images/details-messages.png',
     },
   ];
   id!: string;
