@@ -53,5 +53,7 @@
       </button>
     </form>
   </div>
-  <button *ngIf="editing" class="info__remove">Remove patient</button>
+  <button *ngIf="editing" class="info__remove" (click)="deletePatient()">
+    Remove patient
+  </button>
 </div>

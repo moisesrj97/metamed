@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
   ExtraDataModel,
@@ -9,6 +9,7 @@ import {
 } from 'src/app/models/interfaces';
 import { PatientManagmentService } from 'src/app/services/patientManagment/patient-managment.service';
 import {
+  deleteUserFromProfessional,
   loginUser,
   updatePatientExtraDataFromProfessional,
 } from 'src/app/services/store/actions/user.actions';
@@ -34,6 +35,7 @@ export class InfoComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private store: Store<{ user: UserStore }>,
     public patientManageService: PatientManagmentService,
     public tokenService: TokenService
@@ -107,5 +109,16 @@ export class InfoComponent implements OnInit {
           })
         )
       );
+  }
+
+  deletePatient() {
+    const token = this.tokenService.getTokenFromLocalStorage() as string;
+
+    this.patientManageService
+      .removePatientFromList(this.professionalId, this.id, token)
+      .subscribe((newState) => {
+        this.store.dispatch(deleteUserFromProfessional({ patientId: this.id }));
+        this.router.navigate(['/dashboard']);
+      });
   }
 }
