@@ -45,8 +45,6 @@ export class RegisterService {
       'image'
     );
 
-    console.log(formData.profilePicture);
-
     return this.httpClient.post(
       'http://localhost:3000/professional',
       multipartFormData
