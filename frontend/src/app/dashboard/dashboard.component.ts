@@ -13,15 +13,32 @@ import {
 })
 export class DashboardComponent implements OnInit {
   usersDataInfo: PatientModel[] | ProfessionalModel[] = [];
+  filteredUsersDataInfo: PatientModel[] | ProfessionalModel[] = [];
   constructor(private store: Store<{ user: UserStore }>) {}
 
   ngOnInit(): void {
     this.store.select('user').subscribe((user) => {
       if (user.role === 'Professional') {
         this.usersDataInfo = user.patients as PatientModel[];
+        this.filteredUsersDataInfo = this.usersDataInfo;
       } else {
         this.usersDataInfo = user.professionals as ProfessionalModel[];
+        this.filteredUsersDataInfo = this.usersDataInfo;
       }
     });
+  }
+
+  filterUsers(filter: string) {
+    if (filter === '') {
+      this.filteredUsersDataInfo = this.usersDataInfo;
+    } else {
+      this.filteredUsersDataInfo = this.usersDataInfo.filter((user) => {
+        return (
+          user.refData.name.toLowerCase() +
+          ' ' +
+          user.refData.surname.toLowerCase()
+        ).includes(filter.toLowerCase());
+      });
+    }
   }
 }

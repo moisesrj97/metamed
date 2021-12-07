@@ -1,1 +1,8 @@
-<p>search works!</p>
+<label for="search-input" class="form__label">Look for patient: </label>
+<input
+  class="form__input"
+  type="text"
+  name="search-input"
+  id="search-input"
+  (input)="emitSearch($event)"
+/>
