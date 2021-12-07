@@ -4,9 +4,11 @@ import { Store } from '@ngrx/store';
 import {
   MealGroupModel,
   PatientModel,
+  RefDataModel,
   UserStore,
 } from 'src/app/models/interfaces';
 import { MealGroupService } from 'src/app/services/mealGroup/meal-group.service';
+import { addMealGroup } from 'src/app/services/store/actions/mealGroup.action';
 import { TokenService } from 'src/app/services/token/token.service';
 
 @Component({
@@ -18,6 +20,7 @@ export class MealGroupsComponent implements OnInit {
   id!: string;
   data: string[] = [];
   fetchedData: MealGroupModel[] = [];
+  input: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -45,5 +48,35 @@ export class MealGroupsComponent implements OnInit {
           });
         });
       });
+  }
+
+  addGroup() {
+    const token = this.tokenService.getTokenFromLocalStorage() as string;
+
+    if (this.input.length > 0) {
+      this.mealGroupService
+        .addMealGroupToPatient(this.id, this.input, token)
+        .subscribe((data) => {
+          const newGroupId = data.patients
+            ?.find(
+              (patient) =>
+                patient.refData === (this.id as unknown as RefDataModel)
+            )
+            ?.mealGroups.find(
+              (group) => ![...this.data].includes(group)
+            ) as string;
+
+          this.fetchedData = [];
+
+          this.store.dispatch(
+            addMealGroup({
+              mealGroupId: newGroupId,
+              patientId: this.id,
+            })
+          );
+        });
+    }
+
+    this.input = '';
   }
 }
