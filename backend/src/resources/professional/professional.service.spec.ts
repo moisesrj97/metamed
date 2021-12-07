@@ -34,12 +34,16 @@ describe('Given ProfessionalService', () => {
       },
       findByIdAndUpdate() {
         return {
-          patients: [
-            {
-              refData: new mongoose.Types.ObjectId('f8f8f8f8f8f8'),
-              chatRef: 'f9f9f9f9f9f9',
-            },
-          ],
+          populate: () => {
+            return {
+              patients: [
+                {
+                  refData: new mongoose.Types.ObjectId('f8f8f8f8f8f8'),
+                  chatRef: 'f9f9f9f9f9f9',
+                },
+              ],
+            };
+          },
         };
       },
       findByIdAndDelete() {

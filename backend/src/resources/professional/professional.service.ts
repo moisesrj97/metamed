@@ -101,11 +101,16 @@ export class ProfessionalService {
     if (file) {
       await this.s3ImageService.updateFile(file, profilePicture);
     }
-    return await this.professionalModel.findByIdAndUpdate(
-      { _id: id },
-      { $set: { name, surname, businessName } },
-      { new: true },
-    );
+    return await this.professionalModel
+      .findByIdAndUpdate(
+        { _id: id },
+        { $set: { name, surname, businessName } },
+        { new: true },
+      )
+      .populate({
+        path: 'patients',
+        populate: 'refData',
+      });
   }
 
   async addPatientToProfessional(
@@ -152,11 +157,16 @@ export class ProfessionalService {
       { $push: { professionals: newProfessionalToPatient } },
     );
 
-    return await this.professionalModel.findByIdAndUpdate(
-      { _id: id },
-      { $push: { patients: newPatientToProfessional } },
-      { new: true },
-    );
+    return await this.professionalModel
+      .findByIdAndUpdate(
+        { _id: id },
+        { $push: { patients: newPatientToProfessional } },
+        { new: true },
+      )
+      .populate({
+        path: 'patients',
+        populate: 'refData',
+      });
   }
 
   async updatePatientFromProfessional(
@@ -178,18 +188,23 @@ export class ProfessionalService {
       throw new UnauthorizedException('Invalid token');
     }
 
-    return await this.professionalModel.findByIdAndUpdate(
-      { _id: id },
-      {
-        $set: {
-          'patients.$[elem].extraData': allExtraDataUpdated,
+    return await this.professionalModel
+      .findByIdAndUpdate(
+        { _id: id },
+        {
+          $set: {
+            'patients.$[elem].extraData': allExtraDataUpdated,
+          },
         },
-      },
-      {
-        arrayFilters: [{ 'elem.refData': patientId }],
-        new: true,
-      },
-    );
+        {
+          arrayFilters: [{ 'elem.refData': patientId }],
+          new: true,
+        },
+      )
+      .populate({
+        path: 'patients',
+        populate: 'refData',
+      });
   }
 
   async removePatientFromProfessional(
@@ -226,15 +241,20 @@ export class ProfessionalService {
       ).chatRef,
     );
 
-    const result = await this.professionalModel.findByIdAndUpdate(
-      { _id: id },
-      {
-        $pull: {
-          patients: { refData: patientId },
+    const result = await this.professionalModel
+      .findByIdAndUpdate(
+        { _id: id },
+        {
+          $pull: {
+            patients: { refData: patientId },
+          },
         },
-      },
-      { new: true },
-    );
+        { new: true },
+      )
+      .populate({
+        path: 'patients',
+        populate: 'refData',
+      });
 
     await this.patientModel.findByIdAndUpdate(
       { _id: patientId },
