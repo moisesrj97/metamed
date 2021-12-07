@@ -29,7 +29,11 @@ describe('RouteAuthLazyGuard', () => {
   describe('When tokenService return no token', () => {
     it('canActivate return true', () => {
       localStorage.clear();
-      expect(guard.canActivate()).toBeTrue();
+      expect(
+        guard.canActivate({
+          routeConfig: { path: 'test' },
+        } as ActivatedRouteSnapshot)
+      ).toBeTrue();
     });
   });
 
@@ -37,7 +41,34 @@ describe('RouteAuthLazyGuard', () => {
     it('canActivate return false', () => {
       localStorage.clear();
       localStorage.setItem('token', 'token');
-      expect(guard.canActivate()).toBeFalsy();
+      expect(
+        guard.canActivate({
+          routeConfig: { path: 'test' },
+        } as ActivatedRouteSnapshot)
+      ).toBeFalse();
+    });
+  });
+
+  describe('When tokenService return no token', () => {
+    it('canActivate return true', () => {
+      localStorage.clear();
+      expect(
+        guard.canActivate({
+          routeConfig: { path: 'info' },
+        } as ActivatedRouteSnapshot)
+      ).toBeFalse();
+    });
+  });
+
+  describe('When tokenService return a valid token', () => {
+    it('canActivate return false', () => {
+      localStorage.clear();
+      localStorage.setItem('token', 'token');
+      expect(
+        guard.canActivate({
+          routeConfig: { path: 'info' },
+        } as ActivatedRouteSnapshot)
+      ).toBeTrue();
     });
   });
 });

@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 
 import { NotesComponent } from './notes.component';
 
@@ -8,9 +10,10 @@ describe('NotesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NotesComponent ]
-    })
-    .compileComponents();
+      declarations: [NotesComponent],
+      imports: [RouterTestingModule],
+      providers: [provideMockStore()],
+    }).compileComponents();
   });
 
   beforeEach(() => {

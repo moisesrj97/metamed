@@ -13,38 +13,39 @@ import {
   styleUrls: ['./details.component.scss'],
 })
 export class DetailsComponent implements OnInit {
-  navItems = [
-    {
-      label: 'Patient data',
-      route: 'info',
-      icon: '../../assets/images/user.png',
-    },
-    {
-      label: 'Exercise table',
-      route: 'exercise-groups',
-      icon: '../../assets/images/details-exercise.png',
-    },
-    {
-      label: 'Meal plans',
-      route: 'meal-groups',
-      icon: '../../assets/images/detailes-meals.png',
-    },
-    {
-      label: 'Notes',
-      route: 'notes',
-      icon: '../../assets/images/details-notes.png',
-    },
-    {
-      label: 'Messages',
-      route: 'messages',
-      icon: '../../assets/images/details-messages.png',
-    },
-  ];
+  navItems!: { label: string; route: string; icon: string }[];
   id!: string;
 
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.navItems = [
+      {
+        label: 'Patient data',
+        route: 'info',
+        icon: '../../assets/images/user.png',
+      },
+      {
+        label: 'Exercise table',
+        route: 'exercise-groups',
+        icon: '../../assets/images/details-exercise.png',
+      },
+      {
+        label: 'Meal plans',
+        route: 'meal-groups',
+        icon: '../../assets/images/detailes-meals.png',
+      },
+      {
+        label: 'Notes',
+        route: 'notes',
+        icon: '../../assets/images/details-notes.png',
+      },
+      {
+        label: 'Messages',
+        route: 'messages',
+        icon: '../../assets/images/details-messages.png',
+      },
+    ];
     this.id = this.route.snapshot.paramMap.get('id') as string;
   }
 }
