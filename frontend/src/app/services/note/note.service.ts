@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserStore } from 'src/app/models/interfaces';
+import { NoteModel, UserStore } from 'src/app/models/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -41,15 +41,15 @@ export class NoteService {
     ) as Observable<UserStore>;
   }
 
-  getNote(noteId: string, token: string): Observable<UserStore> {
+  getNote(noteId: string, token: string): Observable<NoteModel> {
     return this.httpClient.get(`${this.baseUrl}/${noteId}`, {
       headers: new HttpHeaders().set('Authorization', 'Bearer ' + token),
-    }) as Observable<UserStore>;
+    }) as Observable<NoteModel>;
   }
 
-  deleteNote(noteId: string, token: string): Observable<UserStore> {
+  deleteNote(noteId: string, token: string): Observable<NoteModel> {
     return this.httpClient.delete(`${this.baseUrl}/${noteId}`, {
       headers: new HttpHeaders().set('Authorization', 'Bearer ' + token),
-    }) as Observable<UserStore>;
+    }) as Observable<NoteModel>;
   }
 }

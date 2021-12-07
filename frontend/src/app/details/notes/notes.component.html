@@ -1,2 +1,6 @@
-<p>notes works!</p>
-{{ data | json }}
+<div class="grid">
+  <div class="card" *ngFor="let item of fetchedData">
+    <h3 class="card__title">{{ item.title }}</h3>
+    <p class="card__text">{{ item.description | slice: 0:140 }} ...</p>
+  </div>
+</div>
