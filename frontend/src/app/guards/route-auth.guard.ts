@@ -25,9 +25,16 @@ export class RouteAuthGuard implements CanActivate {
     | UrlTree {
     let result: boolean;
     if (
-      ['info', 'meal-groups', 'exercise-groups', 'messages', 'notes'].includes(
-        route.routeConfig?.path as string
-      )
+      [
+        'info',
+        'meal-groups',
+        'meal-groups/:id',
+        'exercise-groups',
+        'exercise-groups/:id',
+        'messages',
+        'notes',
+        'notes/:id',
+      ].includes(route.routeConfig?.path as string)
     ) {
       if (!this.tokenService.getTokenFromLocalStorage()) {
         this.router.navigate(['/']);
