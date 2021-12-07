@@ -7,6 +7,12 @@ import {
   RefDataModel,
   UserStore,
 } from 'src/app/models/interfaces';
+import { PatientManagmentService } from 'src/app/services/patientManagment/patient-managment.service';
+import {
+  loginUser,
+  updatePatientExtraDataFromProfessional,
+} from 'src/app/services/store/actions/user.actions';
+import { TokenService } from 'src/app/services/token/token.service';
 
 @Component({
   selector: 'app-info',
@@ -15,6 +21,7 @@ import {
 })
 export class InfoComponent implements OnInit {
   id!: string;
+  professionalId!: string;
   data: { refData: RefDataModel; extraData: ExtraDataModel[] } = {
     refData: { surname: '', profilePicture: '', name: '', _id: '' },
     extraData: [],
@@ -27,11 +34,19 @@ export class InfoComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private store: Store<{ user: UserStore }>
+    private store: Store<{ user: UserStore }>,
+    public patientManageService: PatientManagmentService,
+    public tokenService: TokenService
   ) {}
 
   ngOnInit(): void {
     this.id = this.route.parent?.snapshot.paramMap.get('id') as string;
+
+    this.store
+      .select((state) => state.user._id)
+      .subscribe((userId) => {
+        this.professionalId = userId;
+      });
 
     this.store
       .select((state) => state.user.patients)
@@ -45,5 +60,52 @@ export class InfoComponent implements OnInit {
       });
   }
 
-  addExtraData() {}
+  addExtraData() {
+    const token = this.tokenService.getTokenFromLocalStorage() as string;
+
+    const updatedExtraData = [
+      ...this.data.extraData,
+      { key: this.key, value: this.value },
+    ];
+    this.patientManageService
+      .updateExtraDataFromPatient(
+        this.professionalId,
+        this.id,
+        updatedExtraData,
+        token
+      )
+      .subscribe(() =>
+        this.store.dispatch(
+          updatePatientExtraDataFromProfessional({
+            patientId: this.id,
+            fullExtraDataUpdated: updatedExtraData,
+          })
+        )
+      );
+    this.key = '';
+    this.value = '';
+  }
+
+  deleteExtraData(index: number) {
+    const token = this.tokenService.getTokenFromLocalStorage() as string;
+
+    const updatedExtraData = [...this.data.extraData];
+    updatedExtraData.splice(index, 1);
+
+    this.patientManageService
+      .updateExtraDataFromPatient(
+        this.professionalId,
+        this.id,
+        updatedExtraData,
+        token
+      )
+      .subscribe(() =>
+        this.store.dispatch(
+          updatePatientExtraDataFromProfessional({
+            patientId: this.id,
+            fullExtraDataUpdated: updatedExtraData,
+          })
+        )
+      );
+  }
 }

@@ -19,13 +19,17 @@
     <p class="info__data-item">Surname: {{ data.refData?.surname }}</p>
   </div>
   <div class="info__data-extra">
-    <div *ngFor="let item of data.extraData" class="info__data-item">
+    <div
+      *ngFor="let item of data.extraData; let i = index"
+      class="info__data-item"
+    >
       <p>{{ item.key }}: {{ item.value }}</p>
       <img
         class="info__data-item-delete"
         src="../../../assets/images/trash.png"
         alt="Delete extra data"
         *ngIf="editing"
+        (click)="deleteExtraData(i)"
       />
     </div>
 
@@ -34,10 +38,12 @@
         type="text"
         placeholder="Key"
         class="info__data-form-input"
+        name="key"
         [(ngModel)]="key"
       />
       <input
         type="text"
+        name="value"
         placeholder="Value"
         class="info__data-form-input"
         [(ngModel)]="value"
