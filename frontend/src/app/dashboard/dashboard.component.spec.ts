@@ -5,6 +5,7 @@ import {
   ProfessionalModel,
   UserStore,
 } from '../models/interfaces';
+import { CardComponent } from './card/card.component';
 
 import { DashboardComponent } from './dashboard.component';
 
@@ -63,7 +64,7 @@ describe('DashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DashboardComponent],
+      declarations: [DashboardComponent, CardComponent],
       providers: [provideMockStore({ initialState })],
     }).compileComponents();
 
