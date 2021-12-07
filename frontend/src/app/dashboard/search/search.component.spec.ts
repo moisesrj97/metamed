@@ -8,9 +8,8 @@ describe('SearchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SearchComponent ]
-    })
-    .compileComponents();
+      declarations: [SearchComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -21,5 +20,16 @@ describe('SearchComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('When emitSearch is called', () => {
+    it('search emit should be called', () => {
+      spyOn(component.search, 'emit');
+      component.emitSearch({
+        target: { value: 'test' } as unknown as HTMLInputElement,
+      } as unknown as Event);
+
+      expect(component.search.emit).toHaveBeenCalled();
+    });
   });
 });
