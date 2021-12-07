@@ -7,9 +7,15 @@ import { CardComponent } from './card/card.component';
 import { SearchComponent } from './search/search.component';
 import { FormsModule } from '@angular/forms';
 import { AddModalComponent } from './add-modal/add-modal.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [DashboardComponent, CardComponent, SearchComponent, AddModalComponent],
-  imports: [CommonModule, DashboardRoutingModule, FormsModule],
+  declarations: [
+    DashboardComponent,
+    CardComponent,
+    SearchComponent,
+    AddModalComponent,
+  ],
+  imports: [CommonModule, DashboardRoutingModule, FormsModule, RouterModule],
 })
 export class DashboardModule {}
