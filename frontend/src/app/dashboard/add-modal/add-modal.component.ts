@@ -26,7 +26,7 @@ export class AddModalComponent implements OnInit {
   constructor(
     public patientManagmentService: PatientManagmentService,
     public tokenService: TokenService,
-    private store: Store<{ user: UserStore }>
+    public store: Store<{ user: UserStore }>
   ) {
     this.closeModal = new EventEmitter();
   }

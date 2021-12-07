@@ -40,6 +40,25 @@ describe('DashboardComponent', () => {
           mealGroups: [],
           notes: [],
         },
+        {
+          refData: {
+            _id: '61ae36e84ca6906a6b9bc5c5',
+            surname: 'Patient',
+            profilePicture:
+              'https://metamed-images.s3.eu-west-3.amazonaws.com/4ab2273c-ffeb-428a-a678-7b3e715c0deb',
+            name: 'Pepe Rodríguez Jurado',
+          },
+          extraData: [],
+          chatRef: {
+            _id: '61ae374c4ca6906a6b9bc5cc',
+            messages: [],
+            patient: '61ae36e84ca6906a6b9bc5c5',
+            professional: '61ae32db4ca6906a6b9bc593',
+          },
+          exerciseGroups: [],
+          mealGroups: [],
+          notes: [],
+        },
       ],
       professionals: [
         {
@@ -99,6 +118,59 @@ describe('DashboardComponent', () => {
           profilePicture:
             'https://metamed-images.s3.eu-west-3.amazonaws.com/4ab2273c-ffeb-428a-a678-7b3e715c0deb',
           name: 'Moisés Rodríguez Jurado',
+        },
+        extraData: [],
+        chatRef: {
+          _id: '61ae374c4ca6906a6b9bc5cc',
+          messages: [],
+          patient: '61ae36e84ca6906a6b9bc5c5',
+          professional: '61ae32db4ca6906a6b9bc593',
+        },
+        exerciseGroups: [],
+        mealGroups: [],
+        notes: [],
+      });
+    });
+  });
+
+  describe('If filterUsers is called with empty string', () => {
+    it('returns equal data', () => {
+      component.filteredUsersDataInfo = [];
+      component.filterUsers('');
+      expect(component.filteredUsersDataInfo[0]).toEqual({
+        refData: {
+          _id: '61ae36e84ca6906a6b9bc5c5',
+          surname: 'Patient',
+          profilePicture:
+            'https://metamed-images.s3.eu-west-3.amazonaws.com/4ab2273c-ffeb-428a-a678-7b3e715c0deb',
+          name: 'Moisés Rodríguez Jurado',
+        },
+        extraData: [],
+        chatRef: {
+          _id: '61ae374c4ca6906a6b9bc5cc',
+          messages: [],
+          patient: '61ae36e84ca6906a6b9bc5c5',
+          professional: '61ae32db4ca6906a6b9bc593',
+        },
+        exerciseGroups: [],
+        mealGroups: [],
+        notes: [],
+      });
+    });
+  });
+
+  describe('If filterUsers is called without empty string', () => {
+    it('filters data', () => {
+      component.filteredUsersDataInfo = [];
+      component.filterUsers('pep');
+      console.log(component.filteredUsersDataInfo);
+      expect(component.filteredUsersDataInfo[0]).toEqual({
+        refData: {
+          _id: '61ae36e84ca6906a6b9bc5c5',
+          surname: 'Patient',
+          profilePicture:
+            'https://metamed-images.s3.eu-west-3.amazonaws.com/4ab2273c-ffeb-428a-a678-7b3e715c0deb',
+          name: 'Pepe Rodríguez Jurado',
         },
         extraData: [],
         chatRef: {
