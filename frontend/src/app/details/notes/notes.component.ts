@@ -24,8 +24,8 @@ export class NotesComponent implements OnInit {
   input: string = '';
 
   constructor(
-    private route: ActivatedRoute,
-    private store: Store<{ user: UserStore }>,
+    public route: ActivatedRoute,
+    public store: Store<{ user: UserStore }>,
     public noteService: NoteService,
     public tokenService: TokenService
   ) {}

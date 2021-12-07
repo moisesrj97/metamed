@@ -23,8 +23,8 @@ export class MealGroupsComponent implements OnInit {
   input: string = '';
 
   constructor(
-    private route: ActivatedRoute,
-    private store: Store<{ user: UserStore }>,
+    public route: ActivatedRoute,
+    public store: Store<{ user: UserStore }>,
     public mealGroupService: MealGroupService,
     public tokenService: TokenService
   ) {}
@@ -32,13 +32,12 @@ export class MealGroupsComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.route.parent?.snapshot.paramMap.get('id') as string;
     const token = this.tokenService.getTokenFromLocalStorage() as string;
-
     this.store
       .select((state) => state.user.patients)
       .subscribe((patients) => {
-        const result = patients?.find(
-          (patient) => patient.refData._id === this.id
-        ) as PatientModel;
+        const result = patients?.find((patient) => {
+          return patient.refData._id === this.id;
+        }) as PatientModel;
 
         this.data = result?.mealGroups;
 
@@ -65,6 +64,8 @@ export class MealGroupsComponent implements OnInit {
             ?.mealGroups.find(
               (group) => ![...this.data].includes(group)
             ) as string;
+
+          console.log(newGroupId);
 
           this.fetchedData = [];
 

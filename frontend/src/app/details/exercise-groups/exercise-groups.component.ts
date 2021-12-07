@@ -23,8 +23,8 @@ export class ExerciseGroupsComponent implements OnInit {
   input: string = '';
 
   constructor(
-    private route: ActivatedRoute,
-    private store: Store<{ user: UserStore }>,
+    public route: ActivatedRoute,
+    public store: Store<{ user: UserStore }>,
     public exerciseGroupService: ExerciseGroupService,
     public tokenService: TokenService
   ) {}
