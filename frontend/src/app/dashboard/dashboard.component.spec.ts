@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import {
@@ -5,9 +6,11 @@ import {
   ProfessionalModel,
   UserStore,
 } from '../models/interfaces';
+import { AddModalComponent } from './add-modal/add-modal.component';
 import { CardComponent } from './card/card.component';
 
 import { DashboardComponent } from './dashboard.component';
+import { SearchComponent } from './search/search.component';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -64,8 +67,14 @@ describe('DashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DashboardComponent, CardComponent],
+      declarations: [
+        DashboardComponent,
+        CardComponent,
+        AddModalComponent,
+        SearchComponent,
+      ],
       providers: [provideMockStore({ initialState })],
+      imports: [HttpClientTestingModule],
     }).compileComponents();
 
     store = TestBed.inject(MockStore);
