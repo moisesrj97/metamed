@@ -1,3 +1,15 @@
+<form class="form" (submit)="addGroup()">
+  <input
+    class="form__input"
+    type="text"
+    name="text"
+    id="text"
+    placeholder="New groups's name"
+    [(ngModel)]="input"
+  />
+  <button class="form__button" type="submit">Add</button>
+</form>
+
 <div class="grid">
   <div class="card" *ngFor="let item of fetchedData">
     <h3 class="card__title">{{ item.title }}</h3>
