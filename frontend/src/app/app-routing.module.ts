@@ -22,6 +22,12 @@ export const routes: Routes = [
     canLoad: [RouteAuthLazyGuard],
   },
   {
+    path: 'details/:id',
+    loadChildren: () =>
+      import('./details/details.module').then((m) => m.DetailsModule),
+    canLoad: [RouteAuthLazyGuard],
+  },
+  {
     path: 'profile',
     loadChildren: () =>
       import('./profile/profile.module').then((m) => m.ProfileModule),
