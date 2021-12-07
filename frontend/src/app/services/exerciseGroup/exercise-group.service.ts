@@ -27,10 +27,11 @@ export class ExerciseGroupService {
 
   updateExerciseGroupName(
     exerciseGroupId: string,
-    newExerciseGroupName: string,
-    newExerciseExtraInfo: string,
-    token: string
+    token: string,
+    newExerciseGroupName?: string,
+    newExerciseExtraInfo?: string
   ): Observable<UserStore> {
+    console.log(newExerciseGroupName, newExerciseExtraInfo);
     return this.httpClient.patch(
       `${this.baseUrl}/${exerciseGroupId}`,
       {

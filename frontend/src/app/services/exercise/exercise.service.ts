@@ -5,14 +5,14 @@ export interface CreateExerciseDto {
   name: string;
   amount: string;
   exerciseGroupId: string;
-  exerciseImage: File;
+  exerciseImage: string;
 }
 
 export interface UpdateExerciseDto {
   name: string;
   amount: string;
   imageUrl: string;
-  exerciseImage?: File;
+  exerciseImage?: string;
 }
 
 @Injectable({
@@ -23,18 +23,15 @@ export class ExerciseService {
   constructor(private httpClient: HttpClient) {}
 
   createExerciseInExerciseGroup(exercise: CreateExerciseDto, token: string) {
-    return this.httpClient.post(
-      this.baseUrl,
-      {
-        name: exercise.name,
-        amount: exercise.amount,
-        exerciseImage: exercise.exerciseImage,
-        exerciseGroupId: exercise.exerciseGroupId,
-      },
-      {
-        headers: new HttpHeaders().set('Authorization', `Bearer ${token}`),
-      }
-    );
+    const multipartFormData = new FormData();
+    multipartFormData.set('name', exercise.name);
+    multipartFormData.set('amount', exercise.amount);
+    multipartFormData.set('exerciseGroupId', exercise.exerciseGroupId);
+    multipartFormData.append('exerciseImage', exercise.exerciseImage, 'image');
+
+    return this.httpClient.post(this.baseUrl, multipartFormData, {
+      headers: new HttpHeaders().set('Authorization', `Bearer ${token}`),
+    });
   }
 
   updateExerciseInfo(
@@ -42,14 +39,21 @@ export class ExerciseService {
     exercise: UpdateExerciseDto,
     token: string
   ) {
+    const multipartFormData = new FormData();
+    multipartFormData.set('name', exercise.name);
+    multipartFormData.set('amount', exercise.amount);
+    multipartFormData.set('imageUrl', exercise.imageUrl);
+    if (exercise.exerciseImage) {
+      multipartFormData.append(
+        'exerciseImage',
+        exercise.exerciseImage,
+        'image'
+      );
+    }
+
     return this.httpClient.patch(
       `${this.baseUrl}/${exerciseId}`,
-      {
-        name: exercise.name,
-        amount: exercise.amount,
-        exerciseImage: exercise.exerciseImage,
-        imageUrl: exercise.imageUrl,
-      },
+      multipartFormData,
       {
         headers: new HttpHeaders().set('Authorization', `Bearer ${token}`),
       }
