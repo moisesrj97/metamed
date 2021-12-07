@@ -20,6 +20,11 @@ export class InfoComponent implements OnInit {
     extraData: [],
   };
 
+  editing: boolean = false;
+
+  key: string = '';
+  value: string = '';
+
   constructor(
     private route: ActivatedRoute,
     private store: Store<{ user: UserStore }>
@@ -39,4 +44,6 @@ export class InfoComponent implements OnInit {
         this.data.extraData = result?.extraData;
       });
   }
+
+  addExtraData() {}
 }
