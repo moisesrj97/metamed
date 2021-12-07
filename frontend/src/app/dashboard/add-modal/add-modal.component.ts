@@ -53,7 +53,6 @@ export class AddModalComponent implements OnInit {
       !event.target.className.match(/modal/i) &&
       !event.target.className.match(/modal-open__button/i)
     ) {
-      console.log('clicked outside');
       this.closeModal.emit(false);
     }
   }

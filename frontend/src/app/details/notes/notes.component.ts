@@ -23,13 +23,9 @@ export class NotesComponent implements OnInit {
     this.store
       .select((state) => state.user.patients)
       .subscribe((patients) => {
-        console.log(this.id, patients);
-
         const result = patients?.find(
           (patient) => patient.refData._id === this.id
         ) as PatientModel;
-
-        console.log(result);
 
         this.data = result?.notes;
       });

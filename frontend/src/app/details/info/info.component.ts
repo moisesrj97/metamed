@@ -31,13 +31,9 @@ export class InfoComponent implements OnInit {
     this.store
       .select((state) => state.user.patients)
       .subscribe((patients) => {
-        console.log(this.id, patients);
-
         const result = patients?.find(
           (patient) => patient.refData._id === this.id
         ) as PatientModel;
-
-        console.log(result);
 
         this.data.refData = result?.refData;
         this.data.extraData = result?.extraData;

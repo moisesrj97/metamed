@@ -163,7 +163,6 @@ describe('DashboardComponent', () => {
     it('filters data', () => {
       component.filteredUsersDataInfo = [];
       component.filterUsers('pep');
-      console.log(component.filteredUsersDataInfo);
       expect(component.filteredUsersDataInfo[0]).toEqual({
         refData: {
           _id: '61ae36e84ca6906a6b9bc5c5',
