@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import {
+  ActivatedRoute,
   ActivatedRouteSnapshot,
   CanActivate,
+  Route,
   Router,
   RouterStateSnapshot,
   UrlTree,
@@ -14,17 +16,32 @@ import { TokenService } from '../services/token/token.service';
 })
 export class RouteAuthGuard implements CanActivate {
   constructor(public tokenService: TokenService, private router: Router) {}
-  canActivate():
+  canActivate(
+    route: ActivatedRouteSnapshot
+  ):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
     let result: boolean;
-    if (this.tokenService.getTokenFromLocalStorage()) {
-      this.router.navigate(['/dashboard']);
-      result = false;
+    if (
+      ['info', 'meal-groups', 'exercise-groups', 'messages', 'notes'].includes(
+        route.routeConfig?.path as string
+      )
+    ) {
+      if (!this.tokenService.getTokenFromLocalStorage()) {
+        this.router.navigate(['/']);
+        result = false;
+      } else {
+        result = true;
+      }
     } else {
-      result = true;
+      if (this.tokenService.getTokenFromLocalStorage()) {
+        this.router.navigate(['/dashboard']);
+        result = false;
+      } else {
+        result = true;
+      }
     }
 
     return result;
