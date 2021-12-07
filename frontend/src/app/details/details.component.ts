@@ -36,22 +36,10 @@ export class DetailsComponent implements OnInit {
     },
   ];
   id!: string;
-  data!: PatientModel | ProfessionalModel;
 
-  constructor(
-    private route: ActivatedRoute,
-    private store: Store<{ user: UserStore }>
-  ) {}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id') as string;
-
-    this.store
-      .select((state) => state.user.patients)
-      .subscribe((patients) => {
-        this.data = patients?.find(
-          (patient) => patient.refData._id === this.id
-        ) as PatientModel;
-      });
   }
 }
