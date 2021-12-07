@@ -1,3 +1,4 @@
+import { Token } from '@angular/compiler/src/ml_parser/tokens';
 import {
   Component,
   Input,
@@ -6,6 +7,11 @@ import {
   EventEmitter,
   HostListener,
 } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { UserStore } from 'src/app/models/interfaces';
+import { PatientManagmentService } from 'src/app/services/patientManagment/patient-managment.service';
+import { loginUser } from 'src/app/services/store/actions/user.actions';
+import { TokenService } from 'src/app/services/token/token.service';
 
 @Component({
   selector: 'app-add-modal',
@@ -15,11 +21,31 @@ import {
 export class AddModalComponent implements OnInit {
   @Input() modalOpen!: boolean;
   @Output() closeModal: EventEmitter<boolean>;
-  constructor() {
+  input: string = '';
+
+  constructor(
+    public patientManagmentService: PatientManagmentService,
+    public tokenService: TokenService,
+    private store: Store<{ user: UserStore }>
+  ) {
     this.closeModal = new EventEmitter();
   }
 
   ngOnInit(): void {}
+
+  addPatient(): void {
+    let token = this.tokenService.getTokenFromLocalStorage() as string;
+    this.store
+      .select((state) => state.user._id)
+      .subscribe((id) => {
+        this.patientManagmentService
+          .addPatientToList(id, this.input, token)
+          .subscribe((newStore) => {
+            this.store.dispatch(loginUser({ userInfo: newStore }));
+            this.closeModal.emit(false);
+          });
+      });
+  }
 
   @HostListener('document:click', ['$event'])
   onGlobalClick(event: any): void {
