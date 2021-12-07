@@ -1,2 +1,22 @@
-<p>info works!</p>
-{{ data | json }}
+<div class="info">
+  <div class="info__edit"></div>
+  <img
+    src="{{ data.refData?.profilePicture }}"
+    alt="{{
+      data.refData?.name + ' ' + data.refData?.surname + ' profile picture'
+    }}"
+    class="info__img"
+  />
+  <div class="info__data">
+    <p class="info__data-item">Name: {{ data.refData?.name }}</p>
+    <p class="info__data-item">Surname: {{ data.refData?.surname }}</p>
+  </div>
+  <div class="info__data-extra">
+    <h4>Extra data:</h4>
+    <p *ngFor="let item of data.extraData">{{ item.key }}: {{ item.value }}</p>
+    <p>Extra data form</p>
+  </div>
+  <div class="info__remove">
+    <button>Remove patient</button>
+  </div>
+</div>
