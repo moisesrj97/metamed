@@ -73,3 +73,19 @@ export interface JwtModel {
   name: string;
   email: string;
 }
+
+export interface ExerciseGroupModel {
+  _id: string;
+  extra: string;
+  name: string;
+  author: string;
+  exercises: ExerciseModel[];
+}
+
+export interface ExerciseModel {
+  _id: string;
+  name: string;
+  amount: string;
+  image: string;
+  author: string;
+}

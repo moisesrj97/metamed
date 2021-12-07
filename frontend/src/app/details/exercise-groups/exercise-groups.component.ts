@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { PatientModel, UserStore } from 'src/app/models/interfaces';
+import {
+  ExerciseGroupModel,
+  PatientModel,
+  UserStore,
+} from 'src/app/models/interfaces';
+import { ExerciseGroupService } from 'src/app/services/exerciseGroup/exercise-group.service';
+import { TokenService } from 'src/app/services/token/token.service';
 
 @Component({
   selector: 'app-exercise-groups',
@@ -11,14 +17,18 @@ import { PatientModel, UserStore } from 'src/app/models/interfaces';
 export class ExerciseGroupsComponent implements OnInit {
   id!: string;
   data: string[] = [];
+  fetchedData: ExerciseGroupModel[] = [];
 
   constructor(
     private route: ActivatedRoute,
-    private store: Store<{ user: UserStore }>
+    private store: Store<{ user: UserStore }>,
+    public exerciseGroupService: ExerciseGroupService,
+    public tokenService: TokenService
   ) {}
 
   ngOnInit(): void {
     this.id = this.route.parent?.snapshot.paramMap.get('id') as string;
+    const token = this.tokenService.getTokenFromLocalStorage() as string;
 
     this.store
       .select((state) => state.user.patients)
@@ -28,6 +38,14 @@ export class ExerciseGroupsComponent implements OnInit {
         ) as PatientModel;
 
         this.data = result?.exerciseGroups;
+
+        this.data?.forEach((group) => {
+          this.exerciseGroupService
+            .getExerciseGroup(group, token)
+            .subscribe((data) => {
+              this.fetchedData.push(data);
+            });
+        });
       });
   }
 }

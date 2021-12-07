@@ -1,2 +1,8 @@
-<p>exercise-groups works!</p>
-{{ data | json }}
+<div class="grid">
+  <div class="card" *ngFor="let item of fetchedData">
+    <h3 class="card__title">{{ item.name }}</h3>
+    <p class="card__title-item" *ngFor="let exercise of item.exercises">
+      {{ exercise.name }}
+    </p>
+  </div>
+</div>

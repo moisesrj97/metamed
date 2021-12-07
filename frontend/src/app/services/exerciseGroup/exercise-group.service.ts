@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserStore } from 'src/app/models/interfaces';
+import { ExerciseGroupModel, UserStore } from 'src/app/models/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -44,10 +44,10 @@ export class ExerciseGroupService {
   getExerciseGroup(
     exerciseGroupId: string,
     token: string
-  ): Observable<UserStore> {
+  ): Observable<ExerciseGroupModel> {
     return this.httpClient.get(`${this.baseUrl}/${exerciseGroupId}`, {
       headers: new HttpHeaders().set('Authorization', 'Bearer ' + token),
-    }) as Observable<UserStore>;
+    }) as Observable<ExerciseGroupModel>;
   }
 
   deleteExerciseGroup(
