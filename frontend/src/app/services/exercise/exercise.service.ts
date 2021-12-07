@@ -1,5 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ExerciseModel } from 'src/app/models/interfaces';
 
 export interface CreateExerciseDto {
   name: string;
@@ -22,7 +24,10 @@ export class ExerciseService {
   baseUrl: string = 'http://localhost:3000/exercise';
   constructor(private httpClient: HttpClient) {}
 
-  createExerciseInExerciseGroup(exercise: CreateExerciseDto, token: string) {
+  createExerciseInExerciseGroup(
+    exercise: CreateExerciseDto,
+    token: string
+  ): Observable<ExerciseModel> {
     const multipartFormData = new FormData();
     multipartFormData.set('name', exercise.name);
     multipartFormData.set('amount', exercise.amount);
@@ -31,7 +36,7 @@ export class ExerciseService {
 
     return this.httpClient.post(this.baseUrl, multipartFormData, {
       headers: new HttpHeaders().set('Authorization', `Bearer ${token}`),
-    });
+    }) as Observable<ExerciseModel>;
   }
 
   updateExerciseInfo(

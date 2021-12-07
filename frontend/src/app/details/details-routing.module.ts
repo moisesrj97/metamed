@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RouteAuthGuard } from '../guards/route-auth.guard';
 import { DetailsComponent } from './details.component';
+import { ExerciseGroupDetailComponent } from './exercise-group-detail/exercise-group-detail.component';
 import { ExerciseGroupsComponent } from './exercise-groups/exercise-groups.component';
 import { InfoComponent } from './info/info.component';
 import { MealGroupsComponent } from './meal-groups/meal-groups.component';
@@ -14,6 +15,11 @@ const routes: Routes = [
     component: DetailsComponent,
     children: [
       { path: 'info', component: InfoComponent, canActivate: [RouteAuthGuard] },
+      {
+        path: 'exercise-groups/:id',
+        component: ExerciseGroupDetailComponent,
+        canActivate: [RouteAuthGuard],
+      },
       {
         path: 'exercise-groups',
         component: ExerciseGroupsComponent,

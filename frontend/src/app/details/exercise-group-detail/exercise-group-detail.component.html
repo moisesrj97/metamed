@@ -1,0 +1,120 @@
+<div *ngIf="editing" class="delete-group"></div>
+<div class="title">
+  <h2>{{ data?.name }}</h2>
+  <img
+    src="../../../assets/images/edit.png"
+    alt="Edit group"
+    class="edit-icon"
+    (click)="editing = !editing"
+  />
+</div>
+<div class="exercises" *ngIf="!editing">
+  <div class="exercise__item" *ngFor="let item of data?.exercises">
+    <img
+      src="{{ item?.image }}"
+      alt="{{ item?.name }}"
+      class="exercise__item-img"
+    />
+    <p class="exercises__item-text">{{ item?.name }}: {{ item?.amount }}</p>
+  </div>
+</div>
+<div class="extra" *ngIf="!editing">
+  <h3 class="extra__title">Extra data:</h3>
+  <p class="extra__text">{{ data?.extra }}</p>
+</div>
+
+<div class="form" *ngIf="editing">
+  <h5>Title</h5>
+  <label for="title" class="form__label">Group title:</label>
+  <input
+    type="text"
+    id="title"
+    class="form__input"
+    [(ngModel)]="data.name"
+    name="title"
+    placeholder="Enter group title"
+    (change)="changeTitle()"
+  />
+
+  <h5>Extra data</h5>
+  <label for="extra" class="form__label">Extra data:</label>
+  <textarea
+    type="text"
+    id="extra"
+    class="form__input"
+    [(ngModel)]="data.extra"
+    name="extra"
+    placeholder="Enter group extra data"
+    (change)="changeExtra()"
+  ></textarea>
+
+  <h5>Exercises</h5>
+  <div *ngFor="let item of data.exercises; let i = index">
+    <label for="{{ 'exercise-name' + i }}">Exercise name: </label
+    ><input
+      type="text"
+      id="{{ 'exercise-name' + i }}"
+      class="form__input"
+      [(ngModel)]="item.name"
+      name="exercise-name"
+      placeholder="Enter exercise name"
+    />
+
+    <label for="{{ 'exercise-image' + i }}">Exercise image: </label>
+    <input
+      type="file"
+      id="{{ 'exercise-image' + i }}"
+      class="form__input"
+      name="exercise-image"
+      placeholder="Enter exercise image"
+    />
+
+    <label for="{{ 'exercise-amount' + i }}">Exercise amount: </label>
+    <input
+      type="text"
+      id="{{ 'exercise-amount' + i }}"
+      class="form__input"
+      [(ngModel)]="item.name"
+      name="exercise-amount"
+      placeholder="Enter exercise amount"
+    />
+  </div>
+
+  <h5>Add exercise</h5>
+  <form (submit)="addExercise()">
+    <label for="exercise-name">Exercise name: </label
+    ><input
+      type="text"
+      id="exercise-name"
+      class="form__input"
+      name="exercise-name"
+      placeholder="Enter exercise name"
+      [(ngModel)]="newExercise.name"
+    />
+
+    <label for="exercise-image">Exercise image: </label>
+    <input
+      type="file"
+      id="exercise-image"
+      class="form__input"
+      name="exercise-image"
+      placeholder="Enter exercise image"
+      [(ngModel)]="newExercise.image"
+      (change)="fileChecker($event)"
+    />
+
+    <label for="exercise-amount">Exercise amount: </label>
+    <input
+      type="text"
+      id="exercise-amount"
+      class="form__input"
+      name="exercise-amount"
+      placeholder="Enter exercise amount"
+      [(ngModel)]="newExercise.amount"
+    />
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <button>Save data</button>
+</div>

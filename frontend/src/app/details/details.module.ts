@@ -9,6 +9,7 @@ import { MealGroupsComponent } from './meal-groups/meal-groups.component';
 import { NotesComponent } from './notes/notes.component';
 import { MessagesComponent } from './messages/messages.component';
 import { FormsModule } from '@angular/forms';
+import { ExerciseGroupDetailComponent } from './exercise-group-detail/exercise-group-detail.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { FormsModule } from '@angular/forms';
     MealGroupsComponent,
     NotesComponent,
     MessagesComponent,
+    ExerciseGroupDetailComponent,
   ],
   imports: [CommonModule, DetailsRoutingModule, FormsModule],
 })
