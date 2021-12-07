@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserStore } from 'src/app/models/interfaces';
+import { MealGroupModel, UserStore } from 'src/app/models/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -41,10 +41,10 @@ export class MealGroupService {
     ) as Observable<UserStore>;
   }
 
-  getMealGroup(mealGroupId: string, token: string): Observable<UserStore> {
+  getMealGroup(mealGroupId: string, token: string): Observable<MealGroupModel> {
     return this.httpClient.get(`${this.baseUrl}/${mealGroupId}`, {
       headers: new HttpHeaders().set('Authorization', 'Bearer ' + token),
-    }) as Observable<UserStore>;
+    }) as Observable<MealGroupModel>;
   }
 
   deleteMealGroup(mealGroupId: string, token: string): Observable<UserStore> {

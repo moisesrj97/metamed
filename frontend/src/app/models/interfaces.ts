@@ -89,3 +89,25 @@ export interface ExerciseModel {
   image: string;
   author: string;
 }
+
+export interface MealGroupModel {
+  _id: string;
+  extra: string;
+  name: string;
+  author: string;
+  meals: MealModel[];
+}
+
+export interface MealModel {
+  _id: string;
+  name: string;
+  amount: string;
+  author: string;
+}
+
+export interface NoteModel {
+  _id: string;
+  title: string;
+  description: string;
+  author: string;
+}

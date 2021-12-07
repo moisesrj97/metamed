@@ -1,2 +1,11 @@
-<p>meal-groups works!</p>
-{{ data | json }}
+<div class="grid">
+  <div class="card" *ngFor="let item of fetchedData">
+    <h3 class="card__title">{{ item.name }}</h3>
+    <div *ngFor="let exercise of item.meals; let index = index">
+      <p class="card__title-item" *ngIf="index < 3">
+        {{ exercise.name }}
+      </p>
+      <p class="card__title-item" *ngIf="index === 3">...</p>
+    </div>
+  </div>
+</div>
