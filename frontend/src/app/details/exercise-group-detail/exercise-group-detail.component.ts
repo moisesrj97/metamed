@@ -110,8 +110,8 @@ export class ExerciseGroupDetailComponent implements OnInit {
       });
   }
 
-  async editExercise(event: Event, exerciseId: string, field: string) {
-    await this.fileChecker(event);
+  editExercise(event: Event, exerciseId: string, field: string) {
+    this.fileChecker(event);
 
     setTimeout(() => {
       if (!this.fileError) {
@@ -135,12 +135,15 @@ export class ExerciseGroupDetailComponent implements OnInit {
             return this.exerciseService
               .updateExerciseInfo(exerciseId, { ...exerciseDto }, token)
               .subscribe((data) => {
+                console.log(data);
                 this.data.exercises = this.data.exercises.map((exercise) => {
+                  console.log(exercise._id, exerciseId);
                   if (exercise._id === exerciseId) {
                     return data;
                   }
                   return exercise;
                 });
+
                 this.fileError = false;
                 this.imageSrc = undefined;
               });
@@ -162,17 +165,16 @@ export class ExerciseGroupDetailComponent implements OnInit {
                 this.fileError = false;
               });
           default:
-            throw new Error('Field not found');
+            return undefined;
         }
       } else {
-        throw new Error('File error');
+        return undefined;
       }
     }, 100);
   }
 
   deleteExerciseGroup() {
     const token = this.tokenService.getTokenFromLocalStorage() as string;
-    /* console.log(this.id, this.patientId, token); */
     this.exerciseGroupService
       .deleteExerciseGroup(this.id, this.patientId, token)
       .subscribe(() => {
@@ -186,27 +188,26 @@ export class ExerciseGroupDetailComponent implements OnInit {
       });
   }
 
-  async fileChecker(fileEvent: any) {
-    const file = fileEvent.target.files[0];
-    if (
-      !['image/jpeg', 'image/png'].includes(file.type) ||
-      file.size > 10000000
-    ) {
-      this.fileError = true;
-    } else {
-      this.fileError = false;
-    }
-
+  fileChecker(fileEvent: any) {
     const reader = new FileReader();
 
     if (fileEvent.target.files && fileEvent.target.files.length) {
       const [file] = fileEvent.target.files;
 
+      if (
+        !['image/jpeg', 'image/png'].includes(file.type) ||
+        file.size > 10000000
+      ) {
+        this.fileError = true;
+      } else {
+        this.fileError = false;
+      }
+
       reader.onload = () => {
         this.imageSrc = file;
       };
 
-      await reader.readAsDataURL(file);
+      reader.readAsDataURL(file);
     }
   }
 }

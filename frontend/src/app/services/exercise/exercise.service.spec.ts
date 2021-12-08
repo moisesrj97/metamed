@@ -39,7 +39,7 @@ describe('Given ExerciseService', () => {
             name: '',
             amount: '',
             exerciseGroupId: '',
-            exerciseImage: '' as unknown as File,
+            exerciseImage: new Blob(['aaa']) as unknown as string,
           },
           ''
         )
@@ -68,7 +68,7 @@ describe('Given ExerciseService', () => {
             name: '',
             amount: '',
             imageUrl: '',
-            exerciseImage: '' as unknown as File,
+            exerciseImage: new Blob(['aaa']) as unknown as string,
           },
           ''
         )

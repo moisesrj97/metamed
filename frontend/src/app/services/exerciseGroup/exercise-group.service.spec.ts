@@ -3,6 +3,8 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { DetailsComponent } from 'src/app/details/details.component';
 
 import { ExerciseGroupService } from './exercise-group.service';
 
@@ -19,7 +21,12 @@ describe('Given ExerciseGroupService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'details/:id', component: DetailsComponent },
+        ]),
+      ],
     });
     service = TestBed.inject(ExerciseGroupService);
     httpTestingController = TestBed.inject(HttpTestingController);
@@ -89,14 +96,18 @@ describe('Given ExerciseGroupService', () => {
 
   describe('When deleteExerciseGroup is called', () => {
     it('httpClient should be called', () => {
-      service.deleteExerciseGroup('test', 'test').subscribe((response: any) => {
-        expect(response).not.toBe(null);
-        expect(JSON.stringify(response)).toEqual(JSON.stringify(mockResponse));
-      });
+      service
+        .deleteExerciseGroup('test', 'test', 'test')
+        .subscribe((response: any) => {
+          expect(response).not.toBe(null);
+          expect(JSON.stringify(response)).toEqual(
+            JSON.stringify(mockResponse)
+          );
+        });
 
       const req = httpTestingController.expectOne({
         method: 'DELETE',
-        url: 'http://localhost:3000/exercise-group/test',
+        url: 'http://localhost:3000/exercise-group/test/test',
       });
 
       req.flush(mockResponse);
