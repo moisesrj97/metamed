@@ -41,6 +41,10 @@ describe('Given UserInfoService', () => {
             name: 'test',
             surname: 'test',
             profilePicture: 'test',
+            businessName: 'test',
+            gender: 'test',
+            birthDate: 'test',
+            file: new Blob([], { type: 'image/png' }) as unknown as string,
           },
           'helloiamatoken'
         )
