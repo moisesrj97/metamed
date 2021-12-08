@@ -10,7 +10,17 @@
   </div>
 </div>
 
-<form (submit)="sendMessage()">
-  <input type="text" [(ngModel)]="newMessage" name="message" />
-  <button type="submit">Send</button>
+<form class="form" (submit)="sendMessage()">
+  <input
+    class="form__input"
+    type="text"
+    [(ngModel)]="newMessage"
+    name="message"
+  />
+  <img
+    class="form__button"
+    src="../../../assets/images/send.png"
+    alt="Send message"
+    (click)="sendMessage()"
+  />
 </form>
