@@ -61,3 +61,13 @@
     border-radius: 200px 200px 0 200px;
   }
 }
+
+@media (max-width: 768px) {
+  .chat-window {
+    width: 100%;
+  }
+
+  .message {
+    font-size: 1rem;
+  }
+}
