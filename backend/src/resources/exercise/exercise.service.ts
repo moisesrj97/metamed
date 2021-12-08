@@ -68,7 +68,6 @@ export class ExerciseService {
     exerciseImage: Express.Multer.File,
   ) {
     let response: JwtInterface;
-    console.log(id, updateExerciseDto, exerciseImage);
 
     try {
       response = validateJwt(token);
