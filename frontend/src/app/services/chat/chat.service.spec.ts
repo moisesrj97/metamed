@@ -45,7 +45,7 @@ describe('Given ChatService', () => {
         });
 
       const req = httpTestingController.expectOne({
-        method: 'POST',
+        method: 'PATCH',
         url: 'http://localhost:3000/chat/test',
       });
 
