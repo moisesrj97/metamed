@@ -1,4 +1,4 @@
-import { IsString, Length } from 'class-validator';
+import { IsOptional, IsString, Length } from 'class-validator';
 
 export default class UpdatePatientDto {
   @IsString()
@@ -9,10 +9,12 @@ export default class UpdatePatientDto {
   @Length(3, 50)
   surname: string;
 
+  @IsOptional()
   @IsString()
   @Length(3, 20)
   gender: string;
 
+  @IsOptional()
   @IsString()
   @Length(3, 20)
   birthDate: string;

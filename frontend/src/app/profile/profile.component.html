@@ -1,1 +1,98 @@
-<p>profile works!</p>
+<div class="info">
+  <div class="info__edit">
+    <img
+      src="../../../assets/images/edit.png"
+      alt="Edit"
+      class="info__edit-icon"
+      (click)="toggleEditing()"
+    />
+  </div>
+  <img
+    src="{{ data.profilePicture + '?t=' + timestamp }}"
+    alt="{{ data.name + ' ' + data.surname + ' profile picture' }}"
+    class="info__img"
+    *ngIf="!editing"
+  />
+  <div class="info__data" *ngIf="!editing">
+    <p class="info__data-item">Name: {{ data.name }}</p>
+    <p class="info__data-item">Surname: {{ data.surname }}</p>
+    <p class="info__data-item">Email: {{ data.email }}</p>
+    <p class="info__data-item" *ngIf="data.businessName">
+      Surname: {{ data.businessName }}
+    </p>
+    <p class="info__data-item" *ngIf="data.gender">Gender: {{ data.gender }}</p>
+    <p class="info__data-item" *ngIf="data.birthDate">
+      Birth Date: {{ data.birthDate }}
+    </p>
+  </div>
+</div>
+
+<div class="form" *ngIf="editing">
+  <div class="form__group">
+    <label class="form__label" for="name">Name: </label>
+    <input
+      class="form__input"
+      type="text"
+      id="name"
+      name="name"
+      [(ngModel)]="data.name"
+      (change)="edit($event)"
+    />
+  </div>
+  <div class="form__group">
+    <label class="form__label" for="surnane">Surname: </label>
+    <input
+      class="form__input"
+      type="text"
+      id="surname"
+      name="surname"
+      [(ngModel)]="data.surname"
+      (change)="edit($event)"
+    />
+  </div>
+
+  <div class="form__group">
+    <label class="form__label" for="profilePicture">Profile picture: </label>
+    <input
+      class="form__input"
+      type="file"
+      id="profilePicture"
+      name="profilePicture"
+      (change)="edit($event)"
+    />
+    <p *ngIf="fileError">Error en el archivo</p>
+  </div>
+  <div class="form__group" *ngIf="data.businessName">
+    <label class="form__label" for="businessName">Business Name: </label>
+    <input
+      class="form__input"
+      type="text"
+      id="businessName"
+      name="businessName"
+      [(ngModel)]="data.businessName"
+      (change)="edit($event)"
+    />
+  </div>
+  <div class="form__group" *ngIf="data.gender">
+    <label class="form__label" for="gender">Gender: </label>
+    <input
+      class="form__input"
+      type="text"
+      id="gender"
+      name="gender"
+      [(ngModel)]="data.gender"
+      (change)="edit($event)"
+    />
+  </div>
+  <div class="form__group" *ngIf="data.birthDate">
+    <label class="form__label" for="birthDate">Birth Date: </label>
+    <input
+      class="form__input"
+      type="text"
+      id="birthDate"
+      name="birthDate"
+      [(ngModel)]="data.birthDate"
+      (change)="edit($event)"
+    />
+  </div>
+</div>
