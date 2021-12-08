@@ -48,3 +48,11 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .details__nav {
+    &-item-text {
+      display: none;
+    }
+  }
+}
