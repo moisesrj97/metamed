@@ -47,8 +47,12 @@ export class NoteService {
     }) as Observable<NoteModel>;
   }
 
-  deleteNote(noteId: string, token: string): Observable<NoteModel> {
-    return this.httpClient.delete(`${this.baseUrl}/${noteId}`, {
+  deleteNote(
+    noteId: string,
+    patientId: string,
+    token: string
+  ): Observable<NoteModel> {
+    return this.httpClient.delete(`${this.baseUrl}/${noteId}/${patientId}`, {
       headers: new HttpHeaders().set('Authorization', 'Bearer ' + token),
     }) as Observable<NoteModel>;
   }

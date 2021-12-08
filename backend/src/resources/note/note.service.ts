@@ -100,7 +100,7 @@ export class NoteService {
     );
   }
 
-  async remove(id: string, deleteNoteDto: DeleteNoteDto, token: string) {
+  async remove(id: string, patientId: string, token: string) {
     let decodedToken: JwtInterface;
     try {
       decodedToken = validateJwt(token);
@@ -110,8 +110,6 @@ export class NoteService {
 
     isProfessional(decodedToken);
     await isAuthor(decodedToken, id, this.noteModel);
-
-    const { patientId } = deleteNoteDto;
 
     await this.noteModel.findByIdAndDelete(id);
 

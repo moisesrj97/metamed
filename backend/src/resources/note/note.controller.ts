@@ -39,12 +39,12 @@ export class NoteController {
     return this.noteService.update(id, updateNoteDto, token);
   }
 
-  @Delete(':id')
+  @Delete(':id/:patientId')
   remove(
     @Param('id') id: string,
-    @Body() deleteNoteDto: DeleteNoteDto,
+    @Param('patientId') patientId: string,
     @Headers('Authorization') token: string,
   ) {
-    return this.noteService.remove(id, deleteNoteDto, token);
+    return this.noteService.remove(id, patientId, token);
   }
 }

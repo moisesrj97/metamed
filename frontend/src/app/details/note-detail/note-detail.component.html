@@ -1,0 +1,46 @@
+<div class="title">
+  <h2>{{ data?.title }}</h2>
+  <img
+    src="../../../assets/images/edit.png"
+    alt="Edit group"
+    class="title__edit-icon"
+    (click)="toggle()"
+  />
+</div>
+<div class="extra" *ngIf="!editing">
+  <h3 class="extra__title">Extra data:</h3>
+  <p class="extra__text">{{ data?.description }}</p>
+</div>
+
+<div class="form" *ngIf="editing">
+  <h2 class="form__subtitle">Title and extra data</h2>
+  <label for="title" class="form__label">Group title:</label>
+  <input
+    type="text"
+    id="title"
+    class="form__input"
+    [(ngModel)]="data.title"
+    name="title"
+    placeholder="Enter group title"
+    (change)="changeTitleAndExtra()"
+  />
+
+  <label for="extra" class="form__label">Extra data:</label>
+  <textarea
+    type="text"
+    id="extra"
+    class="form__textarea"
+    cols="30"
+    rows="30"
+    [(ngModel)]="data.description"
+    name="extra"
+    placeholder="Enter group extra data"
+    (change)="changeTitleAndExtra()"
+  ></textarea>
+
+  <div class="form__button-container">
+    <p class="form__button form__button--danger" (click)="deleteNote()">
+      Delete meal Group
+    </p>
+  </div>
+</div>

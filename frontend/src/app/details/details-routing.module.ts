@@ -8,6 +8,7 @@ import { InfoComponent } from './info/info.component';
 import { MealGroupDetailComponent } from './meal-group-detail/meal-group-detail.component';
 import { MealGroupsComponent } from './meal-groups/meal-groups.component';
 import { MessagesComponent } from './messages/messages.component';
+import { NoteDetailComponent } from './note-detail/note-detail.component';
 import { NotesComponent } from './notes/notes.component';
 
 const routes: Routes = [
@@ -34,6 +35,11 @@ const routes: Routes = [
       {
         path: 'meal-groups',
         component: MealGroupsComponent,
+        canActivate: [RouteAuthGuard],
+      },
+      {
+        path: 'notes/:id',
+        component: NoteDetailComponent,
         canActivate: [RouteAuthGuard],
       },
       {

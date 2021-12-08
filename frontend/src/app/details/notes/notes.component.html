@@ -11,7 +11,11 @@
 </form>
 
 <div class="grid">
-  <div class="card" *ngFor="let item of fetchedData">
+  <div
+    class="card"
+    *ngFor="let item of fetchedData"
+    routerLink="{{ '/details/' + id + '/notes/' + item._id }}"
+  >
     <h3 class="card__title">{{ item.title }}</h3>
     <p class="card__text">{{ item.description | slice: 0:140 }} ...</p>
   </div>
