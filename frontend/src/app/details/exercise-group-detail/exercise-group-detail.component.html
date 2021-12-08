@@ -5,13 +5,13 @@
     src="../../../assets/images/edit.png"
     alt="Edit group"
     class="edit-icon"
-    (click)="editing = !editing"
+    (click)="toggle()"
   />
 </div>
 <div class="exercises" *ngIf="!editing">
   <div class="exercise__item" *ngFor="let item of data?.exercises">
     <img
-      src="{{ item?.image }}"
+      src="{{ item?.image + '?t=' + timestamp }}"
       alt="{{ item?.name }}"
       class="exercise__item-img"
     />
@@ -55,9 +55,10 @@
       type="text"
       id="{{ 'exercise-name' + i }}"
       class="form__input"
-      [(ngModel)]="item.name"
       name="exercise-name"
       placeholder="Enter exercise name"
+      [(ngModel)]="item.name"
+      (change)="editExercise($event, item._id, 'name')"
     />
 
     <label for="{{ 'exercise-image' + i }}">Exercise image: </label>
@@ -67,6 +68,7 @@
       class="form__input"
       name="exercise-image"
       placeholder="Enter exercise image"
+      (change)="editExercise($event, item._id, 'exerciseImage')"
     />
 
     <label for="{{ 'exercise-amount' + i }}">Exercise amount: </label>
@@ -74,9 +76,10 @@
       type="text"
       id="{{ 'exercise-amount' + i }}"
       class="form__input"
-      [(ngModel)]="item.name"
       name="exercise-amount"
       placeholder="Enter exercise amount"
+      [(ngModel)]="item.amount"
+      (change)="editExercise($event, item._id, 'amount')"
     />
 
     <img

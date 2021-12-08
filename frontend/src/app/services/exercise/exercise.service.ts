@@ -43,7 +43,7 @@ export class ExerciseService {
     exerciseId: string,
     exercise: UpdateExerciseDto,
     token: string
-  ) {
+  ): Observable<ExerciseModel> {
     const multipartFormData = new FormData();
     multipartFormData.set('name', exercise.name);
     multipartFormData.set('amount', exercise.amount);
@@ -62,7 +62,7 @@ export class ExerciseService {
       {
         headers: new HttpHeaders().set('Authorization', `Bearer ${token}`),
       }
-    );
+    ) as Observable<ExerciseModel>;
   }
 
   deleteExerciseFromGroup(
