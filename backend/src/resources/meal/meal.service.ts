@@ -66,7 +66,7 @@ export class MealService {
     const { amount, name } = updateMealDto;
 
     return await this.mealModel.findByIdAndUpdate(
-      { _id: id },
+      id,
       { $set: { amount, name } },
       { new: true },
     );

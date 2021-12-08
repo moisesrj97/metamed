@@ -259,10 +259,9 @@ describe('AppController (e2e)', () => {
         'Authorization',
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
       );
+    createdMealId = response.body._id;
     expect(response.status).toBe(201);
-    createdMealId = response.body.meals[0];
-    console.log(createdMealGroupId);
-    expect(response.body.meals.length).toBe(1);
+    expect(response.body.name).toBe('sample meal');
   });
 
   it('/meal/ (PATCH)', async () => {
@@ -282,7 +281,7 @@ describe('AppController (e2e)', () => {
 
   it('/meal/createdMealId (DELETE)', async () => {
     const response = await request(app.getHttpServer())
-      .delete('/meal/' + createdMealId)
+      .delete('/meal/' + createdMealId + '/' + createdMealId)
       .set(
         'Authorization',
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
@@ -316,10 +315,7 @@ describe('AppController (e2e)', () => {
 
   it('/meal-group/createdId (DELETE)', async () => {
     const response = await request(app.getHttpServer())
-      .delete('/meal-group/' + createdMealGroupId)
-      .send({
-        patientId: '61a661fd036917e975f253b0',
-      })
+      .delete('/meal-group/' + createdMealGroupId + '/61a661fd036917e975f253b0')
       .set(
         'Authorization',
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',

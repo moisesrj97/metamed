@@ -88,8 +88,7 @@ describe('Given MealService', () => {
         },
       );
       expect(response).toEqual({
-        _id: 'f2f2f2f2f2f2',
-        author: 'f8f8f8f8f8f8',
+        _id: 'f9f9f9f9f9f9',
       });
     });
   });
