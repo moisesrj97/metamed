@@ -58,7 +58,7 @@ describe('Given ExerciseGroupController', () => {
 
   describe('When controller.remove is executed', () => {
     it('service.remove should be called', () => {
-      controller.remove('', { patientId: '' }, '');
+      controller.remove('', '', '');
       expect(service.remove).toHaveBeenCalled();
     });
   });

@@ -154,10 +154,10 @@ describe('AppController (e2e)', () => {
       .field('amount', 'deletethis@test.com')
       .attach('exerciseImage', 'test/sample.png');
 
+    createdExerciseId = response.body._id;
+
     expect(response.status).toBe(201);
-    createdExerciseId = response.body.exercises[0];
-    console.log(createdExerciseId);
-    expect(response.body.exercises.length).toBe(1);
+    expect(response.body.name).toBe('test');
   });
 
   it('/exercise/createdExerciseId (PATCH)', async () => {
@@ -181,7 +181,7 @@ describe('AppController (e2e)', () => {
 
   it('/exercise/createdExerciseId (DELETE)', async () => {
     const response = await request(app.getHttpServer())
-      .delete('/exercise/' + createdExerciseId)
+      .delete('/exercise/' + createdExerciseId + '/' + createdExerciseGroupId)
       .set(
         'Authorization',
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
@@ -217,10 +217,11 @@ describe('AppController (e2e)', () => {
 
   it('/exercise-group/createdId (DELETE)', async () => {
     const response = await request(app.getHttpServer())
-      .delete('/exercise-group/' + createdExerciseGroupId)
-      .send({
-        patientId: '61a661fd036917e975f253b0',
-      })
+      .delete(
+        '/exercise-group/' +
+          createdExerciseGroupId +
+          '/61a661fd036917e975f253b0',
+      )
       .set(
         'Authorization',
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
