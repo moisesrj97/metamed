@@ -92,3 +92,129 @@
     }
   }
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 10px;
+  &__subtitle {
+    font-size: 1.2rem;
+    margin: 30px 0 10px 0;
+  }
+  &__roles {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+  }
+  &__label {
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: 1.2rem;
+    padding-right: 10px;
+  }
+  &__input {
+    background-color: white;
+    padding: 5px 20px;
+    font-size: 1rem;
+    border: 1px solid #2e21ff;
+    border-radius: 25px;
+  }
+  &__textarea {
+    width: 450px;
+    height: auto;
+    min-height: 80px;
+    font-size: 1rem;
+    border: 1px solid #2e21ff;
+    border-radius: 25px;
+    padding: 5px 20px;
+  }
+  &__group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  &__button {
+    margin: 20px 0;
+    color: #2e21ff;
+    border: 2px solid #2e21ff;
+    background-color: white;
+    box-sizing: border-box;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    &-container {
+      padding-bottom: 40px;
+    }
+    &:hover {
+      background-color: #2e21ff;
+      color: white;
+      cursor: pointer;
+    }
+    &--danger {
+      color: rgb(255, 0, 0);
+      border-color: rgb(255, 0, 0);
+      margin-bottom: 30px;
+      text-transform: none;
+      font-size: 1rem;
+    }
+    &--danger:hover {
+      background-color: rgb(255, 0, 0);
+      color: white;
+    }
+
+    &--disabled {
+      background-color: #ebebeb;
+      color: black;
+      border-color: black;
+
+      &:hover {
+        background-color: #e2e2e2;
+        color: black;
+        border-color: black;
+        cursor: not-allowed;
+      }
+    }
+  }
+  &__popup {
+    background-color: #3021ff1e;
+    color: black;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: center;
+    border-radius: 20px;
+  }
+  &__delete-icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    &-container {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .form {
+    width: 100%;
+    &__group {
+      width: 100%;
+    }
+    &__input {
+      width: 100%;
+    }
+    &__textarea {
+      width: 100%;
+    }
+    &__label {
+      width: 100%;
+    }
+  }
+}
