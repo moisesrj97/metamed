@@ -5,7 +5,7 @@
     [ngClass]="{ 'message-container--send': item.from === userId }"
   >
     <p class="message" [ngClass]="{ 'message--send': item.from === userId }">
-      {{ item.text }}
+      {{ item.text }} <span *ngIf="item.read">✔️</span>
     </p>
   </div>
 </div>

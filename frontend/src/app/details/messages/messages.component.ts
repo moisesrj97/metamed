@@ -1,13 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { map } from 'rxjs';
 import {
   ChatRefModel,
   PatientModel,
   UserStore,
 } from 'src/app/models/interfaces';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { ChatService } from 'src/app/services/chat/chat.service';
-import { addMessageToChat } from 'src/app/services/store/actions/chat.actions';
+import {
+  addMessageToChat,
+  updateMessageReadState,
+} from 'src/app/services/store/actions/chat.actions';
+import { loginUser } from 'src/app/services/store/actions/user.actions';
 import { TokenService } from 'src/app/services/token/token.service';
 
 @Component({
@@ -25,11 +31,14 @@ export class MessagesComponent implements OnInit {
     private route: ActivatedRoute,
     private store: Store<{ user: UserStore }>,
     private chatService: ChatService,
+    public authService: AuthenticationService,
     private tokenService: TokenService
   ) {}
 
   ngOnInit(): void {
     this.id = this.route.parent?.snapshot.paramMap.get('id') as string;
+    const token = this.tokenService.getTokenFromLocalStorage() as string;
+
     this.store
       .select((user) => user.user._id)
       .subscribe((id) => {
@@ -44,7 +53,20 @@ export class MessagesComponent implements OnInit {
         ) as PatientModel;
 
         this.data = result?.chatRef;
+        this.data.messages.forEach((message) => {
+          if (message.from !== this.userId && message.read === false) {
+            this.chatService.toggleMessage(message._id, token).subscribe(() => {
+              this.store.dispatch(updateMessageReadState({ message: message }));
+            });
+          }
+        });
       });
+
+    /* setInterval(() => {
+      this.authService.loginWithToken(token).subscribe((data) => {
+        this.store.dispatch(loginUser({ userInfo: data }));
+      });
+    }, 10000); */
   }
 
   sendMessage() {
