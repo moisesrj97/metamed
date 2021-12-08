@@ -1,4 +1,6 @@
-<div *ngIf="editing" class="delete-group"></div>
+<div *ngIf="editing" class="delete-group">
+  <p (click)="deleteExerciseGroup()">DELETE</p>
+</div>
 <div class="title">
   <h2>{{ data?.name }}</h2>
   <img

@@ -53,10 +53,14 @@ export class ExerciseGroupService {
 
   deleteExerciseGroup(
     exerciseGroupId: string,
+    patientId: string,
     token: string
   ): Observable<UserStore> {
-    return this.httpClient.delete(`${this.baseUrl}/${exerciseGroupId}`, {
-      headers: new HttpHeaders().set('Authorization', 'Bearer ' + token),
-    }) as Observable<UserStore>;
+    return this.httpClient.delete(
+      `${this.baseUrl}/${exerciseGroupId}/${patientId}`,
+      {
+        headers: new HttpHeaders().set('Authorization', 'Bearer ' + token),
+      }
+    ) as Observable<UserStore>;
   }
 }

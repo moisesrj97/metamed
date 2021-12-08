@@ -1,8 +1,14 @@
 import { Component, OnInit, SimpleChanges } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ExerciseGroupModel, ExerciseModel } from 'src/app/models/interfaces';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import {
+  ExerciseGroupModel,
+  ExerciseModel,
+  UserStore,
+} from 'src/app/models/interfaces';
 import { ExerciseService } from 'src/app/services/exercise/exercise.service';
 import { ExerciseGroupService } from 'src/app/services/exerciseGroup/exercise-group.service';
+import { deleteExerciseGroup } from 'src/app/services/store/actions/exerciseGroup.actions';
 import { TokenService } from 'src/app/services/token/token.service';
 
 @Component({
@@ -12,6 +18,7 @@ import { TokenService } from 'src/app/services/token/token.service';
 })
 export class ExerciseGroupDetailComponent implements OnInit {
   id!: string;
+  patientId!: string;
   data!: ExerciseGroupModel;
   editing: boolean = false;
   newExercise: { name: string; amount: string; image: string } = {
@@ -25,9 +32,11 @@ export class ExerciseGroupDetailComponent implements OnInit {
 
   constructor(
     public route: ActivatedRoute,
+    public router: Router,
     public exerciseGroupService: ExerciseGroupService,
     public exerciseService: ExerciseService,
-    public tokenService: TokenService
+    public tokenService: TokenService,
+    public store: Store<{ user: UserStore }>
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +44,8 @@ export class ExerciseGroupDetailComponent implements OnInit {
     this.timestamp = new Date().getTime();
 
     this.id = this.route.snapshot.paramMap.get('id') as string;
+    this.patientId = this.route.parent?.snapshot.paramMap.get('id') as string;
+
     this.exerciseGroupService
       .getExerciseGroup(this.id, token)
       .subscribe((data) => {
@@ -157,6 +168,22 @@ export class ExerciseGroupDetailComponent implements OnInit {
         throw new Error('File error');
       }
     }, 100);
+  }
+
+  deleteExerciseGroup() {
+    const token = this.tokenService.getTokenFromLocalStorage() as string;
+    /* console.log(this.id, this.patientId, token); */
+    this.exerciseGroupService
+      .deleteExerciseGroup(this.id, this.patientId, token)
+      .subscribe(() => {
+        this.store.dispatch(
+          deleteExerciseGroup({
+            exerciseGroupId: this.id,
+            patientId: this.patientId,
+          })
+        );
+        this.router.navigate(['/details/', this.patientId]);
+      });
   }
 
   async fileChecker(fileEvent: any) {
