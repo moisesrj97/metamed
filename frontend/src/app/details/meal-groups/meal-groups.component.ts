@@ -65,7 +65,6 @@ export class MealGroupsComponent implements OnInit {
               (group) => ![...this.data].includes(group)
             ) as string;
 
-          console.log(newGroupId);
 
           this.fetchedData = [];
 

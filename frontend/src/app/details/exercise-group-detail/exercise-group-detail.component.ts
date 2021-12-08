@@ -135,9 +135,7 @@ export class ExerciseGroupDetailComponent implements OnInit {
             return this.exerciseService
               .updateExerciseInfo(exerciseId, { ...exerciseDto }, token)
               .subscribe((data) => {
-                console.log(data);
                 this.data.exercises = this.data.exercises.map((exercise) => {
-                  console.log(exercise._id, exerciseId);
                   if (exercise._id === exerciseId) {
                     return data;
                   }

@@ -31,7 +31,6 @@ export class ExerciseGroupService {
     newExerciseGroupName?: string,
     newExerciseExtraInfo?: string
   ): Observable<UserStore> {
-    console.log(newExerciseGroupName, newExerciseExtraInfo);
     return this.httpClient.patch(
       `${this.baseUrl}/${exerciseGroupId}`,
       {
