@@ -32,7 +32,7 @@ export class MealController {
     return this.mealService.update(token, id, updateMealDto);
   }
 
-  @Delete(':id')
+  @Delete(':id/:groupId')
   remove(
     @Param('id') id: string,
     @Param('groupId') groupId: string,

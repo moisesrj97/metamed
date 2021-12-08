@@ -5,7 +5,6 @@ import {
 } from '@nestjs/common';
 import { CreateExerciseGroupDto } from './dto/create-exercise-group.dto';
 import { UpdateExerciseGroupDto } from './dto/update-exercise-group.dto';
-import { DeleteExerciseGroupDto } from './dto/delete-exercise-group.dto';
 import validateJwt, { JwtInterface } from '../../helpers/validateJwt';
 import { ExerciseGroup, ExerciseGroupDocument } from './exerciseGroup.schema';
 import { InjectModel } from '@nestjs/mongoose';
@@ -16,7 +15,6 @@ import {
 } from '../professional/professional.schema';
 import { isProfessional } from '../../helpers/isProfessional';
 import { isAuthor } from '../../helpers/isAuthor';
-import { String } from 'aws-sdk/clients/appstream';
 
 @Injectable()
 export class ExerciseGroupService {

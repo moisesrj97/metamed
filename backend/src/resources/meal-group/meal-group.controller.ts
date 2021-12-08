@@ -39,12 +39,12 @@ export class MealGroupController {
     return this.mealGroupService.update(id, updateMealGroupDto, token);
   }
 
-  @Delete(':id')
+  @Delete(':id/:patientId')
   remove(
     @Param('id') id: string,
-    @Body() deleteMealGroupDto: DeleteMealGroupDto,
+    @Param('patientId') patientId: string,
     @Headers('Authorization') token: string,
   ) {
-    return this.mealGroupService.remove(id, deleteMealGroupDto, token);
+    return this.mealGroupService.remove(id, patientId, token);
   }
 }

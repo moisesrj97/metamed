@@ -103,11 +103,7 @@ export class MealGroupService {
     );
   }
 
-  async remove(
-    id: string,
-    deleteMealGroupDto: DeleteMealGroupDto,
-    token: string,
-  ) {
+  async remove(id: string, patientId: string, token: string) {
     let decodedToken: JwtInterface;
     try {
       decodedToken = validateJwt(token);
@@ -117,8 +113,6 @@ export class MealGroupService {
 
     isProfessional(decodedToken);
     await isAuthor(decodedToken, id, this.mealGroupModel);
-
-    const { patientId } = deleteMealGroupDto;
 
     await this.mealGroupModel.findByIdAndDelete(id);
 

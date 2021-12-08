@@ -36,7 +36,7 @@ export class MealService {
       amount: createMealDto.amount,
     });
 
-    return await this.mealGroupModel.findByIdAndUpdate(
+    await this.mealGroupModel.findByIdAndUpdate(
       createMealDto.mealGroupId,
       {
         $push: {
@@ -45,6 +45,8 @@ export class MealService {
       },
       { new: true },
     );
+
+    return createdMeal;
   }
 
   async update(token: string, id: string, updateMealDto: UpdateMealDto) {
@@ -84,7 +86,7 @@ export class MealService {
     isProfessional(response);
     await isAuthor(response, id, this.mealModel);
 
-    await this.mealModel.findByIdAndUpdate(groupId, {
+    await this.mealGroupModel.findByIdAndUpdate(groupId, {
       $pull: {
         meals: id,
       },

@@ -124,9 +124,7 @@ export class MealGroupDetailComponent implements OnInit {
             patientId: this.patientId,
           })
         );
-        this.router.navigate([
-          '/details/' + this.patientId + '/exercise-groups',
-        ]);
+        this.router.navigate(['/details/' + this.patientId + '/meal-groups']);
       });
   }
 }
