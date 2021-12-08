@@ -4,6 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
 import { UserStore } from 'src/app/models/interfaces';
+import { DetailsComponent } from '../details.component';
 
 import { ExerciseGroupDetailComponent } from './exercise-group-detail.component';
 
@@ -14,7 +15,12 @@ describe('ExerciseGroupDetailComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ExerciseGroupDetailComponent],
-      imports: [HttpClientTestingModule, RouterTestingModule],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'details/:id', component: DetailsComponent },
+        ]),
+      ],
       providers: [provideMockStore()],
     }).compileComponents();
   });

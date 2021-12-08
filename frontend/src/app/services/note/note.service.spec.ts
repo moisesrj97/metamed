@@ -89,14 +89,14 @@ describe('Given NoteService', () => {
 
   describe('When deleteNote is called', () => {
     it('httpClient should be called', () => {
-      service.deleteNote('test', 'test').subscribe((response: any) => {
+      service.deleteNote('test', 'test', '').subscribe((response: any) => {
         expect(response).not.toBe(null);
         expect(JSON.stringify(response)).toEqual(JSON.stringify(mockResponse));
       });
 
       const req = httpTestingController.expectOne({
         method: 'DELETE',
-        url: 'http://localhost:3000/note/test',
+        url: 'http://localhost:3000/note/test/test',
       });
 
       req.flush(mockResponse);
