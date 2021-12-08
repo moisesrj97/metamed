@@ -205,7 +205,7 @@ describe('Given NoteService', () => {
 
       const response = await service.remove(
         '',
-        { patientId: 'f6f6f6f6f6f6' },
+        'f6f6f6f6f6f6',
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiJmOGY4ZjhmOGY4ZjgiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoidGVzdCIsImlhdCI6MTUxNjIzOTAyMn0.2D8RXLfMCZRovoodPQNj-XfjaLXhFTk64BlThks42As',
       );
 
@@ -219,7 +219,7 @@ describe('Given NoteService', () => {
       try {
         await service.remove(
           '',
-          { patientId: 'f6f6f6f6f6f6' },
+          'f6f6f6f6f6f6',
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiJmOGY4ZjhmOGY4ZjgiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoidGVzdCIsImlhdCI6MTUxNjIzOTAyMn0.2D8RXLfMCZRovoodPQNj-XfjaLXhFTk64BlThks42As',
         );
       } catch (e) {
@@ -234,7 +234,7 @@ describe('Given NoteService', () => {
       try {
         await service.remove(
           '',
-          { patientId: 'f6f6f6f6f6f6' },
+          'f6f6f6f6f6f6',
           'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUGF0aWVudCIsImlkIjoiZjhmOGY4ZjhmOGY4IiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwibmFtZSI6InRlc3QiLCJpYXQiOjE1MTYyMzkwMjJ9.meXWG6HkPveRhpZ8O18nXNWaiiu6o-LPjyvTxjnUTTQ',
         );
       } catch (e) {

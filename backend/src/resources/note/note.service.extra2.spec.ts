@@ -75,7 +75,7 @@ describe('Given NoteService', () => {
       try {
         await service.remove(
           '',
-          { patientId: 'f6f6f6f6f6f6' },
+          'f6f6f6f6f6f6',
           'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiJmOGY4ZjhmOGY4ZjgiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoidGVzdCIsImlhdCI6MTUxNjIzOTAyMn0.2D8RXLfMCZRovoodPQNj-XfjaLXhFTk64BlThks42As',
         );
       } catch (e) {

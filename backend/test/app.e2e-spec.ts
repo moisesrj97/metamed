@@ -355,10 +355,7 @@ describe('AppController (e2e)', () => {
 
   it('/note/createdId (DELETE)', async () => {
     const response = await request(app.getHttpServer())
-      .delete('/note/' + createdNoteId)
-      .send({
-        patientId: '61a661fd036917e975f253b0',
-      })
+      .delete('/note/' + createdNoteId + '/61a661fd036917e975f253b0')
       .set(
         'Authorization',
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
