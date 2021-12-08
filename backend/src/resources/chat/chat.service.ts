@@ -34,7 +34,7 @@ export class ChatService {
       toRole: response.role === 'Professional' ? 'Patient' : 'Professional',
     });
 
-    return await this.chatModel.findByIdAndUpdate(
+    await this.chatModel.findByIdAndUpdate(
       id,
       {
         $push: {
@@ -43,5 +43,7 @@ export class ChatService {
       },
       { new: true },
     );
+
+    return newMessage;
   }
 }

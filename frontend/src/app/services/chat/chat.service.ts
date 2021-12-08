@@ -15,8 +15,8 @@ export class ChatService {
     to: string,
     text: string,
     token: string
-  ): Observable<ChatRefModel> {
-    return this.httpClient.post(
+  ): Observable<MessageModel> {
+    return this.httpClient.patch(
       `http://localhost:3000/chat/${chatId}`,
       {
         to,
@@ -25,7 +25,7 @@ export class ChatService {
       {
         headers: new HttpHeaders().set('Authorization', 'Bearer ' + token),
       }
-    ) as Observable<ChatRefModel>;
+    ) as Observable<MessageModel>;
   }
 
   toggleMessage(messageId: string, token: string): Observable<MessageModel> {

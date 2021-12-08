@@ -1,2 +1,16 @@
-<p>messages works!</p>
-{{ data | json }}
+<div class="chat-window" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+  <div
+    *ngFor="let item of data.messages"
+    class="message-container"
+    [ngClass]="{ 'message-container--send': item.from === userId }"
+  >
+    <p class="message" [ngClass]="{ 'message--send': item.from === userId }">
+      {{ item.text }}
+    </p>
+  </div>
+</div>
+
+<form (submit)="sendMessage()">
+  <input type="text" [(ngModel)]="newMessage" name="message" />
+  <button type="submit">Send</button>
+</form>
