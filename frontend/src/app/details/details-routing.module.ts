@@ -5,6 +5,7 @@ import { DetailsComponent } from './details.component';
 import { ExerciseGroupDetailComponent } from './exercise-group-detail/exercise-group-detail.component';
 import { ExerciseGroupsComponent } from './exercise-groups/exercise-groups.component';
 import { InfoComponent } from './info/info.component';
+import { MealGroupDetailComponent } from './meal-group-detail/meal-group-detail.component';
 import { MealGroupsComponent } from './meal-groups/meal-groups.component';
 import { MessagesComponent } from './messages/messages.component';
 import { NotesComponent } from './notes/notes.component';
@@ -23,6 +24,11 @@ const routes: Routes = [
       {
         path: 'exercise-groups',
         component: ExerciseGroupsComponent,
+        canActivate: [RouteAuthGuard],
+      },
+      {
+        path: 'meal-groups/:id',
+        component: MealGroupDetailComponent,
         canActivate: [RouteAuthGuard],
       },
       {

@@ -10,6 +10,7 @@ import { NotesComponent } from './notes/notes.component';
 import { MessagesComponent } from './messages/messages.component';
 import { FormsModule } from '@angular/forms';
 import { ExerciseGroupDetailComponent } from './exercise-group-detail/exercise-group-detail.component';
+import { MealGroupDetailComponent } from './meal-group-detail/meal-group-detail.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ExerciseGroupDetailComponent } from './exercise-group-detail/exercise-g
     NotesComponent,
     MessagesComponent,
     ExerciseGroupDetailComponent,
+    MealGroupDetailComponent,
   ],
   imports: [CommonModule, DetailsRoutingModule, FormsModule],
 })
