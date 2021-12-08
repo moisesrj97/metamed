@@ -16,6 +16,7 @@ import {
 } from '../professional/professional.schema';
 import { isProfessional } from '../../helpers/isProfessional';
 import { isAuthor } from '../../helpers/isAuthor';
+import { String } from 'aws-sdk/clients/appstream';
 
 @Injectable()
 export class ExerciseGroupService {
@@ -103,11 +104,7 @@ export class ExerciseGroupService {
     );
   }
 
-  async remove(
-    id: string,
-    deleteExerciseGroupDto: DeleteExerciseGroupDto,
-    token: string,
-  ) {
+  async remove(id: string, patientId: string, token: string) {
     let decodedToken: JwtInterface;
     try {
       decodedToken = validateJwt(token);
@@ -117,8 +114,6 @@ export class ExerciseGroupService {
 
     isProfessional(decodedToken);
     await isAuthor(decodedToken, id, this.exerciseGroupModel);
-
-    const { patientId } = deleteExerciseGroupDto;
 
     await this.exerciseGroupModel.findByIdAndDelete(id);
 

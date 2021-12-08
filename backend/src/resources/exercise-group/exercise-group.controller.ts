@@ -42,9 +42,9 @@ export class ExerciseGroupController {
   @Delete(':id')
   remove(
     @Param('id') id: string,
-    @Body() deleteExerciseGroupDto: DeleteExerciseGroupDto,
+    @Param('patientId') patientId: string,
     @Headers('Authorization') token: string,
   ) {
-    return this.exerciseGroupService.remove(id, deleteExerciseGroupDto, token);
+    return this.exerciseGroupService.remove(id, patientId, token);
   }
 }
