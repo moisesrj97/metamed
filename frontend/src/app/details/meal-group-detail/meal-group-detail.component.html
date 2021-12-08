@@ -1,1 +1,122 @@
-<p>meal-group-detail works!</p>
+<div class="title">
+  <h2>{{ data?.name }}</h2>
+  <img
+    src="../../../assets/images/edit.png"
+    alt="Edit group"
+    class="title__edit-icon"
+    (click)="toggle()"
+  />
+</div>
+
+<div class="meals" *ngIf="!editing">
+  <div class="meals__item" *ngFor="let item of data?.meals">
+    <p class="meals__item-text">
+      <strong>{{ item?.name }}</strong
+      >: {{ item?.amount }}
+    </p>
+  </div>
+</div>
+<div class="extra" *ngIf="!editing">
+  <h3 class="extra__title">Extra data:</h3>
+  <p class="extra__text">{{ data?.extra }}</p>
+</div>
+
+<div class="form" *ngIf="editing">
+  <h2 class="form__subtitle">Title and extra data</h2>
+  <label for="title" class="form__label">Group title:</label>
+  <input
+    type="text"
+    id="title"
+    class="form__input"
+    [(ngModel)]="data.name"
+    name="title"
+    placeholder="Enter group title"
+    (change)="changeTitleAndExtra()"
+  />
+
+  <label for="extra" class="form__label">Extra data:</label>
+  <textarea
+    type="text"
+    id="extra"
+    class="form__textarea"
+    cols="30"
+    rows="30"
+    [(ngModel)]="data.extra"
+    name="extra"
+    placeholder="Enter group extra data"
+    (change)="changeTitleAndExtra()"
+  ></textarea>
+
+  <h2 class="form__subtitle">meals</h2>
+
+  <div *ngFor="let item of data.meals; let i = index" class="form__group">
+    <div>
+      <label class="form__label" for="{{ 'meal-name' + i }}">meal name: </label
+      ><input
+        type="text"
+        id="{{ 'meal-name' + i }}"
+        class="form__input"
+        name="meal-name"
+        placeholder="Enter meal name"
+        [(ngModel)]="item.name"
+        (change)="editMeal($event, item._id)"
+      />
+    </div>
+    <div>
+      <label class="form__label" for="{{ 'meal-amount' + i }}"
+        >meal amount:
+      </label>
+      <input
+        type="text"
+        id="{{ 'meal-amount' + i }}"
+        class="form__input"
+        name="meal-amount"
+        placeholder="Enter meal amount"
+        [(ngModel)]="item.amount"
+        (change)="editMeal($event, item._id)"
+      />
+    </div>
+
+    <div class="form__delete-icon-container">
+      <img
+        src="../../../assets/images/trash.png"
+        alt="Delete icon"
+        class="form__delete-icon"
+        (click)="deleteMeal(item._id)"
+      />
+    </div>
+  </div>
+
+  <h2 class="form__subtitle">Add new meal</h2>
+  <form class="form" (submit)="addMeal()">
+    <div>
+      <label class="form__label" for="meal-name">meal name: </label
+      ><input
+        type="text"
+        id="meal-name"
+        class="form__input"
+        name="meal-name"
+        placeholder="Enter meal name"
+        [(ngModel)]="newMeal.name"
+      />
+    </div>
+    <div>
+      <label class="form__label" for="meal-amount">meal amount: </label>
+      <input
+        type="text"
+        id="meal-amount"
+        class="form__input"
+        name="meal-amount"
+        placeholder="Enter meal amount"
+        [(ngModel)]="newMeal.amount"
+      />
+    </div>
+
+    <button class="form__button" type="submit">Submit</button>
+  </form>
+  <div class="form__button-container">
+    <p class="form__button form__button--danger" (click)="deleteMealGroup()">
+      Delete meal Group
+    </p>
+  </div>
+</div>

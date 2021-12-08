@@ -47,9 +47,16 @@ export class MealGroupService {
     }) as Observable<MealGroupModel>;
   }
 
-  deleteMealGroup(mealGroupId: string, token: string): Observable<UserStore> {
-    return this.httpClient.delete(`${this.baseUrl}/${mealGroupId}`, {
-      headers: new HttpHeaders().set('Authorization', 'Bearer ' + token),
-    }) as Observable<UserStore>;
+  deleteMealGroup(
+    mealGroupId: string,
+    patientId: string,
+    token: string
+  ): Observable<UserStore> {
+    return this.httpClient.delete(
+      `${this.baseUrl}/${mealGroupId}/${patientId}`,
+      {
+        headers: new HttpHeaders().set('Authorization', 'Bearer ' + token),
+      }
+    ) as Observable<UserStore>;
   }
 }

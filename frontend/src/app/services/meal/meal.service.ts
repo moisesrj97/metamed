@@ -1,5 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { MealModel } from 'src/app/models/interfaces';
 
 export interface CreateMealDto {
   name: string;
@@ -19,7 +21,10 @@ export class MealService {
   baseUrl: string = 'http://localhost:3000/meal';
   constructor(private httpClient: HttpClient) {}
 
-  createMealInMealGroup(meal: CreateMealDto, token: string) {
+  createMealInMealGroup(
+    meal: CreateMealDto,
+    token: string
+  ): Observable<MealModel> {
     return this.httpClient.post(
       this.baseUrl,
       {
@@ -30,10 +35,14 @@ export class MealService {
       {
         headers: new HttpHeaders().set('Authorization', `Bearer ${token}`),
       }
-    );
+    ) as Observable<MealModel>;
   }
 
-  updateMealInfo(mealId: string, meal: UpdateMealDto, token: string) {
+  updateMealInfo(
+    mealId: string,
+    meal: UpdateMealDto,
+    token: string
+  ): Observable<MealModel> {
     return this.httpClient.patch(
       `${this.baseUrl}/${mealId}`,
       {
@@ -43,7 +52,7 @@ export class MealService {
       {
         headers: new HttpHeaders().set('Authorization', `Bearer ${token}`),
       }
-    );
+    ) as Observable<MealModel>;
   }
 
   deleteMealFromGroup(mealId: string, mealGroupId: string, token: string) {

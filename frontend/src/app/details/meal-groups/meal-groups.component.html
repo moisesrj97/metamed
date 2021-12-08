@@ -11,7 +11,11 @@
 </form>
 
 <div class="grid">
-  <div class="card" *ngFor="let item of fetchedData">
+  <div
+    class="card"
+    *ngFor="let item of fetchedData"
+    routerLink="{{ '/details/' + id + '/meal-groups/' + item._id }}"
+  >
     <h3 class="card__title">{{ item.name }}</h3>
     <div *ngFor="let exercise of item.meals; let index = index">
       <p class="card__title-item" *ngIf="index < 3">
