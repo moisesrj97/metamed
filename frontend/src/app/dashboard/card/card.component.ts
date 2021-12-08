@@ -6,9 +6,7 @@ import { PatientModel, ProfessionalModel } from 'src/app/models/interfaces';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
 })
-export class CardComponent implements OnInit {
+export class CardComponent {
   @Input() data!: PatientModel | ProfessionalModel;
   constructor() {}
-
-  ngOnInit(): void {}
 }

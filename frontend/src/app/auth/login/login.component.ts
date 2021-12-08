@@ -11,7 +11,7 @@ import { loginUser } from 'src/app/services/store/actions/user.actions';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   formGroup: FormGroup;
   roles: string[] = ['professional', 'patient'];
   authPopup: boolean = false;
@@ -28,8 +28,6 @@ export class LoginComponent implements OnInit {
       role: ['professional', [Validators.required]],
     });
   }
-
-  ngOnInit(): void {}
 
   submitForm(): void {
     if (this.formGroup.valid) {

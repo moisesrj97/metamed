@@ -18,7 +18,7 @@ import { TokenService } from 'src/app/services/token/token.service';
   templateUrl: './add-modal.component.html',
   styleUrls: ['./add-modal.component.scss'],
 })
-export class AddModalComponent implements OnInit {
+export class AddModalComponent {
   @Input() modalOpen!: boolean;
   @Output() closeModal: EventEmitter<boolean>;
   input: string = '';
@@ -30,8 +30,6 @@ export class AddModalComponent implements OnInit {
   ) {
     this.closeModal = new EventEmitter();
   }
-
-  ngOnInit(): void {}
 
   addPatient(): void {
     let token = this.tokenService.getTokenFromLocalStorage() as string;
