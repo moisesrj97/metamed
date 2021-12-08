@@ -184,7 +184,9 @@ export class ExerciseGroupDetailComponent implements OnInit {
             patientId: this.patientId,
           })
         );
-        this.router.navigate(['/details/', this.patientId]);
+        this.router.navigate([
+          '/details/' + this.patientId + '/exercise-groups',
+        ]);
       });
   }
 
