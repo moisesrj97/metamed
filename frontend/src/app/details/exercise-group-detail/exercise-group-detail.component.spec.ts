@@ -18,7 +18,7 @@ describe('ExerciseGroupDetailComponent', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule.withRoutes([
-          { path: 'details/:id', component: DetailsComponent },
+          { path: 'exercise-groups/:id', component: DetailsComponent },
         ]),
       ],
       providers: [provideMockStore()],
