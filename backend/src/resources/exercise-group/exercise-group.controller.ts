@@ -39,7 +39,7 @@ export class ExerciseGroupController {
     return this.exerciseGroupService.update(id, updateExerciseGroupDto, token);
   }
 
-  @Delete(':id')
+  @Delete(':id/:patientId')
   remove(
     @Param('id') id: string,
     @Param('patientId') patientId: string,
