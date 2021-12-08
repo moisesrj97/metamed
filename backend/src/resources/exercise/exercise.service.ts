@@ -106,7 +106,7 @@ export class ExerciseService {
     isProfessional(response);
     await isAuthor(response, id, this.exerciseModel);
 
-    await this.exerciseModel.findByIdAndUpdate(
+    await this.exerciseGroupModel.findByIdAndUpdate(
       exerciseGroupId,
       { $pull: { exercises: id } },
       { new: true },

@@ -44,7 +44,7 @@ export class ExerciseController {
     );
   }
 
-  @Delete(':id')
+  @Delete(':id/:groupId')
   remove(
     @Param('id') id: string,
     @Param('groupId') groupId: string,

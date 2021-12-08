@@ -76,6 +76,17 @@ export class ExerciseGroupDetailComponent implements OnInit {
     }
   }
 
+  deleteExercise(id: string) {
+    const token = this.tokenService.getTokenFromLocalStorage() as string;
+    this.exerciseService
+      .deleteExerciseFromGroup(id, this.id, token)
+      .subscribe(() => {
+        this.data.exercises = this.data.exercises.filter(
+          (exercise) => exercise._id !== id
+        );
+      });
+  }
+
   fileChecker(fileEvent: any) {
     const file = fileEvent.target.files[0];
     if (

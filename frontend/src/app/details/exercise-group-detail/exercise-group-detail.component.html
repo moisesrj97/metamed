@@ -78,6 +78,13 @@
       name="exercise-amount"
       placeholder="Enter exercise amount"
     />
+
+    <img
+      src="../../../assets/images/trash.png"
+      alt="Delete icon"
+      class="form__delete-icon"
+      (click)="deleteExercise(item._id)"
+    />
   </div>
 
   <h5>Add exercise</h5>
