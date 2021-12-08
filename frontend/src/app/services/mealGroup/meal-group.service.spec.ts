@@ -89,14 +89,14 @@ describe('Given MealGroupService', () => {
 
   describe('When deleteMealGroup is called', () => {
     it('httpClient should be called', () => {
-      service.deleteMealGroup('test', 'test').subscribe((response: any) => {
+      service.deleteMealGroup('test', 'test', '').subscribe((response: any) => {
         expect(response).not.toBe(null);
         expect(JSON.stringify(response)).toEqual(JSON.stringify(mockResponse));
       });
 
       const req = httpTestingController.expectOne({
         method: 'DELETE',
-        url: 'http://localhost:3000/meal-group/test',
+        url: 'http://localhost:3000/meal-group/test/test',
       });
 
       req.flush(mockResponse);
