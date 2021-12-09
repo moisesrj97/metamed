@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { fileChecker } from '../helpers/fileChecker.helper';
 import { UserStore } from '../models/interfaces';
 import { updateUserBasicData } from '../services/store/actions/user.actions';
 import { TokenService } from '../services/token/token.service';
@@ -38,12 +39,14 @@ export class ProfileComponent implements OnInit {
     this.timestamp = new Date().getTime();
   }
 
+  fileChecker = fileChecker;
+
   edit(event: Event) {
     const token = this.tokenService.getTokenFromLocalStorage() as string;
     const target = event.target as HTMLInputElement;
 
     if (target.name === 'profilePicture') {
-      this.fileChecker(event);
+      this.fileChecker(this, event);
     }
 
     if (!this.fileError) {
@@ -58,13 +61,15 @@ export class ProfileComponent implements OnInit {
           birthDate: this.data.birthDate,
         };
 
+        const updateData = (data: UserStore) => {
+          this.store.dispatch(updateUserBasicData({ fullDataUpdated: data }));
+        };
+
         if (target.name === 'profilePicture') {
           this.userInfoService
             .update(this.data._id, this.data.role, dto, token)
             .subscribe((data) => {
-              this.store.dispatch(
-                updateUserBasicData({ fullDataUpdated: data })
-              );
+              updateData(data);
             });
         } else {
           this.userInfoService
@@ -75,35 +80,10 @@ export class ProfileComponent implements OnInit {
               token
             )
             .subscribe((data) => {
-              this.store.dispatch(
-                updateUserBasicData({ fullDataUpdated: data })
-              );
+              updateData(data);
             });
         }
       }, 100);
-    }
-  }
-
-  fileChecker(fileEvent: any) {
-    const reader = new FileReader();
-
-    if (fileEvent.target.files && fileEvent.target.files.length) {
-      const [file] = fileEvent.target.files;
-
-      if (
-        !['image/jpeg', 'image/png'].includes(file.type) ||
-        file.size > 10000000
-      ) {
-        this.fileError = true;
-      } else {
-        this.fileError = false;
-      }
-
-      reader.onload = () => {
-        this.imageSrc = file;
-      };
-
-      reader.readAsDataURL(file);
     }
   }
 }

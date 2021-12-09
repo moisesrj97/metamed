@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { pipe } from 'rxjs';
+import { fileChecker } from 'src/app/helpers/fileChecker.helper';
 import { UserStore } from 'src/app/models/interfaces';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { RegisterService } from 'src/app/services/register/register.service';
@@ -116,6 +117,8 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  fileChecker = fileChecker;
+
   submitForm() {
     const sendInfo = () => {
       this.authService
@@ -183,29 +186,6 @@ export class RegisterComponent implements OnInit {
             },
           });
       }
-    }
-  }
-
-  fileChecker(fileEvent: any) {
-    const file = fileEvent.target.files[0];
-    if (
-      !['image/jpeg', 'image/png'].includes(file.type) ||
-      file.size > 10000000
-    ) {
-      this.fileError = true;
-    } else {
-      this.fileError = false;
-    }
-
-    const reader = new FileReader();
-
-    if (fileEvent.target.files && fileEvent.target.files.length) {
-      const [filem] = fileEvent.target.files;
-      reader.readAsDataURL(filem);
-
-      reader.onload = () => {
-        this.imageSrc = filem;
-      };
     }
   }
 }

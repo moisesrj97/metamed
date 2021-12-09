@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { fileChecker } from 'src/app/helpers/fileChecker.helper';
 import {
   ExerciseGroupModel,
   ExerciseModel,
@@ -115,8 +116,10 @@ export class ExerciseGroupDetailComponent implements OnInit {
       });
   }
 
+  fileChecker = fileChecker;
+
   editExercise(event: Event, exerciseId: string, field: string) {
-    this.fileChecker(event);
+    this.fileChecker(this, event);
 
     setTimeout(() => {
       if (!this.fileError) {
@@ -134,19 +137,22 @@ export class ExerciseGroupDetailComponent implements OnInit {
           exerciseImage: this.imageSrc,
         };
 
+        const updateExercise = (data: ExerciseModel) => {
+          this.data.exercises = this.data.exercises.map((exercise) => {
+            if (exercise._id === exerciseId) {
+              return data;
+            }
+            return exercise;
+          });
+        };
+
         switch (field) {
           case 'exerciseImage':
             exerciseDto.exerciseImage = this.imageSrc;
             return this.exerciseService
               .updateExerciseInfo(exerciseId, { ...exerciseDto }, token)
               .subscribe((data) => {
-                this.data.exercises = this.data.exercises.map((exercise) => {
-                  if (exercise._id === exerciseId) {
-                    return data;
-                  }
-                  return exercise;
-                });
-
+                updateExercise(data);
                 this.fileError = false;
                 this.imageSrc = undefined;
               });
@@ -159,12 +165,7 @@ export class ExerciseGroupDetailComponent implements OnInit {
                 token
               )
               .subscribe((data) => {
-                this.data.exercises = this.data.exercises.map((exercise) => {
-                  if (exercise._id === exerciseId) {
-                    return data;
-                  }
-                  return exercise;
-                });
+                updateExercise(data);
                 this.fileError = false;
               });
           default:
@@ -191,28 +192,5 @@ export class ExerciseGroupDetailComponent implements OnInit {
           '/details/' + this.patientId + '/exercise-groups',
         ]);
       });
-  }
-
-  fileChecker(fileEvent: any) {
-    const reader = new FileReader();
-
-    if (fileEvent.target.files && fileEvent.target.files.length) {
-      const [file] = fileEvent.target.files;
-
-      if (
-        !['image/jpeg', 'image/png'].includes(file.type) ||
-        file.size > 10000000
-      ) {
-        this.fileError = true;
-      } else {
-        this.fileError = false;
-      }
-
-      reader.onload = () => {
-        this.imageSrc = file;
-      };
-
-      reader.readAsDataURL(file);
-    }
   }
 }

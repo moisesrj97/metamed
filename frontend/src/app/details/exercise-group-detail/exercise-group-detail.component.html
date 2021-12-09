@@ -129,7 +129,7 @@
         name="exercise-image"
         placeholder="Enter exercise image"
         [(ngModel)]="newExercise.image"
-        (change)="fileChecker($event)"
+        (change)="fileChecker(this, $event)"
       />
     </div>
     <div>
