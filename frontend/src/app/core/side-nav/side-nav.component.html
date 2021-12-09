@@ -1,6 +1,6 @@
 <div
   class="side-nav"
-  [ngClass]="{ 'side-nav--closed': !open }"
+  [ngClass]="{ 'side-nav--closed': !open, 'side-nav--dark': darkMode }"
   *ngIf="isRendered"
 >
   <div class="side-nav__close">
@@ -11,13 +11,14 @@
       (click)="closeNav()"
     />
   </div>
-  <ul class="side-nav__list">
+  <ul class="side-nav__list" *ngIf="!darkMode">
     <li
       *ngFor="let item of menuItems"
       class="side-nav__item"
+      [ngClass]="{ 'side-nav__item--dark': darkMode }"
       routerLink="{{ item.route }}"
-      routerLinkActive="side-nav__item--active"
       (click)="closeNav()"
+      routerLinkActive="side-nav__item--active"
     >
       <img
         class="side-nav__item-img"
@@ -27,10 +28,35 @@
       <p class="side-nav__item-label">{{ item.label }}</p>
     </li>
   </ul>
-  <div class="side-nav__logout" (click)="logout()">
+  <ul class="side-nav__list" *ngIf="darkMode">
+    <li
+      *ngFor="let item of menuItems"
+      class="side-nav__item side-nav__item--dark"
+      routerLink="{{ item.route }}"
+      (click)="closeNav()"
+      routerLinkActive="side-nav__item--dark--active"
+    >
+      <img
+        class="side-nav__item-img"
+        src="{{ item.imagePath }}"
+        alt="{{ item.label }}"
+      />
+      <p class="side-nav__item-label">{{ item.label }}</p>
+    </li>
+  </ul>
+
+  <div
+    class="side-nav__logout"
+    [ngClass]="{ 'side-nav__logout--dark': darkMode }"
+    (click)="logout()"
+  >
     <img
+      [src]="
+        darkMode
+          ? '../../../assets/images/logoutDark.png'
+          : '../../../assets/images/logout.png'
+      "
       class="side-nav__logout-icon"
-      src="../../../assets/images/logout.png"
       alt="Logout"
     />
     <p class="side-nav__logout-label">Logout</p>

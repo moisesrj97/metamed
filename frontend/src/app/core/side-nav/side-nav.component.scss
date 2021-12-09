@@ -11,6 +11,10 @@
   gap: 30px;
   transition: all 0.2s ease-in-out;
   box-shadow: 1px 4px 4px rgba(0, 0, 0, 0.25);
+  &--dark {
+    background-color: #000000;
+    color: white;
+  }
   &:hover .side-nav__item-label {
     font-size: 1rem;
 
@@ -46,9 +50,15 @@
     &:hover {
       background-color: #efe8ff;
     }
-
     &--active {
       background-color: #efe8ff;
+    }
+    &--dark:hover {
+      background-color: #25e6ff60;
+    }
+
+    &--dark--active {
+      background-color: #25e6ff60;
     }
 
     &-img {
@@ -71,6 +81,9 @@
     cursor: pointer;
     width: 100%;
     height: 50px;
+    &--dark {
+      color: white;
+    }
     &-icon {
       height: 35px;
       aspect-ratio: 1;

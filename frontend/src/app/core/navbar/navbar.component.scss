@@ -11,6 +11,9 @@
   width: 100%;
   padding: 0 40px;
   background-color: #fff;
+  &--dark {
+    background-color: #000000;
+  }
   &__mobile-toggle {
     display: none;
   }
@@ -29,8 +32,14 @@
       font-weight: 300;
       font-size: 1.8rem;
       letter-spacing: -0.2rem;
+      &--dark {
+        color: white;
+      }
       &--accent {
         color: #2e21ff;
+        &--dark {
+          color: #25e5ff;
+        }
       }
     }
   }

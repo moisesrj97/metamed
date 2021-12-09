@@ -20,6 +20,7 @@ export class SideNavComponent implements OnInit {
   wasInside: boolean = false;
   isRendered: boolean;
   compWindow: Window;
+  darkMode!: boolean;
 
   menuItems: {
     imagePath: string;
@@ -32,7 +33,7 @@ export class SideNavComponent implements OnInit {
 
   constructor(
     public tokenService: TokenService,
-    public store: Store<{ user: UserStore }>
+    public store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>
   ) {
     this.toggleNav = new EventEmitter<boolean>();
     this.menuItems = [
@@ -99,6 +100,23 @@ export class SideNavComponent implements OnInit {
       .subscribe((role) => {
         this.menuItems[1].label =
           role === 'Patient' ? 'My professionals' : 'My patients';
+      });
+
+    this.store
+      .select((state) => state.darkMode.darkMode)
+      .subscribe((mode) => {
+        this.darkMode = mode;
+        this.menuItems.forEach((item, index) => {
+          if (mode) {
+            this.menuItems[index].imagePath = this.menuItems[
+              index
+            ].imagePath.replace('.png', 'Dark.png');
+          } else {
+            this.menuItems[index].imagePath = this.menuItems[
+              index
+            ].imagePath.replace('Dark.png', '.png');
+          }
+        });
       });
   }
 

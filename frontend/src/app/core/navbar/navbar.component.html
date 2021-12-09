@@ -1,4 +1,7 @@
-<div class="navbar" [ngClass]="{ 'navbar--logged': loggedIn }">
+<div
+  class="navbar"
+  [ngClass]="{ 'navbar--logged': loggedIn, 'navbar--dark': darkMode }"
+>
   <div class="navbar__mobile-toggle" (click)="openNav()">
     <img
       src="../../../assets/images/hamburguer.png"
@@ -11,9 +14,21 @@
       src="../../../assets/images/logo.png"
       alt="Logo"
       class="navbar__header-group-logo"
+      [src]="
+        darkMode
+          ? '../../../assets/images/logoDark.png'
+          : '../../../assets/images/logo.png'
+      "
     />
-    <h1 class="navbar__header-group-title">
-      Meta<span class="navbar__header-group-title--accent">Med</span>
+    <h1
+      class="navbar__header-group-title"
+      [ngClass]="{ 'navbar__header-group-title--dark': darkMode }"
+    >
+      Meta<span
+        class="navbar__header-group-title--accent"
+        [ngClass]="{ 'navbar__header-group-title--accent--dark': darkMode }"
+        >Med</span
+      >
     </h1>
   </div>
 
@@ -32,9 +47,14 @@
         routerLink="auth"
       />
       <img
-        src="../../../assets/images/darkModeSwitch.png"
+        [src]="
+          darkMode
+            ? '../../../assets/images/darkModeSwitchDark.png'
+            : '../../../assets/images/darkModeSwitch.png'
+        "
         alt="Dark mode toggle"
         class="navbar__menu-icons-dark-mode-toggle"
+        (click)="toggleDarkMode()"
       />
     </div>
   </div>
