@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  ControlContainer,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { pipe } from 'rxjs';
@@ -209,11 +203,11 @@ export class RegisterComponent implements OnInit {
     const reader = new FileReader();
 
     if (fileEvent.target.files && fileEvent.target.files.length) {
-      const [file] = fileEvent.target.files;
-      reader.readAsDataURL(file);
+      const [filem] = fileEvent.target.files;
+      reader.readAsDataURL(filem);
 
       reader.onload = () => {
-        this.imageSrc = file;
+        this.imageSrc = filem;
       };
     }
   }

@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import {
-  PatientModel,
-  ProfessionalModel,
-  UserStore,
-} from '../models/interfaces';
+import { UserStore } from '../models/interfaces';
 
 @Component({
   selector: 'app-details',

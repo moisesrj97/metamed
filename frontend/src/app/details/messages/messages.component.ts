@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs';
 import {
   ChatRefModel,
   PatientModel,
@@ -14,7 +13,6 @@ import {
   addMessageToChat,
   updateMessageReadState,
 } from 'src/app/services/store/actions/chat.actions';
-import { loginUser } from 'src/app/services/store/actions/user.actions';
 import { TokenService } from 'src/app/services/token/token.service';
 
 @Component({

@@ -1,9 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Token } from '@angular/compiler/src/ml_parser/tokens';
 import { Injectable } from '@angular/core';
-import { mergeMap, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { UserStore } from 'src/app/models/interfaces';
-import { TokenService } from '../token/token.service';
 
 export interface RegisterProfessionalFormData {
   name: string;

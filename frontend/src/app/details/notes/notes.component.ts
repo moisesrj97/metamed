@@ -8,7 +8,6 @@ import {
   RefDataModel,
   ProfessionalModel,
 } from 'src/app/models/interfaces';
-import { MealGroupService } from 'src/app/services/mealGroup/meal-group.service';
 import { NoteService } from 'src/app/services/note/note.service';
 import { addNote } from 'src/app/services/store/actions/note.actions';
 import { TokenService } from 'src/app/services/token/token.service';

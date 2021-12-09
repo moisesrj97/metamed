@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { CanLoad, Route, Router, UrlSegment, UrlTree } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { CanLoad, Route, Router, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { UserStore } from '../models/interfaces';
 import { TokenService } from '../services/token/token.service';
 
 @Injectable({
@@ -34,6 +32,6 @@ export class RouteAuthLazyGuard implements CanLoad {
       }
     }
 
-    return result as boolean;
+    return result;
   }
 }

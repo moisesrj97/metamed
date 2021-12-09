@@ -10,7 +10,6 @@ import {
 import { PatientManagmentService } from 'src/app/services/patientManagment/patient-managment.service';
 import {
   deleteUserFromProfessional,
-  loginUser,
   updatePatientExtraDataFromProfessional,
 } from 'src/app/services/store/actions/user.actions';
 import { TokenService } from 'src/app/services/token/token.service';

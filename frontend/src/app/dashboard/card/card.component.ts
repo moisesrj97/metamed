@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { PatientModel, ProfessionalModel } from 'src/app/models/interfaces';
 
 @Component({
@@ -8,5 +8,4 @@ import { PatientModel, ProfessionalModel } from 'src/app/models/interfaces';
 })
 export class CardComponent {
   @Input() data!: PatientModel | ProfessionalModel;
-  constructor() {}
 }

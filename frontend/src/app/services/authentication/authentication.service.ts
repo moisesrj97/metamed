@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { mergeMap, Observable } from 'rxjs';
-import { JwtModel, UserStore } from 'src/app/models/interfaces';
+import { UserStore } from 'src/app/models/interfaces';
 import { TokenService } from '../token/token.service';
 
 @Injectable({

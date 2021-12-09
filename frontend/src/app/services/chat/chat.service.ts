@@ -1,8 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ChatRefModel, MessageModel } from 'src/app/models/interfaces';
+import { MessageModel } from 'src/app/models/interfaces';
 
 @Injectable({
   providedIn: 'root',

@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserStore } from 'src/app/models/interfaces';
-import { updateUserBasicData } from '../store/actions/user.actions';
 
 interface UpdateUserInfoDto {
   name: string;
