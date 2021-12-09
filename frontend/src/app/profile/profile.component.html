@@ -42,6 +42,9 @@
       (change)="edit($event)"
     />
   </div>
+  <div class="popup" *ngIf="data.name.length < 3 || data.name.length > 50">
+    Name field should be between 3 and 50 characters
+  </div>
   <div class="form__group">
     <label class="form__label" for="surnane">Surname: </label>
     <input
@@ -53,7 +56,12 @@
       (change)="edit($event)"
     />
   </div>
-
+  <div
+    class="popup"
+    *ngIf="data.surname.length < 3 || data.surname.length > 50"
+  >
+    Surname field should be between 3 and 50 characters
+  </div>
   <div class="form__group">
     <label class="form__label" for="profilePicture">Profile picture: </label>
     <input
@@ -65,6 +73,9 @@
     />
     <p *ngIf="fileError">Error en el archivo</p>
   </div>
+  <div class="popup" *ngIf="fileError">
+    Files must be jpg or png and less than 10MB
+  </div>
   <div class="form__group" *ngIf="data.businessName">
     <label class="form__label" for="businessName">Business Name: </label>
     <input
@@ -75,7 +86,14 @@
       [(ngModel)]="data.businessName"
       (change)="edit($event)"
     />
+    <div
+      class="popup"
+      *ngIf="data.businessName.length < 3 || data.businessName.length > 50"
+    >
+      BusinessName field should be between 3 and 50 characters
+    </div>
   </div>
+
   <div class="form__group" *ngIf="data.gender">
     <label class="form__label" for="gender">Gender: </label>
     <input
@@ -86,6 +104,12 @@
       [(ngModel)]="data.gender"
       (change)="edit($event)"
     />
+    <div
+      class="popup"
+      *ngIf="data.gender.length < 3 || data.gender.length > 50"
+    >
+      Gender field should be between 3 and 50 characters
+    </div>
   </div>
   <div class="form__group" *ngIf="data.birthDate">
     <label class="form__label" for="birthDate">Birth Date: </label>
@@ -97,5 +121,11 @@
       [(ngModel)]="data.birthDate"
       (change)="edit($event)"
     />
+    <div
+      class="popup"
+      *ngIf="data.birthDate.length < 3 || data.birthDate.length > 50"
+    >
+      Birthdate field should be between 3 and 50 characters
+    </div>
   </div>
 </div>
