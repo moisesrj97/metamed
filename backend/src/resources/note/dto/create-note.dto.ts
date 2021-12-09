@@ -5,6 +5,6 @@ export class CreateNoteDto {
   patient: mongoose.Types.ObjectId;
 
   @IsString()
-  @Length(3, 30)
+  @Length(3, 50)
   title: string;
 }

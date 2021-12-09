@@ -5,6 +5,6 @@ export class CreateMealGroupDto {
   patient: mongoose.Types.ObjectId;
 
   @IsString()
-  @Length(3, 30)
+  @Length(3, 50)
   name: string;
 }

@@ -11,12 +11,12 @@ export default class UpdatePatientDto {
 
   @IsOptional()
   @IsString()
-  @Length(3, 20)
+  @Length(3, 50)
   gender: string;
 
   @IsOptional()
   @IsString()
-  @Length(3, 20)
+  @Length(3, 50)
   birthDate: string;
 
   @IsString()

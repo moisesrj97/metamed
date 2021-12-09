@@ -17,10 +17,10 @@ export default class CreatePatientDto {
   surname: string;
 
   @IsString()
-  @Length(3, 20)
+  @Length(3, 50)
   gender: string;
 
   @IsString()
-  @Length(3, 20)
+  @Length(3, 50)
   birthDate: string;
 }
