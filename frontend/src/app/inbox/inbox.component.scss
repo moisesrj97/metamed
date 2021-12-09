@@ -1,0 +1,48 @@
+:host {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 80px;
+  gap: 20px;
+}
+
+.chat-badge {
+  width: 600px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  background-color: #0500ff;
+  border: 1px solid black;
+  border-radius: 250px;
+  cursor: pointer;
+  &__avatar {
+    height: 60px;
+    width: 60px;
+    border-radius: 100%;
+  }
+  &__name {
+    padding: 0 10px;
+    color: white;
+  }
+  &__message {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: white;
+    border-radius: 250px;
+    height: 100%;
+    &--receiver {
+      color: #0500ff;
+    }
+    &--unread {
+      font-weight: 700;
+    }
+  }
+  &__unread-icon {
+    margin-left: 20px;
+    height: 40px;
+  }
+}

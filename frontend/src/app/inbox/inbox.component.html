@@ -1,1 +1,40 @@
-<p>inbox works!</p>
+<div class="chat-badge__container" *ngFor="let item of data">
+  <div
+    class="chat-badge"
+    *ngIf="item.chatRef.messages.length > 0"
+    routerLink="{{ '/details/' + item.refData._id }}"
+  >
+    <img
+      src="{{ item.refData.profilePicture }}"
+      alt="{{ item.refData.name + ' ' + item.refData.surname }}"
+      class="chat-badge__avatar"
+    />
+    <p class="chat-badge__name">{{ item.refData.name }}</p>
+    <p
+      class="chat-badge__message"
+      [ngClass]="{
+        'chat-badge__message--receiver':
+          item.chatRef.messages[item.chatRef.messages.length - 1].from !==
+          userId,
+        'chat-badge__message--unread':
+          item.chatRef.messages[item.chatRef.messages.length - 1].read ===
+            false &&
+          item.chatRef.messages[item.chatRef.messages.length - 1].from !==
+            userId
+      }"
+    >
+      {{ item.chatRef.messages[item.chatRef.messages.length - 1].text }}
+      <img
+        src="../../assets/images/bell.png"
+        alt="Unread icon"
+        class="chat-badge__unread-icon"
+        *ngIf="
+          item.chatRef.messages[item.chatRef.messages.length - 1].read ===
+            false &&
+          item.chatRef.messages[item.chatRef.messages.length - 1].from !==
+            userId
+        "
+      />
+    </p>
+  </div>
+</div>
