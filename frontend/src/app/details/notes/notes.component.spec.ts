@@ -11,6 +11,7 @@ import { NotesComponent } from './notes.component';
 const initialState = {
   user: {
     _id: '123',
+    role: 'Professional',
     patients: [
       { refData: { _id: '123' }, notes: ['123'] },
       { refData: { _id: '1234' }, notes: ['123'] },

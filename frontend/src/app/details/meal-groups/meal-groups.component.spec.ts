@@ -11,6 +11,7 @@ import { MealGroupsComponent } from './meal-groups.component';
 const initialState = {
   user: {
     _id: '123',
+    role: 'Professional',
     patients: [
       { refData: { _id: '123' }, mealGroups: ['123'] },
       { refData: { _id: '1234' }, mealGroups: ['123'] },

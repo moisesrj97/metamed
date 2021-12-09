@@ -4,19 +4,15 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
-import {
-  ExerciseGroupModel,
-  MealGroupModel,
-  UserStore,
-} from 'src/app/models/interfaces';
+import { ExerciseGroupModel, UserStore } from 'src/app/models/interfaces';
 
 import { ExerciseGroupsComponent } from './exercise-groups.component';
 
 const initialState = {
   user: {
     _id: '123',
-    role: 'Professional',
-    patients: [
+    role: 'Patient',
+    professionals: [
       { refData: { _id: '123' }, exerciseGroups: ['123'] },
       { refData: { _id: '1234' }, exerciseGroups: ['123'] },
     ],
@@ -59,26 +55,6 @@ describe('ExerciseGroupsComponent', () => {
       expect(
         component.exerciseGroupService.getExerciseGroup
       ).toHaveBeenCalled();
-    });
-  });
-
-  describe('When addGroup is called', () => {
-    it('Store dispatch should be called', () => {
-      spyOn(component.store, 'dispatch').and.returnValue();
-      spyOn(
-        component.exerciseGroupService,
-        'addExerciseGroupToPatient'
-      ).and.returnValue(
-        of({
-          patients: [{ refData: '123', exerciseGroups: ['123'] }],
-        } as unknown as UserStore)
-      );
-
-      component.input = 'Test';
-
-      component.addGroup();
-
-      expect(store.dispatch).toHaveBeenCalled();
     });
   });
 });

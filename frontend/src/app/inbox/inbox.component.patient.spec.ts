@@ -6,8 +6,8 @@ import { InboxComponent } from './inbox.component';
 const initialState = {
   user: {
     _id: '123',
-    role: 'Professional',
-    patients: [
+    role: 'Patient',
+    professionals: [
       {
         refData: { _id: '1234' },
         chatRef: {

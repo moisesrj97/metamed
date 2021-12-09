@@ -8,6 +8,12 @@ import { DetailsComponent } from '../details.component';
 
 import { ExerciseGroupDetailComponent } from './exercise-group-detail.component';
 
+const initialState = {
+  user: {
+    role: 'Professional',
+  },
+};
+
 describe('ExerciseGroupDetailComponent', () => {
   let component: ExerciseGroupDetailComponent;
   let fixture: ComponentFixture<ExerciseGroupDetailComponent>;
@@ -21,7 +27,7 @@ describe('ExerciseGroupDetailComponent', () => {
           { path: 'exercise-groups/:id', component: DetailsComponent },
         ]),
       ],
-      providers: [provideMockStore()],
+      providers: [provideMockStore({ initialState })],
     }).compileComponents();
   });
 

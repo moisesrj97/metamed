@@ -4,33 +4,29 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
-import {
-  ExerciseGroupModel,
-  MealGroupModel,
-  UserStore,
-} from 'src/app/models/interfaces';
+import { MealGroupModel, UserStore } from 'src/app/models/interfaces';
 
-import { ExerciseGroupsComponent } from './exercise-groups.component';
+import { MealGroupsComponent } from './meal-groups.component';
 
 const initialState = {
   user: {
     _id: '123',
-    role: 'Professional',
-    patients: [
-      { refData: { _id: '123' }, exerciseGroups: ['123'] },
-      { refData: { _id: '1234' }, exerciseGroups: ['123'] },
+    role: 'Patient',
+    professionals: [
+      { refData: { _id: '123' }, mealGroups: ['123'] },
+      { refData: { _id: '1234' }, mealGroups: ['123'] },
     ],
   },
 };
 
-describe('ExerciseGroupsComponent', () => {
-  let component: ExerciseGroupsComponent;
-  let fixture: ComponentFixture<ExerciseGroupsComponent>;
+describe('MealGroupsComponent', () => {
+  let component: MealGroupsComponent;
+  let fixture: ComponentFixture<MealGroupsComponent>;
   let store: MockStore;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ExerciseGroupsComponent],
+      declarations: [MealGroupsComponent],
       imports: [RouterTestingModule, HttpClientTestingModule],
       providers: [provideMockStore({ initialState })],
     }).compileComponents();
@@ -39,13 +35,13 @@ describe('ExerciseGroupsComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ExerciseGroupsComponent);
+    fixture = TestBed.createComponent(MealGroupsComponent);
     component = fixture.componentInstance;
     component.route = {
       parent: { snapshot: { paramMap: { get: () => '123' } } },
     } as unknown as ActivatedRoute;
-    spyOn(component.exerciseGroupService, 'getExerciseGroup').and.returnValue(
-      of({} as unknown as ExerciseGroupModel)
+    spyOn(component.mealGroupService, 'getMealGroup').and.returnValue(
+      of({} as unknown as MealGroupModel)
     );
     fixture.detectChanges();
   });
@@ -55,10 +51,8 @@ describe('ExerciseGroupsComponent', () => {
   });
 
   describe('When component loads', () => {
-    it('exerciseGroups getexerciseGroups should be called', () => {
-      expect(
-        component.exerciseGroupService.getExerciseGroup
-      ).toHaveBeenCalled();
+    it('mealGroups getMEalGroups should be called', () => {
+      expect(component.mealGroupService.getMealGroup).toHaveBeenCalled();
     });
   });
 
@@ -66,11 +60,11 @@ describe('ExerciseGroupsComponent', () => {
     it('Store dispatch should be called', () => {
       spyOn(component.store, 'dispatch').and.returnValue();
       spyOn(
-        component.exerciseGroupService,
-        'addExerciseGroupToPatient'
+        component.mealGroupService,
+        'addMealGroupToPatient'
       ).and.returnValue(
         of({
-          patients: [{ refData: '123', exerciseGroups: ['123'] }],
+          patients: [{ refData: '123', mealGroups: ['123'] }],
         } as unknown as UserStore)
       );
 

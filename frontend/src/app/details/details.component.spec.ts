@@ -6,6 +6,12 @@ import { provideMockStore } from '@ngrx/store/testing';
 
 import { DetailsComponent } from './details.component';
 
+const initialState = {
+  user: {
+    role: 'Professional',
+  },
+};
+
 describe('DetailsComponent', () => {
   let component: DetailsComponent;
   let fixture: ComponentFixture<DetailsComponent>;
@@ -14,7 +20,7 @@ describe('DetailsComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [DetailsComponent],
       imports: [RouterTestingModule, HttpClientTestingModule],
-      providers: [provideMockStore()],
+      providers: [provideMockStore({ initialState })],
     }).compileComponents();
   });
 
