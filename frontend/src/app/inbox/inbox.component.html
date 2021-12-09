@@ -2,7 +2,7 @@
   <div
     class="chat-badge"
     *ngIf="item.chatRef.messages.length > 0"
-    routerLink="{{ '/details/' + item.refData._id }}"
+    routerLink="{{ '/details/' + item.refData._id + '/messages' }}"
   >
     <img
       src="{{ item.refData.profilePicture }}"

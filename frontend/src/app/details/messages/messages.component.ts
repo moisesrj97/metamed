@@ -25,7 +25,12 @@ export class MessagesComponent implements OnInit {
   id!: string;
   userId!: string;
   newMessage!: string;
-  data: ChatRefModel = { _id: '', messages: [], professional: '', patient: '' };
+  data: ChatRefModel = {
+    _id: '',
+    messages: [],
+    professional: '',
+    patient: '',
+  };
 
   constructor(
     public route: ActivatedRoute,
@@ -54,8 +59,8 @@ export class MessagesComponent implements OnInit {
         ) as PatientModel;
 
         this.data = result?.chatRef;
-        this.data.messages.forEach((message) => {
-          if (message.from !== this.userId && message.read === false) {
+        this.data?.messages.forEach((message) => {
+          if (message.to === this.userId && message.read === false) {
             this.chatService.toggleMessage(message._id, token).subscribe(() => {
               this.store.dispatch(updateMessageReadState({ message: message }));
             });

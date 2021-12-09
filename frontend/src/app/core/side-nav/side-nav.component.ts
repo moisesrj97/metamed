@@ -77,6 +77,24 @@ export class SideNavComponent implements OnInit {
           this.isRendered = true;
         }
       });
+    this.store
+      .select((state) => state.user)
+      .subscribe((user) => {
+        if (
+          user.patients?.some((patient) =>
+            patient.chatRef.messages.some(
+              (message) => message.read === false && message.to === user._id
+            )
+          )
+        ) {
+          console.log('unread messages');
+          this.menuItems[2].imagePath =
+            '../../../assets/images/messagesNotification.png';
+        } else {
+          console.log('no unread messages');
+          this.menuItems[2].imagePath = '../../../assets/images/messages.png';
+        }
+      });
   }
 
   @HostListener('document:click', ['$event'])

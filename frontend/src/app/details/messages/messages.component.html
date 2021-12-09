@@ -1,4 +1,9 @@
-<div class="chat-window" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+<div
+  class="chat-window"
+  #scrollMe
+  [scrollTop]="scrollMe.scrollHeight"
+  *ngIf="data"
+>
   <div
     *ngFor="let item of data.messages"
     class="message-container"
