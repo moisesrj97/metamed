@@ -117,6 +117,25 @@ export class RegisterComponent implements OnInit {
   }
 
   submitForm() {
+    const sendInfo = () => {
+      this.authService
+        .loginWithoutToken(
+          this.formGroup.value['email'],
+          this.formGroup.value['password'],
+          this.formGroup.value['role']
+        )
+        .subscribe(() => this.compWindow.location.reload());
+    };
+
+    const handleError = () => {
+      this.registerError = true;
+      this.formGroup.reset();
+
+      setTimeout(() => {
+        this.registerError = false;
+      }, 2000);
+    };
+
     if (this.formGroup.valid && !this.fileError) {
       if (this.formGroup.value['role'] === 'Professional') {
         this.registerService
@@ -133,22 +152,11 @@ export class RegisterComponent implements OnInit {
               (data: UserStore) =>
                 this.store.dispatch(loginUser({ userInfo: { ...data } })),
               () => {
-                this.authService
-                  .loginWithoutToken(
-                    this.formGroup.value['email'],
-                    this.formGroup.value['password'],
-                    this.formGroup.value['role']
-                  )
-                  .subscribe(() => this.compWindow.location.reload());
+                sendInfo();
               }
             ),
             error: () => {
-              this.registerError = true;
-              this.formGroup.reset();
-
-              setTimeout(() => {
-                this.registerError = false;
-              }, 2000);
+              handleError();
             },
           });
       } else {
@@ -167,22 +175,11 @@ export class RegisterComponent implements OnInit {
               (data: UserStore) =>
                 this.store.dispatch(loginUser({ userInfo: { ...data } })),
               () => {
-                this.authService
-                  .loginWithoutToken(
-                    this.formGroup.value['email'],
-                    this.formGroup.value['password'],
-                    this.formGroup.value['role']
-                  )
-                  .subscribe(() => this.compWindow.location.reload());
+                sendInfo();
               }
             ),
             error: () => {
-              this.registerError = true;
-              this.formGroup.reset();
-
-              setTimeout(() => {
-                this.registerError = false;
-              }, 2000);
+              handleError();
             },
           });
       }
