@@ -174,11 +174,13 @@ export const userReducer = createReducer(
   on(updateMessageReadState, (state: UserStore, { message }) => {
     const recipient =
       message.fromRole === 'Patient' ? 'patients' : 'professionals';
+
     return {
       ...state,
       [recipient]: state[recipient]?.map(
-        (otherUser: ProfessionalModel | PatientModel) => {
+        (otherUser: PatientModel | ProfessionalModel) => {
           if (otherUser.refData._id === message.from) {
+            console.log(otherUser);
             return {
               ...otherUser,
               chatRef: {

@@ -18,7 +18,7 @@ import {
   updateMessageReadState,
 } from './actions/chat.actions';
 
-describe('Given BooksReducer', () => {
+describe('Given UserReducer', () => {
   describe('When unknown action', () => {
     it('should return the default state', () => {
       const { initialState } = fromReducer;
@@ -1214,7 +1214,7 @@ describe('Given BooksReducer', () => {
         role: 'Professional',
         profilePicture: 'test.jpg',
         businessName: 'test',
-        patients: [
+        professionals: [
           {
             refData: {
               _id: 'f8f8f8f8f8f8',
@@ -1222,7 +1222,6 @@ describe('Given BooksReducer', () => {
               surname: 'Doe',
               profilePicture: 'test.jpg',
             },
-            extraData: [],
             chatRef: {
               _id: '5e9f8f8f8f8f8f8f8f8f8f8',
               patient: '5e9f8f8f8f8f8f8f8f8f8f8',
@@ -1259,7 +1258,6 @@ describe('Given BooksReducer', () => {
               surname: 'Doe',
               profilePicture: 'test.jpg',
             },
-            extraData: [],
             chatRef: {
               _id: '5e9f8f8f8f8f8f8f8f8f8f8',
               patient: '5e9f8f8f8f8f8f8f8f8f8f8',
@@ -1281,7 +1279,7 @@ describe('Given BooksReducer', () => {
         role: 'Professional',
         profilePicture: 'test.jpg',
         businessName: 'test',
-        patients: [
+        professionals: [
           {
             refData: {
               _id: 'f8f8f8f8f8f8',
@@ -1289,7 +1287,6 @@ describe('Given BooksReducer', () => {
               surname: 'Doe',
               profilePicture: 'test.jpg',
             },
-            extraData: [],
             chatRef: {
               _id: '5e9f8f8f8f8f8f8f8f8f8f8',
               patient: '5e9f8f8f8f8f8f8f8f8f8f8',
@@ -1326,7 +1323,6 @@ describe('Given BooksReducer', () => {
               surname: 'Doe',
               profilePicture: 'test.jpg',
             },
-            extraData: [],
             chatRef: {
               _id: '5e9f8f8f8f8f8f8f8f8f8f8',
               patient: '5e9f8f8f8f8f8f8f8f8f8f8',
@@ -1343,8 +1339,8 @@ describe('Given BooksReducer', () => {
       const action = updateMessageReadState({
         message: {
           _id: 'f9f9f9f9f9f9',
-          to: 'f8f8f8f8f8f8',
-          from: '5e9f8f8f8f8f8f8f8f8f8f8',
+          to: '5e9f8f8f8f8f8f8f8f8f8f8',
+          from: 'f8f8f8f8f8f8',
           text: 'test',
           toRole: 'Patient',
           fromRole: 'Professional',
@@ -1352,7 +1348,6 @@ describe('Given BooksReducer', () => {
         },
       });
       const state = fromReducer.userReducer(initialState, action);
-
       expect(state).toEqual(newState);
     });
   });
@@ -1368,7 +1363,7 @@ describe('Given BooksReducer', () => {
         profilePicture: 'test.jpg',
         gender: 'test',
         birthDate: 'test',
-        professionals: [
+        patients: [
           {
             refData: {
               _id: 'f8f8f8f8f8f8',
@@ -1376,6 +1371,7 @@ describe('Given BooksReducer', () => {
               surname: 'Doe',
               profilePicture: 'test.jpg',
             },
+            extraData: [],
             chatRef: {
               _id: '5e9f8f8f8f8f8f8f8f8f8f8',
               patient: '5e9f8f8f8f8f8f8f8f8f8f8',
@@ -1412,6 +1408,8 @@ describe('Given BooksReducer', () => {
               surname: 'Doe',
               profilePicture: 'test.jpg',
             },
+
+            extraData: [],
             chatRef: {
               _id: '5e9f8f8f8f8f8f8f8f8f8f8',
               patient: '5e9f8f8f8f8f8f8f8f8f8f8',
@@ -1434,7 +1432,7 @@ describe('Given BooksReducer', () => {
         profilePicture: 'test.jpg',
         gender: 'test',
         birthDate: 'test',
-        professionals: [
+        patients: [
           {
             refData: {
               _id: 'f8f8f8f8f8f8',
@@ -1442,6 +1440,8 @@ describe('Given BooksReducer', () => {
               surname: 'Doe',
               profilePicture: 'test.jpg',
             },
+
+            extraData: [],
             chatRef: {
               _id: '5e9f8f8f8f8f8f8f8f8f8f8',
               patient: '5e9f8f8f8f8f8f8f8f8f8f8',
@@ -1478,6 +1478,8 @@ describe('Given BooksReducer', () => {
               surname: 'Doe',
               profilePicture: 'test.jpg',
             },
+
+            extraData: [],
             chatRef: {
               _id: '5e9f8f8f8f8f8f8f8f8f8f8',
               patient: '5e9f8f8f8f8f8f8f8f8f8f8',
@@ -1494,8 +1496,8 @@ describe('Given BooksReducer', () => {
       const action = updateMessageReadState({
         message: {
           _id: 'f9f9f9f9f9f9',
-          to: 'f8f8f8f8f8f8',
-          from: '5e9f8f8f8f8f8f8f8f8f8f8',
+          to: '5e9f8f8f8f8f8f8f8f8f8f8',
+          from: 'f8f8f8f8f8f8',
           text: 'test',
           toRole: 'Professional',
           fromRole: 'Patient',
