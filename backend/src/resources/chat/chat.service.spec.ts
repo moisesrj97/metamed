@@ -51,7 +51,7 @@ describe('Given ChatService', () => {
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiJmOGY4ZjhmOGY4ZjkiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoidGVzdCIsImlhdCI6MTUxNjIzOTAyMn0.jYXlg2_VxJ3WpmNPywOlNgmQZNP0q6qA8qf7vNZKM0k',
       );
 
-      expect(response).toBe('find model');
+      expect(response).toBe('create model');
     });
   });
 
@@ -65,7 +65,7 @@ describe('Given ChatService', () => {
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUGF0aWVudCIsImlkIjoiNjFhNGY0YTkzZDZjYzU2MmYxZmI1MmE5IiwibmFtZSI6ImFhYWEiLCJlYW1pbCI6ImFhYSIsImlhdCI6MTUxNjIzOTAyMn0.ml57PoWBI1WVRZNLfAlfZt6mdD9r5T2RvKssNw5UMyg',
       );
 
-      expect(response).toBe('find model');
+      expect(response).toBe('create model');
     });
   });
 

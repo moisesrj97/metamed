@@ -375,10 +375,10 @@ describe('AppController (e2e)', () => {
         'Authorization',
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
       );
-    initialMessageRef = response.body.messages[0];
+    initialMessageRef = response.body._id;
     console.log(response.body.messages);
     expect(response.status).toBe(200);
-    expect(response.body.messages.length).toBe(initialChatLength + 1);
+    expect(response.body.text).toBe('Hello World');
   });
 
   it('/message/initialMessageRef (PATCH)', async () => {
