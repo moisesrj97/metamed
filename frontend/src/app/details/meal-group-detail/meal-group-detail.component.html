@@ -34,6 +34,9 @@
     placeholder="Enter group title"
     (change)="changeTitleAndExtra()"
   />
+  <div class="popup" *ngIf="data.name.length < 3 || data.name.length > 50">
+    Name field should be between 3 and 50 characters
+  </div>
 
   <label for="extra" class="form__label">Extra data:</label>
   <textarea
@@ -47,12 +50,14 @@
     placeholder="Enter group extra data"
     (change)="changeTitleAndExtra()"
   ></textarea>
-
+  <div class="popup" *ngIf="data.extra.length < 3 || data.extra.length > 50">
+    Extra field should be between 3 and 50 characters
+  </div>
   <h2 class="form__subtitle">meals</h2>
 
   <div *ngFor="let item of data.meals; let i = index" class="form__group">
     <div>
-      <label class="form__label" for="{{ 'meal-name' + i }}">meal name: </label
+      <label class="form__label" for="{{ 'meal-name' + i }}">Meal name: </label
       ><input
         type="text"
         id="{{ 'meal-name' + i }}"
@@ -63,9 +68,12 @@
         (change)="editMeal($event, item._id)"
       />
     </div>
+    <div class="popup" *ngIf="item.name.length < 3 || item.name.length > 50">
+      Name field should be between 3 and 30 characters
+    </div>
     <div>
       <label class="form__label" for="{{ 'meal-amount' + i }}"
-        >meal amount:
+        >Meal amount:
       </label>
       <input
         type="text"
@@ -76,6 +84,12 @@
         [(ngModel)]="item.amount"
         (change)="editMeal($event, item._id)"
       />
+    </div>
+    <div
+      class="popup"
+      *ngIf="item.amount.length < 3 || item.amount.length > 50"
+    >
+      Amount field should be between 3 and 50 characters
     </div>
 
     <div class="form__delete-icon-container">
@@ -89,31 +103,55 @@
   </div>
 
   <h2 class="form__subtitle">Add new meal</h2>
-  <form class="form" (submit)="addMeal()">
+  <form class="form" (submit)="addMeal()" [formGroup]="formGroup">
     <div>
-      <label class="form__label" for="meal-name">meal name: </label
+      <label class="form__label" for="meal-name">Meal name: </label
       ><input
         type="text"
         id="meal-name"
         class="form__input"
         name="meal-name"
         placeholder="Enter meal name"
-        [(ngModel)]="newMeal.name"
+        formControlName="name"
       />
     </div>
+    <div
+      class="popup"
+      *ngIf="
+        formGroup.controls['name'].invalid && formGroup.controls['name'].touched
+      "
+    >
+      Name must be between 3 and 50 characters
+    </div>
     <div>
-      <label class="form__label" for="meal-amount">meal amount: </label>
+      <label class="form__label" for="meal-amount">Meal amount: </label>
       <input
         type="text"
         id="meal-amount"
         class="form__input"
         name="meal-amount"
         placeholder="Enter meal amount"
-        [(ngModel)]="newMeal.amount"
+        formControlName="amount"
       />
     </div>
+    <div
+      class="popup"
+      *ngIf="
+        formGroup.controls['amount'].invalid &&
+        formGroup.controls['amount'].touched
+      "
+    >
+      Amount must be between 3 and 50 characters
+    </div>
 
-    <button class="form__button" type="submit">Submit</button>
+    <button
+      class="form__button"
+      type="submit"
+      [disabled]="formGroup.invalid"
+      [ngClass]="{ 'form__button--disabled': formGroup.invalid }"
+    >
+      Submit
+    </button>
   </form>
   <div class="form__button-container">
     <p class="form__button form__button--danger" (click)="deleteMealGroup()">

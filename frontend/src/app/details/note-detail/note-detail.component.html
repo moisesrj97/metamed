@@ -25,6 +25,9 @@
     placeholder="Enter group title"
     (change)="changeTitleAndExtra()"
   />
+  <div class="popup" *ngIf="data.title.length < 3 || data.title.length > 50">
+    Title field should be between 3 and 50 characters
+  </div>
 
   <label for="extra" class="form__label">Extra data:</label>
   <textarea
@@ -38,6 +41,12 @@
     placeholder="Enter group extra data"
     (change)="changeTitleAndExtra()"
   ></textarea>
+  <div
+    class="popup"
+    *ngIf="data.description.length < 3 || data.description.length > 50"
+  >
+    Description field should be between 3 and 200 characters
+  </div>
 
   <div class="form__button-container">
     <p class="form__button form__button--danger" (click)="deleteNote()">

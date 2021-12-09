@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
@@ -21,10 +22,7 @@ export class MealGroupDetailComponent implements OnInit {
   patientId!: string;
   data!: MealGroupModel;
   editing: boolean = false;
-  newMeal: { name: string; amount: string } = {
-    name: '',
-    amount: '',
-  };
+  formGroup!: FormGroup;
   role!: string;
 
   constructor(
@@ -33,8 +31,28 @@ export class MealGroupDetailComponent implements OnInit {
     public mealGroupService: MealGroupService,
     public mealService: MealService,
     public tokenService: TokenService,
-    public store: Store<{ user: UserStore }>
-  ) {}
+    public store: Store<{ user: UserStore }>,
+    public fb: FormBuilder
+  ) {
+    this.formGroup = this.fb.group({
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(20),
+        ],
+      ],
+      amount: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(20),
+        ],
+      ],
+    });
+  }
 
   ngOnInit(): void {
     const token = this.tokenService.getTokenFromLocalStorage() as string;
@@ -63,21 +81,20 @@ export class MealGroupDetailComponent implements OnInit {
   }
 
   addMeal() {
-    if (this.newMeal.name && this.newMeal.amount) {
+    if (this.formGroup.valid) {
       const token = this.tokenService.getTokenFromLocalStorage() as string;
       this.mealService
         .createMealInMealGroup(
           {
-            name: this.newMeal.name,
-            amount: this.newMeal.amount,
+            name: this.formGroup.value.name,
+            amount: this.formGroup.value.amount,
             mealGroupId: this.id,
           },
           token
         )
         .subscribe((data) => {
           this.data.meals.push(data);
-          this.newMeal.name = '';
-          this.newMeal.amount = '';
+          this.formGroup.reset();
         });
     }
   }

@@ -74,7 +74,7 @@
         (change)="editExercise($event, item._id, 'name')"
       />
       <div class="popup" *ngIf="item.name.length < 3 || item.name.length > 50">
-        Extra field should be between 3 and 50 characters
+        Name field should be between 3 and 30 characters
       </div>
     </div>
     <div>
@@ -107,7 +107,7 @@
         class="popup"
         *ngIf="item.amount.length < 3 || item.amount.length > 50"
       >
-        Extra field should be between 3 and 50 characters
+        Amount field should be between 3 and 50 characters
       </div>
     </div>
 

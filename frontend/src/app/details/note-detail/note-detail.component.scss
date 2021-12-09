@@ -162,6 +162,16 @@
   }
 }
 
+.popup {
+  background-color: #3021ff1e;
+  color: black;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+  border-radius: 20px;
+}
+
 @media (max-width: 768px) {
   .exercises__item {
     width: 100%;
