@@ -180,7 +180,6 @@ export const userReducer = createReducer(
       [recipient]: state[recipient]?.map(
         (otherUser: PatientModel | ProfessionalModel) => {
           if (otherUser.refData._id === message.from) {
-            console.log(otherUser);
             return {
               ...otherUser,
               chatRef: {

@@ -42,7 +42,6 @@ export class MessagesComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.parent?.snapshot.paramMap.get('id') as string;
-    console.log(this.id);
     const token = this.tokenService.getTokenFromLocalStorage() as string;
 
     this.store

@@ -26,7 +26,6 @@ export class UserInfoService {
     token: string
   ): Observable<UserStore> {
     const multipartFormData = new FormData();
-    console.log(id, role, updateUserInfoDto);
     multipartFormData.set('name', updateUserInfoDto.name);
     multipartFormData.set('surname', updateUserInfoDto.surname);
     multipartFormData.set('profilePicture', updateUserInfoDto.profilePicture);
