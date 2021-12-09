@@ -28,15 +28,16 @@ export class MessagesComponent implements OnInit {
   data: ChatRefModel = { _id: '', messages: [], professional: '', patient: '' };
 
   constructor(
-    private route: ActivatedRoute,
+    public route: ActivatedRoute,
     private store: Store<{ user: UserStore }>,
-    private chatService: ChatService,
+    public chatService: ChatService,
     public authService: AuthenticationService,
     private tokenService: TokenService
   ) {}
 
   ngOnInit(): void {
     this.id = this.route.parent?.snapshot.paramMap.get('id') as string;
+    console.log(this.id);
     const token = this.tokenService.getTokenFromLocalStorage() as string;
 
     this.store
