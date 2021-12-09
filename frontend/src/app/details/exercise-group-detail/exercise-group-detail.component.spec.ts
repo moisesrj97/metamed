@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
@@ -26,8 +27,9 @@ describe('ExerciseGroupDetailComponent', () => {
         RouterTestingModule.withRoutes([
           { path: 'exercise-groups/:id', component: DetailsComponent },
         ]),
+        FormsModule,
       ],
-      providers: [provideMockStore({ initialState })],
+      providers: [provideMockStore({ initialState }), FormBuilder],
     }).compileComponents();
   });
 
@@ -130,8 +132,7 @@ describe('ExerciseGroupDetailComponent', () => {
   describe('When addExercise is called with good conditions', () => {
     it('exerciseService.createExerciseInExerciseGroup should be called', () => {
       component.fileError = false;
-      component.newExercise.name = 'test';
-      component.newExercise.amount = 'test';
+      component.formGroup.setValue({ name: 'testo', amount: 'testo' });
       component.imageSrc = 'test';
       spyOn(
         component.exerciseService,
