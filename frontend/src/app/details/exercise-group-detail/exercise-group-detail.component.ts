@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { fileChecker } from 'src/app/helpers/fileChecker.helper';
@@ -22,15 +23,11 @@ export class ExerciseGroupDetailComponent implements OnInit {
   patientId!: string;
   data!: ExerciseGroupModel;
   editing: boolean = false;
-  newExercise: { name: string; amount: string; image: string } = {
-    name: '',
-    amount: '',
-    image: '',
-  };
   fileError: boolean = false;
   imageSrc: any;
   timestamp!: number;
   role!: string;
+  formGroup!: FormGroup;
 
   constructor(
     public route: ActivatedRoute,
@@ -38,8 +35,28 @@ export class ExerciseGroupDetailComponent implements OnInit {
     public exerciseGroupService: ExerciseGroupService,
     public exerciseService: ExerciseService,
     public tokenService: TokenService,
-    public store: Store<{ user: UserStore }>
-  ) {}
+    public store: Store<{ user: UserStore }>,
+    public fb: FormBuilder
+  ) {
+    this.formGroup = this.fb.group({
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(20),
+        ],
+      ],
+      amount: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(20),
+        ],
+      ],
+    });
+  }
 
   ngOnInit(): void {
     const token = this.tokenService.getTokenFromLocalStorage() as string;
@@ -81,16 +98,18 @@ export class ExerciseGroupDetailComponent implements OnInit {
   addExercise() {
     if (
       !this.fileError &&
-      this.newExercise.name &&
-      this.newExercise.amount &&
+      this.formGroup.valid &&
       this.imageSrc
+      /* this.newExercise.name &&
+      this.newExercise.amount &&
+      this.imageSrc */
     ) {
       const token = this.tokenService.getTokenFromLocalStorage() as string;
       this.exerciseService
         .createExerciseInExerciseGroup(
           {
-            name: this.newExercise.name,
-            amount: this.newExercise.amount,
+            name: this.formGroup.value.name,
+            amount: this.formGroup.value.amount,
             exerciseImage: this.imageSrc,
             exerciseGroupId: this.id,
           },
@@ -98,8 +117,7 @@ export class ExerciseGroupDetailComponent implements OnInit {
         )
         .subscribe((data) => {
           this.data.exercises.push(data);
-          this.newExercise.name = '';
-          this.newExercise.amount = '';
+          this.formGroup.reset();
           this.imageSrc = undefined;
         });
     }

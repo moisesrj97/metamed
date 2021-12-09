@@ -8,7 +8,7 @@ import { ExerciseGroupsComponent } from './exercise-groups/exercise-groups.compo
 import { MealGroupsComponent } from './meal-groups/meal-groups.component';
 import { NotesComponent } from './notes/notes.component';
 import { MessagesComponent } from './messages/messages.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ExerciseGroupDetailComponent } from './exercise-group-detail/exercise-group-detail.component';
 import { MealGroupDetailComponent } from './meal-group-detail/meal-group-detail.component';
 import { NoteDetailComponent } from './note-detail/note-detail.component';
@@ -25,6 +25,11 @@ import { NoteDetailComponent } from './note-detail/note-detail.component';
     MealGroupDetailComponent,
     NoteDetailComponent,
   ],
-  imports: [CommonModule, DetailsRoutingModule, FormsModule],
+  imports: [
+    CommonModule,
+    DetailsRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
 })
 export class DetailsModule {}

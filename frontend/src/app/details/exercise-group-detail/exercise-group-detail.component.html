@@ -39,6 +39,9 @@
     placeholder="Enter group title"
     (change)="changeTitle()"
   />
+  <div class="popup" *ngIf="data.name.length < 3 || data.name.length > 50">
+    Name field should be between 3 and 50 characters
+  </div>
 
   <label for="extra" class="form__label">Extra data:</label>
   <textarea
@@ -52,7 +55,9 @@
     placeholder="Enter group extra data"
     (change)="changeExtra()"
   ></textarea>
-
+  <div class="popup" *ngIf="data.extra.length < 3 || data.extra.length > 50">
+    Extra field should be between 3 and 50 characters
+  </div>
   <h2 class="form__subtitle">Exercises</h2>
 
   <div *ngFor="let item of data.exercises; let i = index" class="form__group">
@@ -68,6 +73,9 @@
         [(ngModel)]="item.name"
         (change)="editExercise($event, item._id, 'name')"
       />
+      <div class="popup" *ngIf="item.name.length < 3 || item.name.length > 50">
+        Extra field should be between 3 and 50 characters
+      </div>
     </div>
     <div>
       <label class="form__label" for="{{ 'exercise-image' + i }}"
@@ -95,6 +103,12 @@
         [(ngModel)]="item.amount"
         (change)="editExercise($event, item._id, 'amount')"
       />
+      <div
+        class="popup"
+        *ngIf="item.amount.length < 3 || item.amount.length > 50"
+      >
+        Extra field should be between 3 and 50 characters
+      </div>
     </div>
 
     <div class="form__delete-icon-container">
@@ -107,8 +121,12 @@
     </div>
   </div>
 
+  <div class="popup" *ngIf="fileError">
+    File must be jpg or png and less than 10MB
+  </div>
+
   <h2 class="form__subtitle">Add new exercise</h2>
-  <form class="form" (submit)="addExercise()">
+  <form class="form" (submit)="addExercise()" [formGroup]="formGroup">
     <div>
       <label class="form__label" for="exercise-name">Exercise name: </label
       ><input
@@ -117,9 +135,18 @@
         class="form__input"
         name="exercise-name"
         placeholder="Enter exercise name"
-        [(ngModel)]="newExercise.name"
+        formControlName="name"
       />
     </div>
+    <div
+      class="popup"
+      *ngIf="
+        formGroup.controls['name'].invalid && formGroup.controls['name'].touched
+      "
+    >
+      Name must be between 3 and 50 characters
+    </div>
+
     <div>
       <label class="form__label" for="exercise-image">Exercise image: </label>
       <input
@@ -128,10 +155,13 @@
         class="form__input"
         name="exercise-image"
         placeholder="Enter exercise image"
-        [(ngModel)]="newExercise.image"
         (change)="fileChecker(this, $event)"
       />
     </div>
+    <div class="popup" *ngIf="fileError || !imageSrc">
+      File must be jpg or png and less than 10MB
+    </div>
+
     <div>
       <label class="form__label" for="exercise-amount">Exercise amount: </label>
       <input
@@ -140,11 +170,28 @@
         class="form__input"
         name="exercise-amount"
         placeholder="Enter exercise amount"
-        [(ngModel)]="newExercise.amount"
+        formControlName="amount"
       />
     </div>
 
-    <button class="form__button" type="submit">Submit</button>
+    <div
+      class="popup"
+      *ngIf="
+        formGroup.controls['amount'].invalid &&
+        formGroup.controls['amount'].touched
+      "
+    >
+      Amount must be between 3 and 50 characters
+    </div>
+
+    <button
+      class="form__button"
+      type="submit"
+      [disabled]="formGroup.invalid"
+      [ngClass]="{ 'form__button--disabled': formGroup.invalid }"
+    >
+      Submit
+    </button>
   </form>
   <div class="form__button-container">
     <p
