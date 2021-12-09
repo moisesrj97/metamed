@@ -46,3 +46,22 @@
     height: 40px;
   }
 }
+
+@media (max-width: 768px) {
+  .chat-badge {
+    &__container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    width: 95%;
+    height: 50px;
+    &__message {
+      height: 100%;
+    }
+    &__avatar {
+      height: 50px;
+      width: 50px;
+    }
+  }
+}
