@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
@@ -20,8 +21,9 @@ describe('MealGroupDetailComponent', () => {
         RouterTestingModule.withRoutes([
           { path: 'deltails/:id', component: DetailsComponent },
         ]),
+        FormsModule,
       ],
-      providers: [provideMockStore()],
+      providers: [provideMockStore(), FormBuilder],
     }).compileComponents();
   });
 
@@ -88,8 +90,8 @@ describe('MealGroupDetailComponent', () => {
 
   describe('When addmeal is called with good conditions', () => {
     it('mealService.createmealInmealGroup should be called', () => {
-      component.newMeal.name = 'test';
-      component.newMeal.amount = 'test';
+      component.formGroup.setValue({ name: 'testo', amount: 'testo' });
+      console.log(component.formGroup.status);
       spyOn(component.mealService, 'createMealInMealGroup').and.returnValue(
         of({
           _id: '123',
