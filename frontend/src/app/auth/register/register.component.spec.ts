@@ -249,7 +249,7 @@ describe('RegisterComponent', () => {
 
   describe('When FileChecker is called with valid file', () => {
     it('fileError should be false ', () => {
-      component.fileChecker({
+      component.fileChecker(component, {
         target: { files: [new File([], 'aadad', { type: 'image/png' })] },
       });
       expect(component.fileError).toBeFalse();
@@ -258,7 +258,7 @@ describe('RegisterComponent', () => {
 
   describe('When FileChecker is called with invalid file', () => {
     it('fileError should be false ', () => {
-      component.fileChecker({
+      component.fileChecker(component, {
         target: { files: [new File([], 'aadad', { type: 'image/asdasd' })] },
       });
       expect(component.fileError).toBeTrue();

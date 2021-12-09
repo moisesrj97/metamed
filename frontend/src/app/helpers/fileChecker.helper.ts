@@ -1,5 +1,3 @@
-import { Component } from '@angular/core';
-
 export function fileChecker(that: any, fileEvent: any) {
   const reader = new FileReader();
 
