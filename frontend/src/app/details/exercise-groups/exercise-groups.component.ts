@@ -35,6 +35,16 @@ export class ExerciseGroupsComponent implements OnInit {
     this.id = this.route.parent?.snapshot.paramMap.get('id') as string;
     const token = this.tokenService.getTokenFromLocalStorage() as string;
 
+    const processData = () => {
+      this.data?.forEach((group) => {
+        this.exerciseGroupService
+          .getExerciseGroup(group, token)
+          .subscribe((data) => {
+            this.fetchedData.push(data);
+          });
+      });
+    };
+
     this.store
       .select((state) => state.user)
       .subscribe((user) => {
@@ -47,13 +57,7 @@ export class ExerciseGroupsComponent implements OnInit {
 
           this.data = result?.exerciseGroups;
 
-          this.data?.forEach((group) => {
-            this.exerciseGroupService
-              .getExerciseGroup(group, token)
-              .subscribe((data) => {
-                this.fetchedData.push(data);
-              });
-          });
+          processData();
         } else {
           const result = user.professionals?.find(
             (professional) => professional.refData._id === this.id
@@ -63,13 +67,7 @@ export class ExerciseGroupsComponent implements OnInit {
 
           this.data = result?.exerciseGroups;
 
-          this.data?.forEach((group) => {
-            this.exerciseGroupService
-              .getExerciseGroup(group, token)
-              .subscribe((data) => {
-                this.fetchedData.push(data);
-              });
-          });
+          processData();
         }
       });
   }

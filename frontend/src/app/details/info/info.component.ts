@@ -61,6 +61,15 @@ export class InfoComponent implements OnInit {
       });
   }
 
+  updateStoreExtraData = (updatedExtraData: ExtraDataModel[]) => {
+    this.store.dispatch(
+      updatePatientExtraDataFromProfessional({
+        patientId: this.id,
+        fullExtraDataUpdated: updatedExtraData,
+      })
+    );
+  };
+
   addExtraData() {
     const token = this.tokenService.getTokenFromLocalStorage() as string;
 
@@ -75,14 +84,7 @@ export class InfoComponent implements OnInit {
         updatedExtraData,
         token
       )
-      .subscribe(() =>
-        this.store.dispatch(
-          updatePatientExtraDataFromProfessional({
-            patientId: this.id,
-            fullExtraDataUpdated: updatedExtraData,
-          })
-        )
-      );
+      .subscribe(() => this.updateStoreExtraData(updatedExtraData));
     this.key = '';
     this.value = '';
   }
@@ -100,14 +102,7 @@ export class InfoComponent implements OnInit {
         updatedExtraData,
         token
       )
-      .subscribe(() =>
-        this.store.dispatch(
-          updatePatientExtraDataFromProfessional({
-            patientId: this.id,
-            fullExtraDataUpdated: updatedExtraData,
-          })
-        )
-      );
+      .subscribe(() => this.updateStoreExtraData(updatedExtraData));
   }
 
   deletePatient() {

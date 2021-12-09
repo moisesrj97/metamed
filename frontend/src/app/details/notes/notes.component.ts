@@ -35,6 +35,14 @@ export class NotesComponent implements OnInit {
     this.id = this.route.parent?.snapshot.paramMap.get('id') as string;
     const token = this.tokenService.getTokenFromLocalStorage() as string;
 
+    const processData = () => {
+      this.data?.forEach((group) => {
+        this.noteService.getNote(group, token).subscribe((data) => {
+          this.fetchedData.push(data);
+        });
+      });
+    };
+
     this.store
       .select((state) => state.user)
       .subscribe((user) => {
@@ -47,11 +55,7 @@ export class NotesComponent implements OnInit {
 
           this.data = result?.notes;
 
-          this.data?.forEach((group) => {
-            this.noteService.getNote(group, token).subscribe((data) => {
-              this.fetchedData.push(data);
-            });
-          });
+          processData();
         } else {
           const result = user.professionals?.find(
             (professional) => professional.refData._id === this.id
@@ -61,11 +65,7 @@ export class NotesComponent implements OnInit {
 
           this.data = result?.notes;
 
-          this.data?.forEach((group) => {
-            this.noteService.getNote(group, token).subscribe((data) => {
-              this.fetchedData.push(data);
-            });
-          });
+          processData();
         }
       });
   }
