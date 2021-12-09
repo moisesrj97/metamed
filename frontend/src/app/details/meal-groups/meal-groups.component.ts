@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import {
   MealGroupModel,
   PatientModel,
+  ProfessionalModel,
   RefDataModel,
   UserStore,
 } from 'src/app/models/interfaces';
@@ -21,6 +22,7 @@ export class MealGroupsComponent implements OnInit {
   data: string[] = [];
   fetchedData: MealGroupModel[] = [];
   input: string = '';
+  role!: string;
 
   constructor(
     public route: ActivatedRoute,
@@ -32,20 +34,43 @@ export class MealGroupsComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.route.parent?.snapshot.paramMap.get('id') as string;
     const token = this.tokenService.getTokenFromLocalStorage() as string;
+
     this.store
-      .select((state) => state.user.patients)
-      .subscribe((patients) => {
-        const result = patients?.find((patient) => {
-          return patient.refData._id === this.id;
-        }) as PatientModel;
+      .select((state) => state.user)
+      .subscribe((user) => {
+        if (user.role === 'Professional') {
+          const result = user.patients?.find(
+            (patient) => patient.refData._id === this.id
+          ) as PatientModel;
 
-        this.data = result?.mealGroups;
+          this.role = 'Professional';
 
-        this.data?.forEach((group) => {
-          this.mealGroupService.getMealGroup(group, token).subscribe((data) => {
-            this.fetchedData.push(data);
+          this.data = result?.mealGroups;
+
+          this.data?.forEach((group) => {
+            this.mealGroupService
+              .getMealGroup(group, token)
+              .subscribe((data) => {
+                this.fetchedData.push(data);
+              });
           });
-        });
+        } else {
+          const result = user.professionals?.find(
+            (professional) => professional.refData._id === this.id
+          ) as ProfessionalModel;
+
+          this.role = 'Patient';
+
+          this.data = result?.mealGroups;
+
+          this.data?.forEach((group) => {
+            this.mealGroupService
+              .getMealGroup(group, token)
+              .subscribe((data) => {
+                this.fetchedData.push(data);
+              });
+          });
+        }
       });
   }
 
@@ -64,7 +89,6 @@ export class MealGroupsComponent implements OnInit {
             ?.mealGroups.find(
               (group) => ![...this.data].includes(group)
             ) as string;
-
 
           this.fetchedData = [];
 

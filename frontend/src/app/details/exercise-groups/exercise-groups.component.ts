@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import {
   ExerciseGroupModel,
   PatientModel,
+  ProfessionalModel,
   RefDataModel,
   UserStore,
 } from 'src/app/models/interfaces';
@@ -21,6 +22,7 @@ export class ExerciseGroupsComponent implements OnInit {
   data: string[] = [];
   fetchedData: ExerciseGroupModel[] = [];
   input: string = '';
+  role!: string;
 
   constructor(
     public route: ActivatedRoute,
@@ -34,21 +36,41 @@ export class ExerciseGroupsComponent implements OnInit {
     const token = this.tokenService.getTokenFromLocalStorage() as string;
 
     this.store
-      .select((state) => state.user.patients)
-      .subscribe((patients) => {
-        const result = patients?.find(
-          (patient) => patient.refData._id === this.id
-        ) as PatientModel;
+      .select((state) => state.user)
+      .subscribe((user) => {
+        if (user.role === 'Professional') {
+          const result = user.patients?.find(
+            (patient) => patient.refData._id === this.id
+          ) as PatientModel;
 
-        this.data = result?.exerciseGroups;
+          this.role = 'Professional';
 
-        this.data?.forEach((group) => {
-          this.exerciseGroupService
-            .getExerciseGroup(group, token)
-            .subscribe((data) => {
-              this.fetchedData.push(data);
-            });
-        });
+          this.data = result?.exerciseGroups;
+
+          this.data?.forEach((group) => {
+            this.exerciseGroupService
+              .getExerciseGroup(group, token)
+              .subscribe((data) => {
+                this.fetchedData.push(data);
+              });
+          });
+        } else {
+          const result = user.professionals?.find(
+            (professional) => professional.refData._id === this.id
+          ) as ProfessionalModel;
+
+          this.role = 'Patient';
+
+          this.data = result?.exerciseGroups;
+
+          this.data?.forEach((group) => {
+            this.exerciseGroupService
+              .getExerciseGroup(group, token)
+              .subscribe((data) => {
+                this.fetchedData.push(data);
+              });
+          });
+        }
       });
   }
 

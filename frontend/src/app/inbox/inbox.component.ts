@@ -18,9 +18,13 @@ export class InboxComponent implements OnInit {
 
   ngOnInit(): void {
     this.store
-      .select((state) => state.user.patients)
-      .subscribe((data) => {
-        this.data = data;
+      .select((state) => state.user)
+      .subscribe((user) => {
+        if (user.role === 'Professional') {
+          this.data = user.patients;
+        } else {
+          this.data = user.professionals;
+        }
       });
 
     this.store

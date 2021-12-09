@@ -5,6 +5,7 @@ import { map } from 'rxjs';
 import {
   ChatRefModel,
   PatientModel,
+  ProfessionalModel,
   UserStore,
 } from 'src/app/models/interfaces';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
@@ -51,11 +52,19 @@ export class MessagesComponent implements OnInit {
       });
 
     this.store
-      .select((state) => state.user.patients)
-      .subscribe((patients) => {
-        const result = patients?.find(
-          (patient) => patient.refData._id === this.id
-        ) as PatientModel;
+      .select((state) => state.user)
+      .subscribe((user) => {
+        let result: PatientModel | ProfessionalModel;
+
+        if (user.role === 'Professional') {
+          result = user.patients?.find(
+            (patient) => patient.refData._id === this.id
+          ) as PatientModel;
+        } else {
+          result = user.professionals?.find(
+            (professional) => professional.refData._id === this.id
+          ) as ProfessionalModel;
+        }
 
         this.data = result?.chatRef;
         this.data?.messages.forEach((message) => {

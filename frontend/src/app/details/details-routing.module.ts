@@ -54,11 +54,11 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'info',
+        redirectTo: 'messages',
       },
       {
         path: '**',
-        redirectTo: 'info',
+        redirectTo: 'messages',
       },
     ],
   },

@@ -5,6 +5,7 @@
     alt="Edit group"
     class="title__edit-icon"
     (click)="toggle()"
+    *ngIf="role === 'Professional'"
   />
 </div>
 
@@ -26,7 +27,7 @@
   <p class="extra__text">{{ data?.extra }}</p>
 </div>
 
-<div class="form" *ngIf="editing">
+<div class="form" *ngIf="editing && role === 'Professional'">
   <h2 class="form__subtitle">Title and extra data</h2>
   <label for="title" class="form__label">Group title:</label>
   <input

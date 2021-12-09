@@ -6,6 +6,7 @@ import {
   PatientModel,
   NoteModel,
   RefDataModel,
+  ProfessionalModel,
 } from 'src/app/models/interfaces';
 import { MealGroupService } from 'src/app/services/mealGroup/meal-group.service';
 import { NoteService } from 'src/app/services/note/note.service';
@@ -22,6 +23,7 @@ export class NotesComponent implements OnInit {
   data: string[] = [];
   fetchedData: NoteModel[] = [];
   input: string = '';
+  role!: string;
 
   constructor(
     public route: ActivatedRoute,
@@ -35,19 +37,37 @@ export class NotesComponent implements OnInit {
     const token = this.tokenService.getTokenFromLocalStorage() as string;
 
     this.store
-      .select((state) => state.user.patients)
-      .subscribe((patients) => {
-        const result = patients?.find(
-          (patient) => patient.refData._id === this.id
-        ) as PatientModel;
+      .select((state) => state.user)
+      .subscribe((user) => {
+        if (user.role === 'Professional') {
+          const result = user.patients?.find(
+            (patient) => patient.refData._id === this.id
+          ) as PatientModel;
 
-        this.data = result?.notes;
+          this.role = 'Professional';
 
-        this.data?.forEach((group) => {
-          this.noteService.getNote(group, token).subscribe((data) => {
-            this.fetchedData.push(data);
+          this.data = result?.notes;
+
+          this.data?.forEach((group) => {
+            this.noteService.getNote(group, token).subscribe((data) => {
+              this.fetchedData.push(data);
+            });
           });
-        });
+        } else {
+          const result = user.professionals?.find(
+            (professional) => professional.refData._id === this.id
+          ) as ProfessionalModel;
+
+          this.role = 'Patient';
+
+          this.data = result?.notes;
+
+          this.data?.forEach((group) => {
+            this.noteService.getNote(group, token).subscribe((data) => {
+              this.fetchedData.push(data);
+            });
+          });
+        }
       });
   }
 

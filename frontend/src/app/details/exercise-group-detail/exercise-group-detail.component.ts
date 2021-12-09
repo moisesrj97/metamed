@@ -29,6 +29,7 @@ export class ExerciseGroupDetailComponent implements OnInit {
   fileError: boolean = false;
   imageSrc: any;
   timestamp!: number;
+  role!: string;
 
   constructor(
     public route: ActivatedRoute,
@@ -45,6 +46,10 @@ export class ExerciseGroupDetailComponent implements OnInit {
 
     this.id = this.route.snapshot.paramMap.get('id') as string;
     this.patientId = this.route.parent?.snapshot.paramMap.get('id') as string;
+
+    this.store.select('user').subscribe((data) => {
+      this.role = data.role;
+    });
 
     this.exerciseGroupService
       .getExerciseGroup(this.id, token)

@@ -93,6 +93,13 @@ export class SideNavComponent implements OnInit {
           this.menuItems[2].imagePath = '../../../assets/images/messages.png';
         }
       });
+
+    this.store
+      .select((state) => state.user.role)
+      .subscribe((role) => {
+        this.menuItems[1].label =
+          role === 'Patient' ? 'My professionals' : 'My patients';
+      });
   }
 
   @HostListener('document:click', ['$event'])

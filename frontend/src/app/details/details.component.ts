@@ -15,10 +15,19 @@ import {
 export class DetailsComponent implements OnInit {
   navItems!: { label: string; route: string; icon: string }[];
   id!: string;
+  role!: string;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private store: Store<{ user: UserStore }>
+  ) {}
 
   ngOnInit(): void {
+    this.store
+      .select((state) => state.user.role)
+      .subscribe((role) => {
+        this.role = role;
+      });
     this.navItems = [
       {
         label: 'Patient data',

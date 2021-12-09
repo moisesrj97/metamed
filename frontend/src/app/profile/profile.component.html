@@ -24,6 +24,9 @@
     <p class="info__data-item" *ngIf="data.birthDate">
       Birth Date: {{ data.birthDate }}
     </p>
+    <p class="info__data-item" *ngIf="data.role === 'Patient'">
+      Id: {{ data._id }}
+    </p>
   </div>
 </div>
 

@@ -25,6 +25,7 @@ export class MealGroupDetailComponent implements OnInit {
     name: '',
     amount: '',
   };
+  role!: string;
 
   constructor(
     public route: ActivatedRoute,
@@ -37,6 +38,10 @@ export class MealGroupDetailComponent implements OnInit {
 
   ngOnInit(): void {
     const token = this.tokenService.getTokenFromLocalStorage() as string;
+
+    this.store.select('user').subscribe((data) => {
+      this.role = data.role;
+    });
 
     this.id = this.route.snapshot.paramMap.get('id') as string;
     this.patientId = this.route.parent?.snapshot.paramMap.get('id') as string;

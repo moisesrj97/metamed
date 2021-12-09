@@ -14,6 +14,7 @@ import {
 export class DashboardComponent implements OnInit {
   usersDataInfo: PatientModel[] | ProfessionalModel[] = [];
   filteredUsersDataInfo: PatientModel[] | ProfessionalModel[] = [];
+  role!: string;
 
   isModalOpen: boolean = false;
 
@@ -21,6 +22,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.select('user').subscribe((user) => {
+      this.role = user.role;
       if (user.role === 'Professional') {
         this.usersDataInfo = user.patients as PatientModel[];
         this.filteredUsersDataInfo = this.usersDataInfo;

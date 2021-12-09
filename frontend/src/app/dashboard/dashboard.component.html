@@ -1,4 +1,4 @@
-<div class="modal-open">
+<div class="modal-open" *ngIf="role === 'Professional'">
   <img
     src="../../assets/images/plus.png"
     alt="plus icon"
@@ -7,7 +7,10 @@
   />
   <p class="modal-open__button" (click)="isModalOpen = true">Add patient</p>
 </div>
-<app-search (search)="filterUsers($event)"></app-search>
+<app-search
+  (search)="filterUsers($event)"
+  *ngIf="role === 'Professional'"
+></app-search>
 <div class="main-container">
   <app-card *ngFor="let item of filteredUsersDataInfo" [data]="item"></app-card>
 </div>
