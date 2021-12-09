@@ -21,4 +21,4 @@ Backend: Node/NestJS/MongoDB
 
 ##### For PWA support
 
-` ng build``  `cd dist/frontend` `npx live-server```
+` ng build` `cd dist/frontend` `npx live-server`
