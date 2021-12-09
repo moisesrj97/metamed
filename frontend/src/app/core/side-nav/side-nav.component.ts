@@ -87,11 +87,9 @@ export class SideNavComponent implements OnInit {
             )
           )
         ) {
-          console.log('unread messages');
           this.menuItems[2].imagePath =
             '../../../assets/images/messagesNotification.png';
         } else {
-          console.log('no unread messages');
           this.menuItems[2].imagePath = '../../../assets/images/messages.png';
         }
       });

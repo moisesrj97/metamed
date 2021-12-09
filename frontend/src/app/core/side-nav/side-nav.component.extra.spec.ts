@@ -26,7 +26,7 @@ describe('SideNavComponent', () => {
       patients: [
         {
           _id: '123',
-          chatRef: { _id: '123', messages: [{ read: false, to: '123' }] },
+          chatRef: { _id: '123', messages: [{ read: true, to: '123' }] },
         },
       ],
     },
@@ -54,49 +54,11 @@ describe('SideNavComponent', () => {
     store?.resetSelectors();
   });
 
-  describe('When there are unread messages', () => {
-    it('should create', () => {
-      expect(component).toBeTruthy();
+  describe('When there aren´t unread messages', () => {
+    it('should create with icon unmarked', () => {
       expect(component.menuItems[2].imagePath).toBe(
-        '../../../assets/images/messagesNotification.png'
+        '../../../assets/images/messages.png'
       );
-    });
-  });
-
-  describe('When closeNav is called', () => {
-    it('Event should be emited', () => {
-      spyOn(component.toggleNav, 'next');
-
-      component.closeNav();
-
-      expect(component.toggleNav.next).toHaveBeenCalled();
-    });
-  });
-
-  describe('When clicks outside', () => {
-    it('closeNav should be called', async () => {
-      spyOn(component, 'closeNav');
-      component.onGlobalClick({ target: { className: 'toggle' } });
-      expect(component.closeNav).not.toHaveBeenCalled();
-      component.onGlobalClick({ target: { className: 'adsad' } });
-      expect(component.closeNav).toHaveBeenCalled();
-    });
-  });
-
-  describe('When store has a valid _id', () => {
-    it('isRendered should be true', () => {
-      expect(component.isRendered).toBe(true);
-    });
-  });
-
-  describe('When logout is called', () => {
-    it('Token service, store and window should be called', () => {
-      spyOn(component.tokenService, 'deleteTokenFromLocalStorage');
-      spyOn(component.compWindow.location, 'reload').and.callFake(() => {});
-      component.logout();
-      expect(
-        component.tokenService.deleteTokenFromLocalStorage
-      ).toHaveBeenCalled();
     });
   });
 });
