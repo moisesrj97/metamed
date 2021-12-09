@@ -15,7 +15,16 @@ const initialState = {
         refData: { _id: '1234' },
         chatRef: {
           _id: '12345',
-          messages: [{ id: '123', from: '1234', read: false }],
+          messages: [
+            {
+              id: '123',
+              from: '1234',
+              to: '123',
+              read: false,
+              fromRole: 'Patient',
+              text: 'test',
+            },
+          ],
         },
       },
     ],
