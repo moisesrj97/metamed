@@ -56,7 +56,12 @@ describe('NavbarComponent', () => {
 
   describe('With no valid _id in the store', () => {
     it('Should set loggedIn to false', () => {
-      TestBed.inject(MockStore).setState({ user: { _id: '123' } });
+      TestBed.inject(MockStore).setState({
+        user: { _id: '123' },
+        darkMode: {
+          darkMode: true,
+        },
+      });
 
       expect(component.loggedIn).toBeTrue();
     });

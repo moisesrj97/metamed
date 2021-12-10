@@ -23,6 +23,7 @@ describe('SideNavComponent', () => {
   let initialState = {
     user: {
       _id: '123',
+      role: 'Professional',
       patients: [
         {
           _id: '123',
