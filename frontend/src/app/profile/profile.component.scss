@@ -47,6 +47,9 @@
         margin-left: 10px;
       }
     }
+    &--dark {
+      color: white;
+    }
     &-form {
       margin-top: 20px;
       display: flex;
@@ -114,6 +117,9 @@
     font-weight: 600;
     font-size: 1.2rem;
     padding-right: 10px;
+    &--dark {
+      color: white;
+    }
   }
   &__input {
     background-color: white;
@@ -121,6 +127,11 @@
     font-size: 1rem;
     border: 1px solid #2e21ff;
     border-radius: 25px;
+    &--dark {
+      background-color: transparent;
+      color: white;
+      border-color: #25e5ff;
+    }
   }
   &__textarea {
     width: 450px;
@@ -213,7 +224,7 @@
 
 @media (max-width: 768px) {
   .form {
-    width: 100%;
+    width: 95%;
     &__group {
       width: 100%;
     }
