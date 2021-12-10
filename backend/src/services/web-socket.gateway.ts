@@ -14,7 +14,7 @@ export class WebSocketGatewayChat
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
   @WebSocketServer() server: Server;
-  private logger: Logger = new Logger('AppGateway');
+  public logger: Logger = new Logger('AppGateway');
 
   @SubscribeMessage('msgToServer')
   handleMessage(client: Socket, payload: any): void {

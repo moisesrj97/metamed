@@ -11,7 +11,6 @@ import {
 import { ExerciseGroupService } from './exercise-group.service';
 import { CreateExerciseGroupDto } from './dto/create-exercise-group.dto';
 import { UpdateExerciseGroupDto } from './dto/update-exercise-group.dto';
-import { DeleteExerciseGroupDto } from './dto/delete-exercise-group.dto';
 
 @Controller('exercise-group')
 export class ExerciseGroupController {
