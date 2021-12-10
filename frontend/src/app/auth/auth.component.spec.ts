@@ -1,7 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 
 import { AuthComponent } from './auth.component';
+
+const initialState = {
+  darkMode: {
+    darkMode: true,
+  },
+};
 
 describe('AuthComponent', () => {
   let component: AuthComponent;
@@ -11,6 +18,7 @@ describe('AuthComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [AuthComponent],
       imports: [RouterTestingModule],
+      providers: [provideMockStore({ initialState })],
     }).compileComponents();
   });
 

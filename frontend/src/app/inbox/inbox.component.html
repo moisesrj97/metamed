@@ -34,7 +34,10 @@
           darkMode
       }"
     >
-      {{ item.chatRef.messages[item.chatRef.messages.length - 1].text }}
+      {{
+        item.chatRef.messages[item.chatRef.messages.length - 1].text
+          | slice: 0:30
+      }}
       <img
         [src]="
           darkMode

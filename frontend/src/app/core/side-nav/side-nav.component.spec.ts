@@ -30,6 +30,9 @@ describe('SideNavComponent', () => {
         },
       ],
     },
+    darkMode: {
+      darkMode: true,
+    },
   };
 
   beforeEach(async () => {
@@ -57,9 +60,12 @@ describe('SideNavComponent', () => {
   describe('When there are unread messages', () => {
     it('should create', () => {
       expect(component).toBeTruthy();
-      expect(component.menuItems[2].imagePath).toBe(
-        '../../../assets/images/messagesNotification.png'
-      );
+      expect(
+        [
+          '../../../assets/images/messagesNotification.png',
+          '../../../assets/images/messagesNotificationDark.png',
+        ].includes(component.menuItems[2].imagePath)
+      ).toBeTrue();
     });
   });
 
