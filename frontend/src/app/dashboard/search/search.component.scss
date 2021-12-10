@@ -8,6 +8,9 @@
 .form {
   &__label {
     font-size: 1.2rem;
+    &--dark {
+      color: white;
+    }
   }
 
   &__input {
@@ -17,5 +20,10 @@
     border: 1px solid #2e21ff;
     border-radius: 25px;
     outline: none;
+    &--dark {
+      background-color: transparent;
+      color: white;
+      border-color: #25e5ff;
+    }
   }
 }

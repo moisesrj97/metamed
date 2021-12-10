@@ -1,6 +1,14 @@
-<div class="modal-open" *ngIf="role === 'Professional'">
+<div
+  class="modal-open"
+  *ngIf="role === 'Professional'"
+  [ngClass]="{ 'modal-open--dark': darkMode }"
+>
   <img
-    src="../../assets/images/plus.png"
+    [src]="
+      darkMode
+        ? '../../assets/images/plusDark.png'
+        : '../../assets/images/plus.png'
+    "
     alt="plus icon"
     class="modal-open__button-icon"
     (click)="isModalOpen = true"
