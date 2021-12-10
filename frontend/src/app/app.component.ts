@@ -37,6 +37,17 @@ export class AppComponent implements OnInit {
         .subscribe((data: UserStore): void => {
           this.userInfo = data;
           this.store.dispatch(loginUser({ userInfo: { ...data } }));
+          const otherUsers =
+            data.role === 'Professional' ? 'patients' : 'professionals';
+          const mappedIds = data[otherUsers]?.map((e) => {
+            if (data.role === 'Professional') {
+              return data._id + e.refData._id;
+            } else {
+              return e.refData._id + data._id;
+            }
+          }) as string[];
+          console.log(mappedIds);
+          this.socket.connectToRoom(mappedIds);
         });
     }
   }

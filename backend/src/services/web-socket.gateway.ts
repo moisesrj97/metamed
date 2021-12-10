@@ -17,9 +17,15 @@ export class WebSocketGatewayChat
   private logger: Logger = new Logger('AppGateway');
 
   @SubscribeMessage('msgToServer')
-  handleMessage(client: Socket, payload: string): void {
+  handleMessage(client: Socket, payload: any): void {
     console.log(payload, client.id);
-    this.server.emit('msgToClient', payload);
+    this.server.to(payload.room).emit('msgToClient', payload.msg);
+  }
+
+  @SubscribeMessage('joinRoom')
+  handleJoinRoom(client: Socket, payload: string[]): void {
+    this.logger.log(`User ${client.id} is joining ${payload}`);
+    client.join(payload);
   }
 
   afterInit(server: Server) {

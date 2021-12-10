@@ -96,7 +96,7 @@ export class MessagesComponent implements OnInit {
       .addMessageToChat(this.data._id, this.id, this.newMessage, token)
       .subscribe((data) => {
         this.store.dispatch(addMessageToChat({ message: data }));
-        this.socket.sendMessage(data.text);
+        this.socket.sendMessage(data);
         this.newMessage = '';
       });
   }
