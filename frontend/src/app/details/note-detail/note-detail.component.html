@@ -1,4 +1,4 @@
-<div class="title">
+<div class="title" [ngClass]="{ 'title--dark': darkMode }">
   <h2>{{ data?.title }}</h2>
   <img
     src="../../../assets/images/edit.png"
@@ -8,18 +8,26 @@
     *ngIf="role === 'Professional'"
   />
 </div>
-<div class="extra" *ngIf="!editing">
+<div class="extra" [ngClass]="{ 'extra--dark': darkMode }" *ngIf="!editing">
   <h3 class="extra__title">Extra data:</h3>
   <p class="extra__text">{{ data?.description }}</p>
 </div>
 
 <div class="form" *ngIf="editing && role === 'Professional'">
-  <h2 class="form__subtitle">Title and extra data</h2>
-  <label for="title" class="form__label">Group title:</label>
+  <h2 class="form__subtitle" [ngClass]="{ 'form__subtitle--dark': darkMode }">
+    Title and extra data
+  </h2>
+  <label
+    for="title"
+    class="form__label"
+    [ngClass]="{ 'form__label--dark': darkMode }"
+    >Group title:</label
+  >
   <input
     type="text"
     id="title"
     class="form__input"
+    [ngClass]="{ 'form__input--dark': darkMode }"
     [(ngModel)]="data.title"
     name="title"
     placeholder="Enter group title"
@@ -29,11 +37,17 @@
     Title field should be between 3 and 50 characters
   </div>
 
-  <label for="extra" class="form__label">Extra data:</label>
+  <label
+    for="extra"
+    class="form__label"
+    [ngClass]="{ 'form__label--dark': darkMode }"
+    >Extra data:</label
+  >
   <textarea
     type="text"
     id="extra"
     class="form__textarea"
+    [ngClass]="{ 'form__textarea--dark': darkMode }"
     cols="30"
     rows="30"
     [(ngModel)]="data.description"
@@ -43,13 +57,17 @@
   ></textarea>
   <div
     class="popup"
-    *ngIf="data.description.length < 3 || data.description.length > 50"
+    *ngIf="data.description.length < 3 || data.description.length > 500"
   >
     Description field should be between 3 and 500 characters
   </div>
 
   <div class="form__button-container">
-    <p class="form__button form__button--danger" (click)="deleteNote()">
+    <p
+      class="form__button form__button--danger"
+      [ngClass]="{ 'form__button--danger--dark': darkMode }"
+      (click)="deleteNote()"
+    >
       Delete meal Group
     </p>
   </div>

@@ -1,7 +1,11 @@
-<div class="title">
+<div class="title" [ngClass]="{ 'title--dark': darkMode }">
   <h2>{{ data?.name }}</h2>
   <img
-    src="../../../assets/images/edit.png"
+    [src]="
+      darkMode
+        ? '../../../assets/images/editDark.png'
+        : '../../../assets/images/edit.png'
+    "
     alt="Edit group"
     class="title__edit-icon"
     (click)="toggle()"
@@ -11,24 +15,35 @@
 
 <div class="meals" *ngIf="!editing">
   <div class="meals__item" *ngFor="let item of data?.meals">
-    <p class="meals__item-text">
+    <p
+      class="meals__item-text"
+      [ngClass]="{ 'meals__item-text--dark': darkMode }"
+    >
       <strong>{{ item?.name }}</strong
       >: {{ item?.amount }}
     </p>
   </div>
 </div>
-<div class="extra" *ngIf="!editing">
+<div class="extra" [ngClass]="{ 'extra--dark': darkMode }" *ngIf="!editing">
   <h3 class="extra__title">Extra data:</h3>
   <p class="extra__text">{{ data?.extra }}</p>
 </div>
 
 <div class="form" *ngIf="editing && role === 'Professional'">
-  <h2 class="form__subtitle">Title and extra data</h2>
-  <label for="title" class="form__label">Group title:</label>
+  <h2 class="form__subtitle" [ngClass]="{ 'form__subtitle--dark': darkMode }">
+    Title and extra data
+  </h2>
+  <label
+    for="title"
+    class="form__label"
+    [ngClass]="{ 'form__label--dark': darkMode }"
+    >Group title:</label
+  >
   <input
     type="text"
     id="title"
     class="form__input"
+    [ngClass]="{ 'form__input--dark': darkMode }"
     [(ngModel)]="data.name"
     name="title"
     placeholder="Enter group title"
@@ -38,7 +53,12 @@
     Name field should be between 3 and 50 characters
   </div>
 
-  <label for="extra" class="form__label">Extra data:</label>
+  <label
+    for="extra"
+    class="form__label"
+    [ngClass]="{ 'form__label--dark': darkMode }"
+    >Extra data:</label
+  >
   <textarea
     type="text"
     id="extra"
@@ -53,15 +73,22 @@
   <div class="popup" *ngIf="data.extra.length < 3 || data.extra.length > 50">
     Extra field should be between 3 and 50 characters
   </div>
-  <h2 class="form__subtitle">meals</h2>
+  <h2 class="form__subtitle" [ngClass]="{ 'form__subtitle--dark': darkMode }">
+    meals
+  </h2>
 
   <div *ngFor="let item of data.meals; let i = index" class="form__group">
     <div>
-      <label class="form__label" for="{{ 'meal-name' + i }}">Meal name: </label
+      <label
+        class="form__label"
+        [ngClass]="{ 'form__label--dark': darkMode }"
+        for="{{ 'meal-name' + i }}"
+        >Meal name: </label
       ><input
         type="text"
         id="{{ 'meal-name' + i }}"
         class="form__input"
+        [ngClass]="{ 'form__input--dark': darkMode }"
         name="meal-name"
         placeholder="Enter meal name"
         [(ngModel)]="item.name"
@@ -72,13 +99,17 @@
       Name field should be between 3 and 50 characters
     </div>
     <div>
-      <label class="form__label" for="{{ 'meal-amount' + i }}"
+      <label
+        class="form__label"
+        [ngClass]="{ 'form__label--dark': darkMode }"
+        for="{{ 'meal-amount' + i }}"
         >Meal amount:
       </label>
       <input
         type="text"
         id="{{ 'meal-amount' + i }}"
         class="form__input"
+        [ngClass]="{ 'form__input--dark': darkMode }"
         name="meal-amount"
         placeholder="Enter meal amount"
         [(ngModel)]="item.amount"
@@ -94,7 +125,11 @@
 
     <div class="form__delete-icon-container">
       <img
-        src="../../../assets/images/trash.png"
+        [src]="
+          darkMode
+            ? '../../../assets/images/trashDark.png'
+            : '../../../assets/images/trash.png'
+        "
         alt="Delete icon"
         class="form__delete-icon"
         (click)="deleteMeal(item._id)"
@@ -102,14 +137,21 @@
     </div>
   </div>
 
-  <h2 class="form__subtitle">Add new meal</h2>
+  <h2 class="form__subtitle" [ngClass]="{ 'form__subtitle--dark': darkMode }">
+    Add new meal
+  </h2>
   <form class="form" (submit)="addMeal()" [formGroup]="formGroup">
     <div>
-      <label class="form__label" for="meal-name">Meal name: </label
+      <label
+        class="form__label"
+        [ngClass]="{ 'form__label--dark': darkMode }"
+        for="meal-name"
+        >Meal name: </label
       ><input
         type="text"
         id="meal-name"
         class="form__input"
+        [ngClass]="{ 'form__input--dark': darkMode }"
         name="meal-name"
         placeholder="Enter meal name"
         formControlName="name"
@@ -124,11 +166,17 @@
       Name must be between 3 and 50 characters
     </div>
     <div>
-      <label class="form__label" for="meal-amount">Meal amount: </label>
+      <label
+        class="form__label"
+        [ngClass]="{ 'form__label--dark': darkMode }"
+        for="meal-amount"
+        >Meal amount:
+      </label>
       <input
         type="text"
         id="meal-amount"
         class="form__input"
+        [ngClass]="{ 'form__input--dark': darkMode }"
         name="meal-amount"
         placeholder="Enter meal amount"
         formControlName="amount"
@@ -148,13 +196,20 @@
       class="form__button"
       type="submit"
       [disabled]="formGroup.invalid"
-      [ngClass]="{ 'form__button--disabled': formGroup.invalid }"
+      [ngClass]="{
+        'form__button--disabled': formGroup.invalid,
+        'form__button--dark': darkMode
+      }"
     >
       Submit
     </button>
   </form>
   <div class="form__button-container">
-    <p class="form__button form__button--danger" (click)="deleteMealGroup()">
+    <p
+      class="form__button form__button--danger"
+      [ngClass]="{ 'form__button--danger--dark': true }"
+      (click)="deleteMealGroup()"
+    >
       Delete meal Group
     </p>
   </div>

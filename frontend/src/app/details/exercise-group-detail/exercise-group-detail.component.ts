@@ -28,6 +28,7 @@ export class ExerciseGroupDetailComponent implements OnInit {
   timestamp!: number;
   role!: string;
   formGroup!: FormGroup;
+  darkMode!: boolean;
 
   constructor(
     public route: ActivatedRoute,
@@ -35,7 +36,7 @@ export class ExerciseGroupDetailComponent implements OnInit {
     public exerciseGroupService: ExerciseGroupService,
     public exerciseService: ExerciseService,
     public tokenService: TokenService,
-    public store: Store<{ user: UserStore }>,
+    public store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>,
     public fb: FormBuilder
   ) {
     this.formGroup = this.fb.group({
@@ -59,6 +60,10 @@ export class ExerciseGroupDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.store.select('darkMode').subscribe((data) => {
+      this.darkMode = data.darkMode;
+    });
+
     const token = this.tokenService.getTokenFromLocalStorage() as string;
     this.timestamp = new Date().getTime();
 
@@ -96,14 +101,7 @@ export class ExerciseGroupDetailComponent implements OnInit {
   }
 
   addExercise() {
-    if (
-      !this.fileError &&
-      this.formGroup.valid &&
-      this.imageSrc
-      /* this.newExercise.name &&
-      this.newExercise.amount &&
-      this.imageSrc */
-    ) {
+    if (!this.fileError && this.formGroup.valid && this.imageSrc) {
       const token = this.tokenService.getTokenFromLocalStorage() as string;
       this.exerciseService
         .createExerciseInExerciseGroup(
