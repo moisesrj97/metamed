@@ -1,6 +1,11 @@
 <div class="info">
   <div class="info__edit">
     <img
+      [src]="
+        darkMode
+          ? '../../../assets/images/editDark.png'
+          : '../../../assets/images/edit.png'
+      "
       src="../../../assets/images/edit.png"
       alt="Edit"
       class="info__edit-icon"
@@ -15,18 +20,33 @@
     class="info__img"
   />
   <div class="info__data">
-    <p class="info__data-item">Name: {{ data.refData?.name }}</p>
-    <p class="info__data-item">Surname: {{ data.refData?.surname }}</p>
+    <p
+      class="info__data-item"
+      [ngClass]="{ 'info__data-item--dark': darkMode }"
+    >
+      Name: {{ data.refData?.name }}
+    </p>
+    <p
+      class="info__data-item"
+      [ngClass]="{ 'info__data-item--dark': darkMode }"
+    >
+      Surname: {{ data.refData?.surname }}
+    </p>
   </div>
   <div class="info__data-extra">
     <div
       *ngFor="let item of data.extraData; let i = index"
       class="info__data-item"
+      [ngClass]="{ 'info__data-item--dark': darkMode }"
     >
       <p>{{ item.key }}: {{ item.value }}</p>
       <img
         class="info__data-item-delete"
-        src="../../../assets/images/trash.png"
+        [src]="
+          darkMode
+            ? '../../../assets/images/trashDark.png'
+            : '../../../assets/images/trash.png'
+        "
         alt="Delete extra data"
         *ngIf="editing"
         (click)="deleteExtraData(i)"
@@ -38,6 +58,7 @@
         type="text"
         placeholder="Key"
         class="info__data-form-input"
+        [ngClass]="{ 'info__data-form-input--dark': darkMode }"
         name="key"
         [(ngModel)]="key"
       />
@@ -46,14 +67,24 @@
         name="value"
         placeholder="Value"
         class="info__data-form-input"
+        [ngClass]="{ 'info__data-form-input--dark': darkMode }"
         [(ngModel)]="value"
       />
-      <button class="info__data-form-button" (click)="addExtraData()">
+      <button
+        class="info__data-form-button"
+        [ngClass]="{ 'info__data-form-button--dark': darkMode }"
+        (click)="addExtraData()"
+      >
         Add
       </button>
     </form>
   </div>
-  <button *ngIf="editing" class="info__remove" (click)="deletePatient()">
+  <button
+    *ngIf="editing"
+    class="info__remove"
+    [ngClass]="{ 'info__remove--dark': darkMode }"
+    (click)="deletePatient()"
+  >
     Remove patient
   </button>
 </div>

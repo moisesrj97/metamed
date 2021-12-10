@@ -38,6 +38,10 @@
       padding: 10px 0;
       display: flex;
       justify-content: center;
+      text-align: center;
+      &--dark {
+        color: white;
+      }
       &-delete {
         height: 25px;
         width: 25px;
@@ -53,9 +57,14 @@
       gap: 10px;
       &-input {
         padding: 10px 15px;
-        font-weight: 1.1rem;
+        font-size: 1.1rem;
         border: 1px solid black;
         border-radius: 15px;
+        &--dark {
+          border-color: white;
+          background-color: transparent;
+          color: white;
+        }
       }
       &-button {
         background: #ffffff;
@@ -69,6 +78,16 @@
         &:hover {
           background: #2e21ff;
           color: #ffffff;
+        }
+        &--dark {
+          border-color: #25e5ff;
+          border-width: 2px;
+          background-color: transparent;
+          color: #25e5ff;
+          &:hover {
+            background-color: #25e5ff;
+            color: black;
+          }
         }
       }
     }
@@ -86,6 +105,13 @@
     &:hover {
       background: #ff0000;
       color: #ffffff;
+    }
+    &--dark {
+      border-width: 2px;
+      background-color: transparent;
+      &:hover {
+        color: white;
+      }
     }
   }
 }
