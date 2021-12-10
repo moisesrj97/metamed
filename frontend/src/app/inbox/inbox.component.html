@@ -36,7 +36,11 @@
     >
       {{ item.chatRef.messages[item.chatRef.messages.length - 1].text }}
       <img
-        src="../../assets/images/bell.png"
+        [src]="
+          darkMode
+            ? '../../assets/images/bellDark.png'
+            : '../../assets/images/bell.png'
+        "
         alt="Unread icon"
         class="chat-badge__unread-icon"
         *ngIf="
