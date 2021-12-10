@@ -33,6 +33,7 @@ export class Message {
 
   @Prop({ required: true, enum: ['Patient', 'Professional'] })
   toRole: string;
+  _id: string;
 }
 
 export const MessageSchema = SchemaFactory.createForClass(Message);

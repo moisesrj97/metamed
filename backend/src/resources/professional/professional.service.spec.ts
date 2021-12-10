@@ -4,6 +4,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import * as mongoose from 'mongoose';
 import { S3ImageService } from '../../services/s3-image-service/s3-image-service.service';
 import { Chat, ChatSchema } from '../chat/chat.schema';
+import { Message, MessageSchema } from '../message/message.schema';
 import { Patient, PatientSchema } from '../patient/patient.schema';
 import { ProfessionalEntity } from './entities/professional.entity';
 import { ProfessionalController } from './professional.controller';
@@ -25,6 +26,7 @@ describe('Given ProfessionalService', () => {
                   chatRef: 'f9f9f9f9f9f9',
                 },
               ],
+              messages: [{ _id: '123' }],
             };
           },
         };
@@ -57,6 +59,7 @@ describe('Given ProfessionalService', () => {
           { name: Professional.name, schema: ProfessionalSchema },
           { name: Patient.name, schema: PatientSchema },
           { name: Chat.name, schema: ChatSchema },
+          { name: Message.name, schema: MessageSchema },
         ]),
       ],
       controllers: [ProfessionalController],
@@ -77,6 +80,8 @@ describe('Given ProfessionalService', () => {
       .overrideProvider(getModelToken('Professional'))
       .useValue(mockRepository)
       .overrideProvider(getModelToken('Chat'))
+      .useValue(mockRepository)
+      .overrideProvider(getModelToken('Message'))
       .useValue(mockRepository)
       .compile();
 
@@ -112,6 +117,11 @@ describe('Given ProfessionalService', () => {
           {
             refData: new mongoose.Types.ObjectId('f8f8f8f8f8f8'),
             chatRef: 'f9f9f9f9f9f9',
+          },
+        ],
+        messages: [
+          {
+            _id: '123',
           },
         ],
       });

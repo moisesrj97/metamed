@@ -17,6 +17,7 @@ import CreateProfessionalDto from './dto/createProfessional.dto';
 import updateProfessionalDto from './dto/updateProfessional.dto';
 import { isProfessional } from '../../helpers/isProfessional';
 import validateJwt, { JwtInterface } from '../../helpers/validateJwt';
+import { Message, MessageDocument } from '../message/message.schema';
 
 @Injectable()
 export class ProfessionalService {
@@ -27,6 +28,8 @@ export class ProfessionalService {
     private patientModel: Model<PatientDocument>,
     @InjectModel(Chat.name)
     private chatModel: Model<ChatDocument>,
+    @InjectModel(Message.name)
+    private messageModel: Model<MessageDocument>,
     private s3ImageService: S3ImageService,
   ) {}
 
@@ -234,6 +237,18 @@ export class ProfessionalService {
         select: ['name', 'surname', 'profilePicture'],
       },
     });
+
+    const chat = await this.chatModel
+      .findById(
+        professional.patients.find(
+          (patient) => patient.refData._id.toString() === patientId,
+        ).chatRef,
+      )
+      .populate('messages');
+
+    for (let i = 0; i < chat.messages.length; i++) {
+      await this.messageModel.findByIdAndDelete(chat.messages[i]._id);
+    }
 
     await this.chatModel.findByIdAndDelete(
       professional.patients.find(
