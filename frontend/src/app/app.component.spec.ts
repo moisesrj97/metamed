@@ -12,10 +12,16 @@ import { of } from 'rxjs';
 import { WebsocketService } from './services/websocket/websocket.service';
 import { config } from './services/websocket/websocket.service.spec';
 import { SocketIoModule } from 'ngx-socket-io';
+import { MessageModel } from './models/interfaces';
 
 const initialState = {
   darkMode: {
     darkMode: true,
+  },
+  user: {
+    _id: '123',
+    role: 'Professional',
+    patients: [{ _id: '123' }],
   },
 };
 
@@ -86,9 +92,81 @@ describe('AppComponent', () => {
           _id: 'aaa',
           name: 'aaa',
           surname: 'aaa',
-          role: 'aaa',
+          role: 'Professional',
           email: 'aaa',
           profilePicture: 'aaa',
+          patients: [
+            {
+              refData: {
+                _id: 'aaa',
+                name: 'aaa',
+                surname: 'aaa',
+                role: 'Patient',
+                email: 'aaa',
+                profilePicture: 'aaa',
+              },
+              chatRef: {
+                _id: 'aaa',
+                messages: [],
+                professional: '',
+                patient: '',
+              },
+              extraData: [],
+              exerciseGroups: [],
+              mealGroups: [],
+              notes: [],
+            },
+          ],
+        })
+      );
+
+      spyOn(fixture.componentInstance.socket, 'getMessage').and.returnValue(
+        of({ to: 'aaa' } as unknown as MessageModel)
+      );
+
+      fixture.detectChanges();
+      expect(
+        fixture.componentInstance.authService.loginWithToken
+      ).toHaveBeenCalled();
+    });
+  });
+
+  describe('If token exists and its patient', () => {
+    it('Auth service should be called', () => {
+      const fixture = TestBed.createComponent(AppComponent);
+      spyOn(
+        fixture.componentInstance.authService,
+        'loginWithToken'
+      ).and.returnValue(
+        of({
+          _id: 'aaa',
+          name: 'aaa',
+          surname: 'aaa',
+          role: 'Patient',
+          email: 'aaa',
+          profilePicture: 'aaa',
+          professionals: [
+            {
+              refData: {
+                _id: 'aaa',
+                name: 'aaa',
+                surname: 'aaa',
+                role: 'Patient',
+                email: 'aaa',
+                profilePicture: 'aaa',
+              },
+              chatRef: {
+                _id: 'aaa',
+                messages: [],
+                professional: '',
+                patient: '',
+              },
+              extraData: [],
+              exerciseGroups: [],
+              mealGroups: [],
+              notes: [],
+            },
+          ],
         })
       );
 

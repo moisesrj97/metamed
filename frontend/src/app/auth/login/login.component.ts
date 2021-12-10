@@ -27,7 +27,7 @@ export class LoginComponent {
     }>,
     private router: Router,
     private fb: FormBuilder,
-    private socket: WebsocketService
+    public socket: WebsocketService
   ) {
     this.formGroup = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -67,6 +67,7 @@ export class LoginComponent {
             this.socket.connectToRoom(mappedIds);
 
             this.socket.getMessage().subscribe((msg) => {
+              console.log(msg, data._id);
               if (msg.to === data._id) {
                 this.store.dispatch(receiveMessageToChat({ message: msg }));
               }

@@ -49,7 +49,44 @@ describe('LoginComponent', () => {
   describe('When submitForm is called with valid form', () => {
     it('Should update the form', () => {
       spyOn(component.authService, 'loginWithoutToken').and.returnValue(
-        of('aaaaaaaaaaaaaaaaaaaa')
+        of({
+          _id: '123',
+          username: 'test',
+          patients: [{ refData: { _id: '123', name: 'test' } }],
+          role: 'Professional',
+        } as any)
+      );
+
+      spyOn(component.socket, 'connectToRoom').and.callThrough();
+
+      spyOn(component.socket, 'getMessage').and.returnValue(
+        of({
+          _id: '123',
+          to: '123',
+          from: '123',
+        }) as any
+      );
+
+      component.formGroup.controls['email'].setValue('fake@test.com');
+      component.formGroup.controls['password'].setValue('aaaaaaaaaa');
+      component.formGroup.controls['role'].setValue('professional');
+
+      component.submitForm();
+
+      expect(component.socket.connectToRoom).toHaveBeenCalled();
+      expect(component.socket.getMessage).toHaveBeenCalled();
+    });
+  });
+
+  describe('When submitForm is called with valid form and its patients', () => {
+    it('Should update the form', () => {
+      spyOn(component.authService, 'loginWithoutToken').and.returnValue(
+        of({
+          _id: '123',
+          username: 'test',
+          professionals: [{ _id: '123', name: 'test' }],
+          role: 'Patient',
+        } as any)
       );
 
       component.formGroup.controls['email'].setValue('fake@test.com');
@@ -62,7 +99,7 @@ describe('LoginComponent', () => {
     });
   });
 
-  describe('When submitForm is called with valid form', () => {
+  describe('When submitForm is called with invalid form', () => {
     it('Should update the form', () => {
       spyOn(component.authService, 'loginWithoutToken').and.returnValue(
         throwError(() => new Error('test'))

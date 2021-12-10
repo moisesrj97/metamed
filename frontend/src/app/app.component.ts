@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     public authService: AuthenticationService,
     public store: Store<{ userStore: UserStore }>,
     private tokenService: TokenService,
-    private socket: WebsocketService
+    public socket: WebsocketService
   ) {
     this.userInfo = undefined;
   }
