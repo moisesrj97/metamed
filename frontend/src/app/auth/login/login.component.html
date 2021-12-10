@@ -1,7 +1,12 @@
 <form class="form" [formGroup]="formGroup" (submit)="submitForm()">
   <div class="form__roles">
     <div *ngFor="let role of roles">
-      <label class="form__label" for="{{ role + 'role' }}">{{ role }}</label>
+      <label
+        class="form__label"
+        [ngClass]="{ 'form__label--dark': darkMode }"
+        for="{{ role + 'role' }}"
+        >{{ role }}</label
+      >
       <input
         type="radio"
         value="{{ role }}"
@@ -12,8 +17,19 @@
     </div>
   </div>
   <div class="form__group">
-    <label class="form__label" for="email">Email:</label>
-    <input class="form__input" type="text" id="email" formControlName="email" />
+    <label
+      class="form__label"
+      [ngClass]="{ 'form__label--dark': darkMode }"
+      for="email"
+      >Email:</label
+    >
+    <input
+      class="form__input"
+      [ngClass]="{ 'form__input--dark': darkMode }"
+      type="text"
+      id="email"
+      formControlName="email"
+    />
   </div>
   <div
     class="form__popup"
@@ -24,9 +40,15 @@
     Email must be between 3 and 50 chatacters and must be an email
   </div>
   <div class="form__group">
-    <label class="form__label" for="password">Password:</label>
+    <label
+      class="form__label"
+      [ngClass]="{ 'form__label--dark': darkMode }"
+      for="password"
+      >Password:</label
+    >
     <input
       class="form__input"
+      [ngClass]="{ 'form__input--dark': darkMode }"
       type="password"
       id="password"
       formControlName="password"
@@ -44,7 +66,10 @@
 
   <button
     class="form__button"
-    [ngClass]="{ 'form__button--disabled': formGroup.invalid }"
+    [ngClass]="{
+      'form__button--disabled': formGroup.invalid,
+      'form__button--dark': darkMode
+    }"
     type="submit"
     [disabled]="formGroup.invalid"
   >

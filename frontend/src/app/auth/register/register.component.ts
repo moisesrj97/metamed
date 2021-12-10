@@ -22,12 +22,13 @@ export class RegisterComponent implements OnInit {
   fileError: boolean = false;
   registerError: boolean = false;
   imageSrc!: string;
+  darkMode!: boolean;
 
   constructor(
     public registerService: RegisterService,
     public authService: AuthenticationService,
     private tokenService: TokenService,
-    private store: Store<{ user: UserStore }>,
+    private store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>,
     private router: Router,
     private fb: FormBuilder
   ) {
@@ -82,6 +83,10 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.store.select('darkMode').subscribe((data) => {
+      this.darkMode = data.darkMode;
+    });
+
     this.formGroup.valueChanges.subscribe((values) => {
       this.formGroup.controls['businessName'].clearValidators();
       this.formGroup.controls['gender'].clearValidators();

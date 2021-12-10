@@ -1,7 +1,18 @@
 <form class="form" [formGroup]="formGroup" (submit)="submitForm()">
   <div class="form__group">
-    <label class="form__label" for="name">Name:</label>
-    <input class="form__input" type="text" id="name" formControlName="name" />
+    <label
+      class="form__label"
+      [ngClass]="{ 'form__label--dark': darkMode }"
+      for="name"
+      >Name:</label
+    >
+    <input
+      class="form__input"
+      [ngClass]="{ 'form__input--dark': darkMode }"
+      type="text"
+      id="name"
+      formControlName="name"
+    />
   </div>
   <div
     class="form__popup"
@@ -12,9 +23,15 @@
     Name must be between 3 and 50 chatacters
   </div>
   <div class="form__group">
-    <label class="form__label" for="surname">Surname:</label>
+    <label
+      class="form__label"
+      [ngClass]="{ 'form__label--dark': darkMode }"
+      for="surname"
+      >Surname:</label
+    >
     <input
       class="form__input"
+      [ngClass]="{ 'form__input--dark': darkMode }"
       type="text"
       id="surname"
       formControlName="surname"
@@ -30,9 +47,15 @@
     Surname must be between 3 and 50 chatacters
   </div>
   <div class="form__group">
-    <label class="form__label" for="profilePicture">ProfilePicture:</label>
+    <label
+      [ngClass]="{ 'form__label--dark': darkMode }"
+      class="form__label"
+      for="profilePicture"
+      >ProfilePicture:</label
+    >
     <input
       class="form__input"
+      [ngClass]="{ 'form__input--dark': darkMode }"
       type="file"
       id="profilePicture"
       formControlName="profilePicture"
@@ -50,8 +73,19 @@
     File extension must be jpg, jpeg or png and size must be less than 10MB
   </div>
   <div class="form__group">
-    <label class="form__label" for="email">Email:</label>
-    <input class="form__input" type="text" id="email" formControlName="email" />
+    <label
+      [ngClass]="{ 'form__label--dark': darkMode }"
+      class="form__label"
+      for="email"
+      >Email:</label
+    >
+    <input
+      class="form__input"
+      [ngClass]="{ 'form__input--dark': darkMode }"
+      type="text"
+      id="email"
+      formControlName="email"
+    />
   </div>
   <div
     class="form__popup"
@@ -62,9 +96,15 @@
     Email must be between 3 and 50 chatacters and must be an email
   </div>
   <div class="form__group">
-    <label class="form__label" for="password">Password:</label>
+    <label
+      [ngClass]="{ 'form__label--dark': darkMode }"
+      class="form__label"
+      for="password"
+      >Password:</label
+    >
     <input
       class="form__input"
+      [ngClass]="{ 'form__input--dark': darkMode }"
       type="password"
       id="password"
       formControlName="password"
@@ -81,7 +121,12 @@
   </div>
   <div class="form__roles">
     <div *ngFor="let role of roles">
-      <label class="form__label" for="{{ role + 'role' }}">{{ role }}</label>
+      <label
+        [ngClass]="{ 'form__label--dark': darkMode }"
+        class="form__label"
+        for="{{ role + 'role' }}"
+        >{{ role }}</label
+      >
       <input
         type="radio"
         value="{{ role }}"
@@ -94,9 +139,15 @@
 
   <div *ngIf="formGroup.value.role === 'Professional'">
     <div class="form__group">
-      <label class="form__label" for="password">BusinessName:</label>
+      <label
+        [ngClass]="{ 'form__label--dark': darkMode }"
+        class="form__label"
+        for="password"
+        >BusinessName:</label
+      >
       <input
         class="form__input"
+        [ngClass]="{ 'form__input--dark': darkMode }"
         type="businessName"
         id="businessName"
         formControlName="businessName"
@@ -115,9 +166,15 @@
 
   <div *ngIf="formGroup.value.role === 'Patient'">
     <div class="form__group">
-      <label class="form__label" for="password">Gender:</label>
+      <label
+        [ngClass]="{ 'form__label--dark': darkMode }"
+        class="form__label"
+        for="password"
+        >Gender:</label
+      >
       <input
         class="form__input"
+        [ngClass]="{ 'form__input--dark': darkMode }"
         type="gender"
         id="gender"
         formControlName="gender"
@@ -136,9 +193,15 @@
 
   <div *ngIf="formGroup.value.role === 'Patient'">
     <div class="form__group">
-      <label class="form__label" for="password">BirthDate:</label>
+      <label
+        [ngClass]="{ 'form__label--dark': darkMode }"
+        class="form__label"
+        for="password"
+        >BirthDate:</label
+      >
       <input
         class="form__input"
+        [ngClass]="{ 'form__input--dark': darkMode }"
         type="birthDate"
         id="birthDate"
         formControlName="birthDate"
@@ -157,7 +220,10 @@
 
   <button
     class="form__button"
-    [ngClass]="{ 'form__button--disabled': formGroup.invalid || fileError }"
+    [ngClass]="{
+      'form__button--disabled': formGroup.invalid || fileError,
+      'form__button--dark': darkMode
+    }"
     type="submit"
     [disabled]="formGroup.invalid"
   >

@@ -1,17 +1,37 @@
-<div class="container">
-  <nav class="container__links">
-    <a
-      class="container__link"
-      routerLink="/auth/login"
-      routerLinkActive="container__link--active"
-      >Login</a
-    >
-    <a
-      class="container__link"
-      routerLink="/auth/register"
-      routerLinkActive="container__link--active"
-      >Register</a
-    >
-  </nav>
+<div class="container" [ngClass]="{ 'container--dark': darkMode }">
+  <ng-container *ngIf="!darkMode"
+    ><nav class="container__links">
+      <a
+        class="container__link"
+        routerLink="/auth/login"
+        routerLinkActive="container__link--active"
+        >Login</a
+      >
+      <a
+        class="container__link"
+        routerLink="/auth/register"
+        routerLinkActive="container__link--active"
+        >Register</a
+      >
+    </nav>
+  </ng-container>
+
+  <ng-container *ngIf="darkMode">
+    <nav class="container__links container__links--dark">
+      <a
+        class="container__link container__link--dark"
+        routerLink="/auth/login"
+        routerLinkActive="container__link--active  container__link--active--dark"
+        >Login</a
+      >
+      <a
+        class="container__link container__link--dark"
+        routerLink="/auth/register"
+        routerLinkActive="container__link--active  container__link--active--dark"
+        >Register</a
+      >
+    </nav></ng-container
+  >
+
   <router-outlet></router-outlet>
 </div>

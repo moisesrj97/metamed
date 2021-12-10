@@ -18,6 +18,9 @@
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 56px;
   padding: 50px;
+  &--dark {
+    background-color: #232323;
+  }
 
   &__link {
     text-decoration: none;
@@ -27,13 +30,29 @@
     padding: 15px 50px;
     margin: 15px 0;
     border: 2px solid #2e21ff;
-    &--active {
-      background-color: #2e21ff;
-      color: white;
-    }
+
     &:hover {
       background-color: #2e21ff;
       color: white;
+    }
+
+    &--dark {
+      color: white;
+      border: 2px solid #25e5ff;
+      &:hover {
+        background-color: #25e5ff;
+        color: black;
+      }
+    }
+
+    &--active {
+      background-color: #2e21ff;
+      color: white;
+      &--dark {
+        background-color: #25e5ff;
+        color: black;
+        border: 2px solid #25e5ff;
+      }
     }
     &:nth-child(1) {
       border-radius: 50px 0 0 50px;
@@ -52,6 +71,8 @@
 
 @media (max-width: 500px) {
   .container {
+    width: 100%;
+    background-color: transparent;
     box-shadow: none;
     padding: 50px 10px;
     &__link {
