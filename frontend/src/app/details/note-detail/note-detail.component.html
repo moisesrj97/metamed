@@ -1,7 +1,11 @@
 <div class="title" [ngClass]="{ 'title--dark': darkMode }">
   <h2>{{ data?.title }}</h2>
   <img
-    src="../../../assets/images/edit.png"
+    [src]="
+      darkMode
+        ? '../../../assets/images/editDark.png'
+        : '../../../assets/images/edit.png'
+    "
     alt="Edit group"
     class="title__edit-icon"
     (click)="toggle()"
