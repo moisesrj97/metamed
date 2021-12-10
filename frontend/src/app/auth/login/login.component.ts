@@ -4,7 +4,9 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { UserStore } from 'src/app/models/interfaces';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { receiveMessageToChat } from 'src/app/services/store/actions/chat.actions';
 import { loginUser } from 'src/app/services/store/actions/user.actions';
+import { WebsocketService } from 'src/app/services/websocket/websocket.service';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +26,8 @@ export class LoginComponent {
       darkMode: { darkMode: boolean };
     }>,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private socket: WebsocketService
   ) {
     this.formGroup = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -50,6 +53,25 @@ export class LoginComponent {
         .subscribe({
           next: (data: any) => {
             this.store.dispatch(loginUser({ userInfo: { ...data } }));
+
+            const otherUsers =
+              data.role === 'Professional' ? 'patients' : 'professionals';
+            const mappedIds = data[otherUsers]?.map((e: any) => {
+              if (data.role === 'Professional') {
+                return data._id + e.refData._id;
+              } else {
+                return e.refData._id + data._id;
+              }
+            }) as string[];
+
+            this.socket.connectToRoom(mappedIds);
+
+            this.socket.getMessage().subscribe((msg) => {
+              if (msg.to === data._id) {
+                this.store.dispatch(receiveMessageToChat({ message: msg }));
+              }
+            });
+
             this.router.navigate(['/dashboard']);
           },
           error: () => {
