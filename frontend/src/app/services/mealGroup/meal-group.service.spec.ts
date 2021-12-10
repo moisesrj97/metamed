@@ -3,6 +3,9 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { SocketIoModule } from 'ngx-socket-io';
+import { WebsocketService } from '../websocket/websocket.service';
+import { config } from '../websocket/websocket.service.spec';
 
 import { MealGroupService } from './meal-group.service';
 
@@ -19,7 +22,8 @@ describe('Given MealGroupService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, SocketIoModule.forRoot(config)],
+      providers: [WebsocketService],
     });
     service = TestBed.inject(MealGroupService);
     httpTestingController = TestBed.inject(HttpTestingController);

@@ -11,7 +11,6 @@ import {
 import { NoteService } from './note.service';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
-import { DeleteNoteDto } from './dto/delete-note.dto';
 
 @Controller('note')
 export class NoteController {

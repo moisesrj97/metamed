@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { UserStore } from './models/interfaces';
 import { AuthenticationService } from './services/authentication/authentication.service';
+import { receiveMessageToChat } from './services/store/actions/chat.actions';
 import { toggleDarkMode } from './services/store/actions/darkMode.actions';
 import { loginUser } from './services/store/actions/user.actions';
 import { TokenService } from './services/token/token.service';
+import { WebsocketService } from './services/websocket/websocket.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +19,8 @@ export class AppComponent implements OnInit {
   constructor(
     public authService: AuthenticationService,
     public store: Store<{ userStore: UserStore }>,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    public socket: WebsocketService
   ) {
     this.userInfo = undefined;
   }
@@ -35,6 +38,23 @@ export class AppComponent implements OnInit {
         .subscribe((data: UserStore): void => {
           this.userInfo = data;
           this.store.dispatch(loginUser({ userInfo: { ...data } }));
+          const otherUsers =
+            data.role === 'Professional' ? 'patients' : 'professionals';
+          const mappedIds = data[otherUsers]?.map((e) => {
+            if (data.role === 'Professional') {
+              return data._id + e.refData._id;
+            } else {
+              return e.refData._id + data._id;
+            }
+          }) as string[];
+
+          this.socket.connectToRoom(mappedIds);
+
+          this.socket.getMessage().subscribe((msg) => {
+            if (msg.to === this.userInfo._id) {
+              this.store.dispatch(receiveMessageToChat({ message: msg }));
+            }
+          });
         });
     }
   }

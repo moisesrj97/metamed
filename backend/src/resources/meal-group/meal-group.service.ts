@@ -13,7 +13,6 @@ import {
   ProfessionalDocument,
 } from '../professional/professional.schema';
 import { CreateMealGroupDto } from './dto/create-meal-group.dto';
-import { DeleteMealGroupDto } from './dto/delete-meal-group.dto';
 import { UpdateMealGroupDto } from './dto/update-meal-group.dto';
 import { MealGroup, MealGroupDocument } from './mealGroup.schema';
 

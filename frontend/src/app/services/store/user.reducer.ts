@@ -6,6 +6,7 @@ import {
 } from 'src/app/models/interfaces';
 import {
   addMessageToChat,
+  receiveMessageToChat,
   updateMessageReadState,
 } from './actions/chat.actions';
 import {
@@ -158,6 +159,28 @@ export const userReducer = createReducer(
       [recipient]: state[recipient]?.map(
         (otherUser: ProfessionalModel | PatientModel) => {
           if (otherUser.refData._id === message.to) {
+            return {
+              ...otherUser,
+              chatRef: {
+                ...otherUser.chatRef,
+                messages: [...otherUser.chatRef.messages, message],
+              },
+            };
+          }
+          return otherUser;
+        }
+      ),
+    };
+  }),
+  on(receiveMessageToChat, (state: UserStore, { message }) => {
+    const recipient =
+      message.fromRole === 'Patient' ? 'patients' : 'professionals';
+
+    return {
+      ...state,
+      [recipient]: state[recipient]?.map(
+        (otherUser: ProfessionalModel | PatientModel) => {
+          if (otherUser.refData._id === message.from) {
             return {
               ...otherUser,
               chatRef: {

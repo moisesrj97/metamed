@@ -15,6 +15,7 @@ import { UserStore } from 'src/app/models/interfaces';
 import { addNote, deleteNote } from './actions/note.actions';
 import {
   addMessageToChat,
+  receiveMessageToChat,
   updateMessageReadState,
 } from './actions/chat.actions';
 
@@ -1195,6 +1196,256 @@ describe('Given UserReducer', () => {
           text: 'test',
           toRole: 'Professional',
           fromRole: 'Patient',
+          read: false,
+        },
+      });
+      const state = fromReducer.userReducer(initialState, action);
+
+      expect(state).toEqual(newState);
+    });
+  });
+
+  describe('When recieveMessageToChat action from patient', () => {
+    it('should add message to patient chat', () => {
+      const initialState: UserStore = {
+        _id: '5e9f8f8f8f8f8f8f8f8f8f8',
+        name: 'John Doe',
+        surname: 'Doe',
+        email: 'fake@test.com',
+        role: 'Professional',
+        profilePicture: 'test.jpg',
+        gender: 'test',
+        birthDate: 'test',
+        patients: [
+          {
+            refData: {
+              _id: '5e9f8f8f8f8f8f8f8f8f8f8',
+              name: 'John Doe',
+              surname: 'Doe',
+              profilePicture: 'test.jpg',
+            },
+            chatRef: {
+              _id: '5e9f8f8f8f8f8f8f8f8f8f8',
+              patient: '5e9f8f8f8f8f8f8f8f8f8f8',
+              professional: '5e9f8f8f8f8f8f8f8f8f8f8',
+              messages: [],
+            },
+            extraData: [],
+            exerciseGroups: [],
+            mealGroups: [],
+            notes: [],
+          },
+          {
+            refData: {
+              _id: 'f9f9f9f9f9f9',
+              name: 'John Doe',
+              surname: 'Doe',
+              profilePicture: 'test.jpg',
+            },
+            chatRef: {
+              _id: '5e9f8f8f8f8f8f8f8f8f8f8',
+              patient: '5e9f8f8f8f8f8f8f8f8f8f8',
+              professional: '5e9f8f8f8f8f8f8f8f8f8f8',
+              messages: [],
+            },
+            extraData: [],
+            exerciseGroups: [],
+            mealGroups: [],
+            notes: [],
+          },
+        ],
+      };
+
+      const newState: UserStore = {
+        _id: '5e9f8f8f8f8f8f8f8f8f8f8',
+        name: 'John Doe',
+        surname: 'Doe',
+        email: 'fake@test.com',
+        role: 'Professional',
+        profilePicture: 'test.jpg',
+        gender: 'test',
+        birthDate: 'test',
+        patients: [
+          {
+            refData: {
+              _id: '5e9f8f8f8f8f8f8f8f8f8f8',
+              name: 'John Doe',
+              surname: 'Doe',
+              profilePicture: 'test.jpg',
+            },
+            chatRef: {
+              _id: '5e9f8f8f8f8f8f8f8f8f8f8',
+              patient: '5e9f8f8f8f8f8f8f8f8f8f8',
+              professional: '5e9f8f8f8f8f8f8f8f8f8f8',
+              messages: [
+                {
+                  _id: 'f9f9f9f9f9f9',
+                  to: 'f8f8f8f8f8f8',
+                  from: '5e9f8f8f8f8f8f8f8f8f8f8',
+                  text: 'test',
+                  toRole: 'Professional',
+                  fromRole: 'Patient',
+                  read: false,
+                },
+              ],
+            },
+            extraData: [],
+            exerciseGroups: [],
+            mealGroups: [],
+            notes: [],
+          },
+          {
+            refData: {
+              _id: 'f9f9f9f9f9f9',
+              name: 'John Doe',
+              surname: 'Doe',
+              profilePicture: 'test.jpg',
+            },
+            chatRef: {
+              _id: '5e9f8f8f8f8f8f8f8f8f8f8',
+              patient: '5e9f8f8f8f8f8f8f8f8f8f8',
+              professional: '5e9f8f8f8f8f8f8f8f8f8f8',
+              messages: [],
+            },
+            extraData: [],
+            exerciseGroups: [],
+            mealGroups: [],
+            notes: [],
+          },
+        ],
+      };
+
+      const action = receiveMessageToChat({
+        message: {
+          _id: 'f9f9f9f9f9f9',
+          to: 'f8f8f8f8f8f8',
+          from: '5e9f8f8f8f8f8f8f8f8f8f8',
+          text: 'test',
+          toRole: 'Professional',
+          fromRole: 'Patient',
+          read: false,
+        },
+      });
+      const state = fromReducer.userReducer(initialState, action);
+
+      expect(state).toEqual(newState);
+    });
+  });
+
+  describe('When recieveMessageToChat action from professional', () => {
+    it('should add message to patient chat', () => {
+      const initialState: UserStore = {
+        _id: '5e9f8f8f8f8f8f8f8f8f8f8',
+        name: 'John Doe',
+        surname: 'Doe',
+        email: 'fake@test.com',
+        role: 'Patient',
+        profilePicture: 'test.jpg',
+        gender: 'test',
+        birthDate: 'test',
+        professionals: [
+          {
+            refData: {
+              _id: '5e9f8f8f8f8f8f8f8f8f8f8',
+              name: 'John Doe',
+              surname: 'Doe',
+              profilePicture: 'test.jpg',
+            },
+            chatRef: {
+              _id: '5e9f8f8f8f8f8f8f8f8f8f8',
+              patient: '5e9f8f8f8f8f8f8f8f8f8f8',
+              professional: '5e9f8f8f8f8f8f8f8f8f8f8',
+              messages: [],
+            },
+            exerciseGroups: [],
+            mealGroups: [],
+            notes: [],
+          },
+          {
+            refData: {
+              _id: 'f9f9f9f9f9f9',
+              name: 'John Doe',
+              surname: 'Doe',
+              profilePicture: 'test.jpg',
+            },
+            chatRef: {
+              _id: '5e9f8f8f8f8f8f8f8f8f8f8',
+              patient: '5e9f8f8f8f8f8f8f8f8f8f8',
+              professional: '5e9f8f8f8f8f8f8f8f8f8f8',
+              messages: [],
+            },
+            exerciseGroups: [],
+            mealGroups: [],
+            notes: [],
+          },
+        ],
+      };
+
+      const newState: UserStore = {
+        _id: '5e9f8f8f8f8f8f8f8f8f8f8',
+        name: 'John Doe',
+        surname: 'Doe',
+        email: 'fake@test.com',
+        role: 'Patient',
+        profilePicture: 'test.jpg',
+        gender: 'test',
+        birthDate: 'test',
+        professionals: [
+          {
+            refData: {
+              _id: '5e9f8f8f8f8f8f8f8f8f8f8',
+              name: 'John Doe',
+              surname: 'Doe',
+              profilePicture: 'test.jpg',
+            },
+            chatRef: {
+              _id: '5e9f8f8f8f8f8f8f8f8f8f8',
+              patient: '5e9f8f8f8f8f8f8f8f8f8f8',
+              professional: '5e9f8f8f8f8f8f8f8f8f8f8',
+              messages: [
+                {
+                  _id: 'f9f9f9f9f9f9',
+                  to: 'f8f8f8f8f8f8',
+                  from: '5e9f8f8f8f8f8f8f8f8f8f8',
+                  text: 'test',
+                  toRole: 'Patient',
+                  fromRole: 'Professional',
+                  read: false,
+                },
+              ],
+            },
+            exerciseGroups: [],
+            mealGroups: [],
+            notes: [],
+          },
+          {
+            refData: {
+              _id: 'f9f9f9f9f9f9',
+              name: 'John Doe',
+              surname: 'Doe',
+              profilePicture: 'test.jpg',
+            },
+            chatRef: {
+              _id: '5e9f8f8f8f8f8f8f8f8f8f8',
+              patient: '5e9f8f8f8f8f8f8f8f8f8f8',
+              professional: '5e9f8f8f8f8f8f8f8f8f8f8',
+              messages: [],
+            },
+            exerciseGroups: [],
+            mealGroups: [],
+            notes: [],
+          },
+        ],
+      };
+
+      const action = receiveMessageToChat({
+        message: {
+          _id: 'f9f9f9f9f9f9',
+          to: 'f8f8f8f8f8f8',
+          from: '5e9f8f8f8f8f8f8f8f8f8f8',
+          text: 'test',
+          toRole: 'Patient',
+          fromRole: 'Professional',
           read: false,
         },
       });

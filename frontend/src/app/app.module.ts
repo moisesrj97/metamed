@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +12,8 @@ import { userReducer } from './services/store/user.reducer';
 import { CoreModule } from './core/core.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { darkModeReducer } from './services/store/darkMode.reducer';
+
+const config: SocketIoConfig = { url: 'http://localhost:3080', options: {} };
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,6 +33,7 @@ import { darkModeReducer } from './services/store/darkMode.reducer';
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000',
     }),
+    SocketIoModule.forRoot(config),
   ],
   providers: [],
   bootstrap: [AppComponent],
