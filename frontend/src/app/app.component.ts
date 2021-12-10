@@ -5,6 +5,7 @@ import { AuthenticationService } from './services/authentication/authentication.
 import { toggleDarkMode } from './services/store/actions/darkMode.actions';
 import { loginUser } from './services/store/actions/user.actions';
 import { TokenService } from './services/token/token.service';
+import { WebsocketService } from './services/websocket/websocket.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,8 @@ export class AppComponent implements OnInit {
   constructor(
     public authService: AuthenticationService,
     public store: Store<{ userStore: UserStore }>,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private socket: WebsocketService
   ) {
     this.userInfo = undefined;
   }

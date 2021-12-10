@@ -14,6 +14,7 @@ import { ExerciseModule } from './resources/exercise/exercise.module';
 import { MealGroupModule } from './resources/meal-group/meal-group.module';
 import { MealModule } from './resources/meal/meal.module';
 import { NoteModule } from './resources/note/note.module';
+import { WebSocketGatewayChat } from './services/web-socket.gateway';
 import LogsMiddleware from './middleware/logger.middleware';
 
 const ENV = process.env.NODE_ENV;
@@ -36,7 +37,7 @@ const ENV = process.env.NODE_ENV;
     NoteModule,
   ],
   controllers: [AppController],
-  providers: [AppService, S3ImageService],
+  providers: [AppService, S3ImageService, WebSocketGatewayChat],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

@@ -14,6 +14,7 @@ import {
   updateMessageReadState,
 } from 'src/app/services/store/actions/chat.actions';
 import { TokenService } from 'src/app/services/token/token.service';
+import { WebsocketService } from 'src/app/services/websocket/websocket.service';
 
 @Component({
   selector: 'app-messages',
@@ -37,7 +38,8 @@ export class MessagesComponent implements OnInit {
     private store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>,
     public chatService: ChatService,
     public authService: AuthenticationService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    public socket: WebsocketService
   ) {}
 
   ngOnInit(): void {
@@ -84,6 +86,8 @@ export class MessagesComponent implements OnInit {
         this.store.dispatch(loginUser({ userInfo: data }));
       });
     }, 10000); */
+
+    this.socket.getMessage().subscribe((data) => console.log(data));
   }
 
   sendMessage() {
@@ -92,6 +96,7 @@ export class MessagesComponent implements OnInit {
       .addMessageToChat(this.data._id, this.id, this.newMessage, token)
       .subscribe((data) => {
         this.store.dispatch(addMessageToChat({ message: data }));
+        this.socket.sendMessage(data.text);
         this.newMessage = '';
       });
   }
