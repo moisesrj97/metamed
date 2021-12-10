@@ -33,15 +33,29 @@
   </div>
 
   <div class="navbar__menu">
-    <nav class="navbar__menu-nav" *ngIf="!loggedIn">
+    <nav
+      class="navbar__menu-nav"
+      *ngIf="!loggedIn"
+      [ngClass]="{ 'navbar__menu-nav--dark': darkMode }"
+    >
       <ul class="navbar__menu-nav-list">
-        <li class="navbar__menu-nav-item" routerLink="auth">Access</li>
+        <li
+          class="navbar__menu-nav-item"
+          [ngClass]="{ 'navbar__menu-nav-item--dark': darkMode }"
+          routerLink="auth"
+        >
+          Access
+        </li>
       </ul>
     </nav>
     <div class="navbar__menu-icons">
       <img
         *ngIf="!loggedIn"
-        src="../../../assets/images/accessIcon.png"
+        [src]="
+          darkMode
+            ? '../../../assets/images/userDark.png'
+            : '../../../assets/images/user.png'
+        "
         alt="Access icon"
         class="navbar__menu-icons-access"
         routerLink="auth"
