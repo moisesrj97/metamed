@@ -88,10 +88,13 @@ export class SideNavComponent implements OnInit {
             )
           )
         ) {
-          this.menuItems[2].imagePath =
-            '../../../assets/images/messagesNotification.png';
+          this.menuItems[2].imagePath = this.darkMode
+            ? '../../../assets/images/messagesNotificationDark.png'
+            : '../../../assets/images/messagesNotification.png';
         } else {
-          this.menuItems[2].imagePath = '../../../assets/images/messages.png';
+          this.menuItems[2].imagePath = this.darkMode
+            ? '../../../assets/images/messagesDark.png'
+            : '../../../assets/images/messages.png';
         }
       });
 
