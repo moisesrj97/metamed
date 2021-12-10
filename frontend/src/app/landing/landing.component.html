@@ -1,14 +1,31 @@
-<div class="container">
-  <h2 class="container__title">
+<div class="container" [ngClass]="{ 'container--dark': darkMode }">
+  <h2
+    class="container__title"
+    [ngClass]="{ 'container__title--dark': darkMode }"
+  >
     The professional-patient
-    <span class="container__title--highlight">intercom</span>
+    <span
+      class="container__title--highlight"
+      [ngClass]="{ 'container__title--highlight--dark': darkMode }"
+      >intercom</span
+    >
   </h2>
-  <div class="image-fill">
-    <button class="container__start-button" routerLink="auth">Start now</button>
+  <div class="image-fill" [ngClass]="{ 'image-fill--dark': darkMode }">
+    <button
+      class="container__start-button"
+      [ngClass]="{ 'container__start-button--dark': darkMode }"
+      routerLink="auth"
+    >
+      Start now
+    </button>
   </div>
   <img
     class="container__img"
-    src="../../assets/images/landing-image.png"
+    [src]="
+      darkMode
+        ? '../../assets/images/landing-imageDark.png'
+        : '../../assets/images/landing-image.png'
+    "
     alt="Landing page image"
   />
 </div>

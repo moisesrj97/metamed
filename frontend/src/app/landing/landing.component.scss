@@ -16,6 +16,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  &--dark {
+    background-color: #181818;
+  }
   &__img {
     width: 70%;
   }
@@ -26,6 +29,12 @@
     text-align: center;
     &--highlight {
       color: #2e21ff;
+    }
+    &--dark {
+      color: white;
+    }
+    &--highlight--dark {
+      color: #25e5ff;
     }
   }
 }
@@ -41,6 +50,10 @@
     box-shadow: none;
     border-radius: none;
     padding: 60px 0;
+    &--dark {
+      background-color: #121212;
+    }
+
     &__title {
       margin: 0;
       font-size: 1.8rem;
@@ -63,6 +76,15 @@
         background-color: #2e21ff;
         color: white;
       }
+      &--dark {
+        color: #25e5ff;
+        border: 2px solid #25e5ff;
+        background-color: #121212;
+        &:hover {
+          background-color: #25e5ff;
+          color: black;
+        }
+      }
     }
   }
 
@@ -77,5 +99,8 @@
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
+    &--dark {
+      background-image: url("../../assets/images/landing-image-mobileDark.png");
+    }
   }
 }
