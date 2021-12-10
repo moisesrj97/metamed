@@ -4,7 +4,7 @@
     [open]="sideBarOpen"
     (toggleNav)="toggleNav($event)"
   ></app-side-nav>
-  <div class="frame">
+  <div class="frame" [ngClass]="{ 'frame--dark': darkMode }">
     <ng-content></ng-content>
   </div>
 </main>

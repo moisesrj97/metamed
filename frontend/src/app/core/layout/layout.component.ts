@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-layout',
@@ -7,8 +8,15 @@ import { Component } from '@angular/core';
 })
 export class LayoutComponent {
   sideBarOpen: boolean;
-  constructor() {
+  darkMode!: boolean;
+  constructor(private store: Store<{ darkMode: { darkMode: boolean } }>) {
     this.sideBarOpen = false;
+  }
+
+  ngOnInit(): void {
+    this.store.select('darkMode').subscribe((data) => {
+      this.darkMode = data.darkMode;
+    });
   }
 
   toggleNav(value: boolean) {
