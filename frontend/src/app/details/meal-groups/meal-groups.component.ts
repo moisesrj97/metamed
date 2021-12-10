@@ -23,15 +23,20 @@ export class MealGroupsComponent implements OnInit {
   fetchedData: MealGroupModel[] = [];
   input: string = '';
   role!: string;
+  darkMode!: boolean;
 
   constructor(
     public route: ActivatedRoute,
-    public store: Store<{ user: UserStore }>,
+    public store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>,
     public mealGroupService: MealGroupService,
     public tokenService: TokenService
   ) {}
 
   ngOnInit(): void {
+    this.store.select('darkMode').subscribe((data) => {
+      this.darkMode = data.darkMode;
+    });
+
     this.id = this.route.parent?.snapshot.paramMap.get('id') as string;
     const token = this.tokenService.getTokenFromLocalStorage() as string;
 
