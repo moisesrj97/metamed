@@ -275,7 +275,8 @@
   </form>
   <div class="form__button-container">
     <p
-      class="form__button form__button--danger form__button--danger--dark"
+      class="form__button form__button--danger"
+      [ngClass]="{ 'form__button--danger--dark': darkMode }"
       (click)="deleteExerciseGroup()"
     >
       Delete Exercise Group
