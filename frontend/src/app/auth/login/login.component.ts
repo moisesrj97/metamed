@@ -15,10 +15,14 @@ export class LoginComponent {
   formGroup: FormGroup;
   roles: string[] = ['professional', 'patient'];
   authPopup: boolean = false;
+  darkMode!: boolean;
 
   constructor(
     public authService: AuthenticationService,
-    private store: Store<{ userStore: UserStore }>,
+    private store: Store<{
+      userStore: UserStore;
+      darkMode: { darkMode: boolean };
+    }>,
     private router: Router,
     private fb: FormBuilder
   ) {
@@ -26,6 +30,12 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
       role: ['professional', [Validators.required]],
+    });
+  }
+
+  ngOnInit(): void {
+    this.store.select('darkMode').subscribe((data) => {
+      this.darkMode = data.darkMode;
     });
   }
 

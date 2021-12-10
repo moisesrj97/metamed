@@ -24,6 +24,7 @@ export class MealGroupDetailComponent implements OnInit {
   editing: boolean = false;
   formGroup!: FormGroup;
   role!: string;
+  darkMode!: boolean;
 
   constructor(
     public route: ActivatedRoute,
@@ -31,7 +32,7 @@ export class MealGroupDetailComponent implements OnInit {
     public mealGroupService: MealGroupService,
     public mealService: MealService,
     public tokenService: TokenService,
-    public store: Store<{ user: UserStore }>,
+    public store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>,
     public fb: FormBuilder
   ) {
     this.formGroup = this.fb.group({
@@ -55,6 +56,10 @@ export class MealGroupDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.store.select('darkMode').subscribe((data) => {
+      this.darkMode = data.darkMode;
+    });
+
     const token = this.tokenService.getTokenFromLocalStorage() as string;
 
     this.store.select('user').subscribe((data) => {

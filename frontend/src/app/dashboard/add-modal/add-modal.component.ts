@@ -4,6 +4,7 @@ import {
   Output,
   EventEmitter,
   HostListener,
+  OnInit,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { UserStore } from 'src/app/models/interfaces';
@@ -16,17 +17,24 @@ import { TokenService } from 'src/app/services/token/token.service';
   templateUrl: './add-modal.component.html',
   styleUrls: ['./add-modal.component.scss'],
 })
-export class AddModalComponent {
+export class AddModalComponent implements OnInit {
   @Input() modalOpen!: boolean;
   @Output() closeModal: EventEmitter<boolean>;
   input: string = '';
+  darkMode!: boolean;
 
   constructor(
     public patientManagmentService: PatientManagmentService,
     public tokenService: TokenService,
-    public store: Store<{ user: UserStore }>
+    public store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>
   ) {
     this.closeModal = new EventEmitter();
+  }
+
+  ngOnInit(): void {
+    this.store.select('darkMode').subscribe((mode) => {
+      this.darkMode = mode.darkMode;
+    });
   }
 
   addPatient(): void {

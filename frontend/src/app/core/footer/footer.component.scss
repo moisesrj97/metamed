@@ -15,6 +15,13 @@
       color: #2e21ff;
     }
   }
+  &--dark {
+    color: #fff;
+    background-color: #121212;
+  }
+  &__address--accent--dark {
+    color: #25e5ff;
+  }
 }
 
 @media (max-width: 500px) {

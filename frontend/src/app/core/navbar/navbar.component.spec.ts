@@ -4,11 +4,19 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 import { NavbarComponent } from './navbar.component';
 
+const initialState = {
+  user: {
+    _id: '',
+  },
+  darkMode: {
+    darkMode: true,
+  },
+};
+
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
   let store: MockStore;
-  let initialState = { user: { _id: '' } };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -48,9 +56,22 @@ describe('NavbarComponent', () => {
 
   describe('With no valid _id in the store', () => {
     it('Should set loggedIn to false', () => {
-      TestBed.inject(MockStore).setState({ user: { _id: '123' } });
+      TestBed.inject(MockStore).setState({
+        user: { _id: '123' },
+        darkMode: {
+          darkMode: true,
+        },
+      });
 
       expect(component.loggedIn).toBeTrue();
+    });
+  });
+
+  describe('When toggleDarkMode is executed', () => {
+    it('Expect store dispatch to have been called', () => {
+      spyOn(component.store, 'dispatch');
+      component.toggleDarkMode();
+      expect(component.store.dispatch).toHaveBeenCalled();
     });
   });
 });

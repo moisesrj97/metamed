@@ -31,6 +31,7 @@
       display: flex;
       align-items: center;
       cursor: pointer;
+
       &:first-child {
         border-radius: 15px 0 0 15px;
       }
@@ -39,6 +40,12 @@
       }
       &--active {
         background-color: #efe8ff;
+      }
+      &--dark {
+        color: white;
+        &--active {
+          background-color: #25e6ff4d;
+        }
       }
       &-img {
         height: 20px;

@@ -1,15 +1,26 @@
 <div class="container" *ngIf="modalOpen">
-  <div class="modal">
+  <div class="modal" [ngClass]="{ 'modal--dark': darkMode }">
     <div class="modal__form">
-      <label for="text" class="modal__form__label">Patient ID:</label>
+      <label
+        for="text"
+        class="modal__form__label"
+        [ngClass]="{ 'modal__form__label--dark': darkMode }"
+        >Patient ID:</label
+      >
       <input
         type="text"
         name="text"
         id="text"
         class="modal__form__input"
+        [ngClass]="{ 'modal__form__input--dark': darkMode }"
         [(ngModel)]="input"
       />
-      <button type="submit" class="modal__form__button" (click)="addPatient()">
+      <button
+        type="submit"
+        class="modal__form__button"
+        [ngClass]="{ 'modal__form__button--dark': darkMode }"
+        (click)="addPatient()"
+      >
         Add patient
       </button>
     </div>

@@ -8,8 +8,13 @@ import { NavbarComponent } from './core/navbar/navbar.component';
 import { FooterComponent } from './core/footer/footer.component';
 import { LayoutComponent } from './core/layout/layout.component';
 import { routes } from './app-routing.module';
-import { of, Subscription } from 'rxjs';
-import { UserStore } from './models/interfaces';
+import { of } from 'rxjs';
+
+const initialState = {
+  darkMode: {
+    darkMode: true,
+  },
+};
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -21,7 +26,7 @@ describe('AppComponent', () => {
         FooterComponent,
         LayoutComponent,
       ],
-      providers: [provideMockStore()],
+      providers: [provideMockStore({ initialState })],
     }).compileComponents();
 
     localStorage.clear();
@@ -42,6 +47,9 @@ describe('AppComponent', () => {
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
+    spyOn(window, 'matchMedia').and.returnValue({
+      matches: true,
+    } as unknown as MediaQueryList);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(

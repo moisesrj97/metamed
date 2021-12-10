@@ -1,5 +1,6 @@
 <div
   class="chat-window"
+  [ngClass]="{ 'chat-window--dark': darkMode }"
   #scrollMe
   [scrollTop]="scrollMe.scrollHeight"
   *ngIf="data"
@@ -9,8 +10,15 @@
     class="message-container"
     [ngClass]="{ 'message-container--send': item.from === userId }"
   >
-    <p class="message" [ngClass]="{ 'message--send': item.from === userId }">
-      {{ item.text }} <span *ngIf="item.read">✔️</span>
+    <p
+      class="message"
+      [ngClass]="{
+        'message--send': item.from === userId,
+        'message--dark': darkMode,
+        'message--dark--send': darkMode && item.from === userId
+      }"
+    >
+      {{ item.text }}
     </p>
   </div>
 </div>
@@ -18,13 +26,18 @@
 <form class="form" (submit)="sendMessage()">
   <input
     class="form__input"
+    [ngClass]="{ 'form__input--dark': darkMode }"
     type="text"
     [(ngModel)]="newMessage"
     name="message"
   />
   <img
     class="form__button"
-    src="../../../assets/images/send.png"
+    [src]="
+      darkMode
+        ? '../../../assets/images/sendDark.png'
+        : '../../../assets/images/send.png'
+    "
     alt="Send message"
     (click)="sendMessage()"
   />

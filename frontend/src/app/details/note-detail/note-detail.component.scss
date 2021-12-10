@@ -11,6 +11,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  &--dark {
+    color: white;
+  }
   &__edit-icon {
     width: 30px;
     height: 30px;
@@ -19,27 +22,11 @@
   }
 }
 
-.meals {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  &__item {
-    margin: 20px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    &-img {
-      height: 300px;
-      margin-bottom: 5px;
-    }
-    &-text {
-      font-size: 1.2rem;
-    }
-  }
-}
-
 .extra {
   padding: 30px 0;
+  &--dark {
+    color: white;
+  }
   &__title {
     font-size: 1.5rem;
     text-align: center;
@@ -47,8 +34,6 @@
   &__text {
     font-size: 1.1rem;
     text-align: center;
-    margin-top: 30px;
-    padding: 0px 50px;
   }
 }
 
@@ -62,6 +47,9 @@
   &__subtitle {
     font-size: 1.2rem;
     margin: 30px 0 10px 0;
+    &--dark {
+      color: white;
+    }
   }
   &__roles {
     display: flex;
@@ -73,6 +61,9 @@
     font-weight: 600;
     font-size: 1.2rem;
     padding-right: 10px;
+    &--dark {
+      color: white;
+    }
   }
   &__input {
     background-color: white;
@@ -80,6 +71,11 @@
     font-size: 1rem;
     border: 1px solid #2e21ff;
     border-radius: 25px;
+    &--dark {
+      color: white;
+      border-color: #25e5ff;
+      background-color: transparent;
+    }
   }
   &__textarea {
     width: 450px;
@@ -89,6 +85,11 @@
     border: 1px solid #2e21ff;
     border-radius: 25px;
     padding: 5px 20px;
+    &--dark {
+      color: white;
+      border-color: #25e5ff;
+      background-color: transparent;
+    }
   }
   &__group {
     margin: 10px 0;
@@ -128,7 +129,14 @@
       background-color: rgb(255, 0, 0);
       color: white;
     }
-
+    &--danger--dark {
+      background-color: transparent;
+      color: white;
+      &:hover {
+        background-color: rgb(255, 0, 0);
+        color: black;
+      }
+    }
     &--disabled {
       background-color: #ebebeb;
       color: black;
@@ -141,6 +149,15 @@
         cursor: not-allowed;
       }
     }
+    &--dark {
+      border-color: #25e5ff;
+      color: white;
+      background-color: transparent;
+      &:hover {
+        color: black;
+        background-color: #25e5ff;
+      }
+    }
   }
   &__popup {
     background-color: #3021ff1e;
@@ -150,6 +167,10 @@
     font-weight: 400;
     text-align: center;
     border-radius: 20px;
+    &--dark {
+      background-color: #25e6ff4d;
+      color: white;
+    }
   }
   &__delete-icon {
     width: 30px;
@@ -170,6 +191,10 @@
   font-weight: 400;
   text-align: center;
   border-radius: 20px;
+  &--dark {
+    background-color: #25e6ff4d;
+    color: white;
+  }
 }
 
 @media (max-width: 768px) {

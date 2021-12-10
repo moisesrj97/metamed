@@ -1,6 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 
 import { CardComponent } from './card.component';
+
+const initialState = {
+  darkMode: {
+    darkMode: true,
+  },
+};
 
 describe('CardComponent', () => {
   let component: CardComponent;
@@ -9,6 +16,7 @@ describe('CardComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CardComponent],
+      providers: [provideMockStore({ initialState })],
     }).compileComponents();
   });
 

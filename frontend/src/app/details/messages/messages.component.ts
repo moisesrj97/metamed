@@ -30,16 +30,21 @@ export class MessagesComponent implements OnInit {
     professional: '',
     patient: '',
   };
+  darkMode!: boolean;
 
   constructor(
     public route: ActivatedRoute,
-    private store: Store<{ user: UserStore }>,
+    private store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>,
     public chatService: ChatService,
     public authService: AuthenticationService,
     private tokenService: TokenService
   ) {}
 
   ngOnInit(): void {
+    this.store.select('darkMode').subscribe((data) => {
+      this.darkMode = data.darkMode;
+    });
+
     this.id = this.route.parent?.snapshot.paramMap.get('id') as string;
     const token = this.tokenService.getTokenFromLocalStorage() as string;
 

@@ -28,6 +28,9 @@ const initialState = {
       },
     ],
   },
+  darkMode: {
+    darkMode: true,
+  },
 };
 
 describe('ProfileComponent', () => {

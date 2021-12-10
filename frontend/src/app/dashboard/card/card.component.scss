@@ -12,6 +12,12 @@
   &:hover {
     box-shadow: 1px 3px 9px rgba(57, 43, 255, 0.25);
   }
+  &--dark {
+    background-color: #2e2e2e;
+    &:hover {
+      box-shadow: 1px 3px 9px rgba(43, 255, 255, 0.568);
+    }
+  }
   &__img {
     width: 80%;
     aspect-ratio: 1;
@@ -20,6 +26,9 @@
   &__text {
     text-align: center;
     font-size: 1.1rem;
+    &--dark {
+      color: white;
+    }
   }
 }
 

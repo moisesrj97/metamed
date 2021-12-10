@@ -13,6 +13,9 @@ const initialState = {
   user: {
     role: 'Professional',
   },
+  darkMode: {
+    darkMode: true,
+  },
 };
 
 describe('ExerciseGroupDetailComponent', () => {

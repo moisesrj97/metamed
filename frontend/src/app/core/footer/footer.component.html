@@ -1,6 +1,14 @@
-<footer class="footer" *ngIf="!isLoggedIn">
+<footer
+  class="footer"
+  *ngIf="!isLoggedIn"
+  [ngClass]="{ 'footer--dark': darkMode }"
+>
   <address class="footer__address">
-    Made with 💙 by <span class="footer__address--accent">M</span>oisés
-    Rodríguez© 2021
+    Made with 💙 by
+    <span
+      class="footer__address--accent"
+      [ngClass]="{ 'footer__address--accent--dark': darkMode }"
+      >M</span
+    >oisés Rodríguez© 2021
   </address>
 </footer>

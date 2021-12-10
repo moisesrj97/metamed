@@ -16,6 +16,9 @@
   flex-direction: column;
   gap: 10px;
   padding: 20px;
+  &--dark {
+    background-color: #252525;
+  }
 }
 
 .message-container {
@@ -40,6 +43,11 @@
     border: 1px solid #2e21ff;
     border-radius: 25px;
     width: 100%;
+    &--dark {
+      background-color: transparent;
+      color: white;
+      border-color: #25e5ff;
+    }
   }
   &__button {
     height: 40px;
@@ -53,12 +61,21 @@
   padding: 10px 20px;
   border: 1px solid #2e21ff;
   background-color: white;
-  border-radius: 200px 200px 200px 0;
+  border-radius: 25px 25px 25px 0;
   font-size: 1.2rem;
+  max-width: 80%;
+
   &--send {
     background-color: #2e21ff;
     color: white;
-    border-radius: 200px 200px 0 200px;
+    border-radius: 25px 25px 0 25px;
+  }
+  &--dark {
+    color: black;
+    background-color: #25e5ff;
+    &--send {
+      background-color: #cab6ff;
+    }
   }
 }
 

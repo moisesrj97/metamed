@@ -17,15 +17,20 @@ export class ProfileComponent implements OnInit {
   timestamp!: number;
   fileError: boolean = false;
   imageSrc: any = null;
+  darkMode!: boolean;
 
   constructor(
-    public store: Store<{ user: UserStore }>,
+    public store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>,
     public userInfoService: UserInfoService,
     public tokenService: TokenService
   ) {}
 
   ngOnInit(): void {
     this.timestamp = Date.now();
+
+    this.store.select('darkMode').subscribe((data) => {
+      this.darkMode = data.darkMode;
+    });
 
     this.store
       .select((user) => user.user)

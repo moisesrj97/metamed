@@ -10,9 +10,11 @@ import { TokenService } from 'src/app/services/token/token.service';
 })
 export class FooterComponent implements OnInit {
   isLoggedIn: boolean;
+  darkMode!: boolean;
+
   constructor(
     public tokenService: TokenService,
-    public store: Store<{ user: UserStore }>
+    public store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>
   ) {
     this.isLoggedIn = false;
   }
@@ -26,6 +28,12 @@ export class FooterComponent implements OnInit {
         } else {
           this.isLoggedIn = false;
         }
+      });
+
+    this.store
+      .select((state) => state.darkMode.darkMode)
+      .subscribe((mode) => {
+        this.darkMode = mode;
       });
   }
 }

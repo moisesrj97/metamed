@@ -54,6 +54,9 @@
       &-item {
         font-size: 1.3rem;
         cursor: pointer;
+        &--dark {
+          color: white;
+        }
       }
     }
     &-icons {

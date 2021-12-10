@@ -17,16 +17,21 @@ export class NoteDetailComponent implements OnInit {
   data!: NoteModel;
   editing: boolean = false;
   role!: string;
+  darkMode!: boolean;
 
   constructor(
     public route: ActivatedRoute,
     public router: Router,
     public noteService: NoteService,
     public tokenService: TokenService,
-    public store: Store<{ user: UserStore }>
+    public store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>
   ) {}
 
   ngOnInit(): void {
+    this.store.select('darkMode').subscribe((data) => {
+      this.darkMode = data.darkMode;
+    });
+
     const token = this.tokenService.getTokenFromLocalStorage() as string;
 
     this.store.select('user').subscribe((data) => {

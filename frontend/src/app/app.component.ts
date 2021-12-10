@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { UserStore } from './models/interfaces';
 import { AuthenticationService } from './services/authentication/authentication.service';
+import { toggleDarkMode } from './services/store/actions/darkMode.actions';
 import { loginUser } from './services/store/actions/user.actions';
 import { TokenService } from './services/token/token.service';
 
@@ -23,6 +24,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     const token = this.tokenService.getTokenFromLocalStorage();
+
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      this.store.dispatch(toggleDarkMode());
+    }
 
     if (token) {
       this.authService

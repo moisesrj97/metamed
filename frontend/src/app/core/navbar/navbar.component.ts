@@ -15,7 +15,7 @@ export class NavbarComponent implements OnInit {
   @Output() toggleNav: EventEmitter<boolean>;
   constructor(
     public tokenService: TokenService,
-    private store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>
+    public store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>
   ) {
     this.loggedIn = false;
     this.toggleNav = new EventEmitter<boolean>();

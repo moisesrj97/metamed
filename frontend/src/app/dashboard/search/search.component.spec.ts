@@ -1,6 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 
 import { SearchComponent } from './search.component';
+
+const initialState = {
+  darkMode: {
+    darkMode: true,
+  },
+};
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
@@ -9,6 +16,7 @@ describe('SearchComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [SearchComponent],
+      providers: [provideMockStore({ initialState })],
     }).compileComponents();
   });
 

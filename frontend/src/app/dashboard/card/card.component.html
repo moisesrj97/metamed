@@ -1,8 +1,15 @@
-<div class="card" routerLink="{{ '/details/' + data.refData._id }}">
+<div
+  class="card"
+  routerLink="{{ '/details/' + data.refData._id }}"
+  [ngClass]="{ 'card--dark': darkMode }"
+>
   <img
     src="{{ data.refData.profilePicture }}"
     alt="{{ data.refData.profilePicture + 'profile picture' }}"
     class="card__img"
+    [ngClass]="{ 'card__img--dark': darkMode }"
   />
-  <p class="card__text">{{ data.refData.name }} {{ data.refData.surname }}</p>
+  <p class="card__text" [ngClass]="{ 'card__text--dark': darkMode }">
+    {{ data.refData.name }} {{ data.refData.surname }}
+  </p>
 </div>

@@ -1,7 +1,7 @@
 <div class="details__container">
   <nav class="details__nav">
     <ul class="details__nav-list">
-      <ng-container *ngIf="role === 'Professional'">
+      <ng-container *ngIf="role === 'Professional' && !darkMode">
         <li
           *ngFor="let item of navItems"
           routerLink="{{ '/details/' + id + '/' + item.route }}"
@@ -16,7 +16,22 @@
           <p class="details__nav-item-text">{{ item.label }}</p>
         </li>
       </ng-container>
-      <ng-container *ngIf="role === 'Patient'">
+      <ng-container *ngIf="role === 'Professional' && darkMode">
+        <li
+          *ngFor="let item of navItems"
+          routerLink="{{ '/details/' + id + '/' + item.route }}"
+          class="details__nav-item details__nav-item--dark"
+          routerLinkActive="details__nav-item--active details__nav-item--dark--active"
+        >
+          <img
+            class="details__nav-item-img"
+            src="{{ darkMode ? item.iconDark : item.icon }}"
+            alt="{{ item.label }}"
+          />
+          <p class="details__nav-item-text">{{ item.label }}</p>
+        </li>
+      </ng-container>
+      <ng-container *ngIf="role === 'Patient' && !darkMode">
         <ng-container *ngFor="let item of navItems; let i = index">
           <li
             *ngIf="i > 0"
@@ -33,8 +48,24 @@
           </li>
         </ng-container>
       </ng-container>
+      <ng-container *ngIf="role === 'Patient' && darkMode">
+        <ng-container *ngFor="let item of navItems; let i = index">
+          <li
+            *ngIf="i > 0"
+            routerLink="{{ '/details/' + id + '/' + item.route }}"
+            class="details__nav-item details__nav-item--dark"
+            routerLinkActive="details__nav-item--active details__nav-item--dark--active"
+          >
+            <img
+              class="details__nav-item-img"
+              src="{{ item.icon }}"
+              alt="{{ item.label }}"
+            />
+            <p class="details__nav-item-text">{{ item.label }}</p>
+          </li>
+        </ng-container>
+      </ng-container>
     </ul>
   </nav>
-  <hr />
   <router-outlet></router-outlet>
 </div>

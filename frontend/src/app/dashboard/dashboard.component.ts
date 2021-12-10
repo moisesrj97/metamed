@@ -15,12 +15,19 @@ export class DashboardComponent implements OnInit {
   usersDataInfo: PatientModel[] | ProfessionalModel[] = [];
   filteredUsersDataInfo: PatientModel[] | ProfessionalModel[] = [];
   role!: string;
+  darkMode!: boolean;
 
   isModalOpen: boolean = false;
 
-  constructor(private store: Store<{ user: UserStore }>) {}
+  constructor(
+    private store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>
+  ) {}
 
   ngOnInit(): void {
+    this.store.select('darkMode').subscribe((data) => {
+      this.darkMode = data.darkMode;
+    });
+
     this.store.select('user').subscribe((user) => {
       this.role = user.role;
       if (user.role === 'Professional') {

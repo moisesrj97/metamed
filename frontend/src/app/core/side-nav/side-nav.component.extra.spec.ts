@@ -30,6 +30,9 @@ describe('SideNavComponent', () => {
         },
       ],
     },
+    darkMode: {
+      darkMode: false,
+    },
   };
 
   beforeEach(async () => {

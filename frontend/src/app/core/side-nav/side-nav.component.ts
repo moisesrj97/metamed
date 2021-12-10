@@ -81,17 +81,22 @@ export class SideNavComponent implements OnInit {
     this.store
       .select((state) => state.user)
       .subscribe((user) => {
+        const otherUsers =
+          user.role === 'Professional' ? 'patients' : 'professionals';
         if (
-          user.patients?.some((patient) =>
-            patient.chatRef.messages.some(
+          user[otherUsers]?.some((otherUser) =>
+            otherUser.chatRef.messages.some(
               (message) => message.read === false && message.to === user._id
             )
           )
         ) {
-          this.menuItems[2].imagePath =
-            '../../../assets/images/messagesNotification.png';
+          this.menuItems[2].imagePath = this.darkMode
+            ? '../../../assets/images/messagesNotificationDark.png'
+            : '../../../assets/images/messagesNotification.png';
         } else {
-          this.menuItems[2].imagePath = '../../../assets/images/messages.png';
+          this.menuItems[2].imagePath = this.darkMode
+            ? '../../../assets/images/messagesDark.png'
+            : '../../../assets/images/messages.png';
         }
       });
 

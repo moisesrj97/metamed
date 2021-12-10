@@ -31,16 +31,21 @@ export class InfoComponent implements OnInit {
 
   key: string = '';
   value: string = '';
+  darkMode!: boolean;
 
   constructor(
     public route: ActivatedRoute,
     private router: Router,
-    private store: Store<{ user: UserStore }>,
+    private store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>,
     public patientManageService: PatientManagmentService,
     public tokenService: TokenService
   ) {}
 
   ngOnInit(): void {
+    this.store.select('darkMode').subscribe((state) => {
+      this.darkMode = state.darkMode;
+    });
+
     this.id = this.route.parent?.snapshot.paramMap.get('id') as string;
 
     this.store

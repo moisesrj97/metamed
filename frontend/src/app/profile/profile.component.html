@@ -1,7 +1,11 @@
 <div class="info">
   <div class="info__edit">
     <img
-      src="../../../assets/images/edit.png"
+      [src]="
+        darkMode
+          ? '../../../assets/images/editDark.png'
+          : '../../../assets/images/edit.png'
+      "
       alt="Edit"
       class="info__edit-icon"
       (click)="toggleEditing()"
@@ -13,7 +17,11 @@
     class="info__img"
     *ngIf="!editing"
   />
-  <div class="info__data" *ngIf="!editing">
+  <div
+    class="info__data"
+    *ngIf="!editing"
+    [ngClass]="{ 'info__data--dark': darkMode }"
+  >
     <p class="info__data-item">Name: {{ data.name }}</p>
     <p class="info__data-item">Surname: {{ data.surname }}</p>
     <p class="info__data-item">Email: {{ data.email }}</p>
@@ -32,9 +40,15 @@
 
 <div class="form" *ngIf="editing">
   <div class="form__group">
-    <label class="form__label" for="name">Name: </label>
+    <label
+      class="form__label"
+      [ngClass]="{ 'form__label--dark': darkMode }"
+      for="name"
+      >Name:
+    </label>
     <input
       class="form__input"
+      [ngClass]="{ 'form__input--dark': darkMode }"
       type="text"
       id="name"
       name="name"
@@ -42,13 +56,23 @@
       (change)="edit($event)"
     />
   </div>
-  <div class="popup" *ngIf="data.name.length < 3 || data.name.length > 50">
+  <div
+    class="popup"
+    [ngClass]="{ 'popup--dark': darkMode }"
+    *ngIf="data.name.length < 3 || data.name.length > 50"
+  >
     Name field should be between 3 and 50 characters
   </div>
   <div class="form__group">
-    <label class="form__label" for="surnane">Surname: </label>
+    <label
+      class="form__label"
+      [ngClass]="{ 'form__label--dark': darkMode }"
+      for="surnane"
+      >Surname:
+    </label>
     <input
       class="form__input"
+      [ngClass]="{ 'form__input--dark': darkMode }"
       type="text"
       id="surname"
       name="surname"
@@ -58,14 +82,21 @@
   </div>
   <div
     class="popup"
+    [ngClass]="{ 'popup--dark': darkMode }"
     *ngIf="data.surname.length < 3 || data.surname.length > 50"
   >
     Surname field should be between 3 and 50 characters
   </div>
   <div class="form__group">
-    <label class="form__label" for="profilePicture">Profile picture: </label>
+    <label
+      class="form__label"
+      [ngClass]="{ 'form__label--dark': darkMode }"
+      for="profilePicture"
+      >Profile picture:
+    </label>
     <input
       class="form__input"
+      [ngClass]="{ 'form__input--dark': darkMode }"
       type="file"
       id="profilePicture"
       name="profilePicture"
@@ -73,13 +104,19 @@
     />
     <p *ngIf="fileError">Error en el archivo</p>
   </div>
-  <div class="popup" *ngIf="fileError">
+  <div class="popup" [ngClass]="{ 'popup--dark': darkMode }" *ngIf="fileError">
     Files must be jpg or png and less than 10MB
   </div>
   <div class="form__group" *ngIf="data.businessName">
-    <label class="form__label" for="businessName">Business Name: </label>
+    <label
+      class="form__label"
+      [ngClass]="{ 'form__label--dark': darkMode }"
+      for="businessName"
+      >Business Name:
+    </label>
     <input
       class="form__input"
+      [ngClass]="{ 'form__input--dark': darkMode }"
       type="text"
       id="businessName"
       name="businessName"
@@ -88,6 +125,7 @@
     />
     <div
       class="popup"
+      [ngClass]="{ 'popup--dark': darkMode }"
       *ngIf="data.businessName.length < 3 || data.businessName.length > 50"
     >
       BusinessName field should be between 3 and 50 characters
@@ -95,9 +133,15 @@
   </div>
 
   <div class="form__group" *ngIf="data.gender">
-    <label class="form__label" for="gender">Gender: </label>
+    <label
+      class="form__label"
+      [ngClass]="{ 'form__label--dark': darkMode }"
+      for="gender"
+      >Gender:
+    </label>
     <input
       class="form__input"
+      [ngClass]="{ 'form__input--dark': darkMode }"
       type="text"
       id="gender"
       name="gender"
@@ -106,15 +150,22 @@
     />
     <div
       class="popup"
+      [ngClass]="{ 'popup--dark': darkMode }"
       *ngIf="data.gender.length < 3 || data.gender.length > 50"
     >
       Gender field should be between 3 and 50 characters
     </div>
   </div>
   <div class="form__group" *ngIf="data.birthDate">
-    <label class="form__label" for="birthDate">Birth Date: </label>
+    <label
+      class="form__label"
+      [ngClass]="{ 'form__label--dark': darkMode }"
+      for="birthDate"
+      >Birth Date:
+    </label>
     <input
       class="form__input"
+      [ngClass]="{ 'form__input--dark': darkMode }"
       type="text"
       id="birthDate"
       name="birthDate"
@@ -123,6 +174,7 @@
     />
     <div
       class="popup"
+      [ngClass]="{ 'popup--dark': darkMode }"
       *ngIf="data.birthDate.length < 3 || data.birthDate.length > 50"
     >
       Birthdate field should be between 3 and 50 characters

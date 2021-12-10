@@ -1,18 +1,26 @@
 <form class="form" (submit)="addGroup()" *ngIf="role === 'Professional'">
   <input
     class="form__input"
+    [ngClass]="{ 'form__input--dark': darkMode }"
     type="text"
     name="text"
     id="text"
     placeholder="New groups's name"
     [(ngModel)]="input"
   />
-  <button class="form__button" type="submit">Add</button>
+  <button
+    class="form__button"
+    type="submit"
+    [ngClass]="{ 'form__button--dark': true }"
+  >
+    Add
+  </button>
 </form>
 
 <div class="grid">
   <div
     class="card"
+    [ngClass]="{ 'card--dark': darkMode }"
     *ngFor="let item of fetchedData"
     routerLink="{{ '/details/' + id + '/notes/' + item._id }}"
   >

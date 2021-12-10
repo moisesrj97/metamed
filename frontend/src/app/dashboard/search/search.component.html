@@ -1,6 +1,12 @@
-<label for="search-input" class="form__label">Look for patient: </label>
+<label
+  for="search-input"
+  class="form__label"
+  [ngClass]="{ 'form__label--dark': darkMode }"
+  >Look for patient:
+</label>
 <input
   class="form__input"
+  [ngClass]="{ 'form__input--dark': darkMode }"
   type="text"
   name="search-input"
   id="search-input"
