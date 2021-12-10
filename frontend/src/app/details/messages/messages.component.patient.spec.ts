@@ -3,7 +3,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
+import { SocketIoModule } from 'ngx-socket-io';
 import { of } from 'rxjs';
+import { WebsocketService } from 'src/app/services/websocket/websocket.service';
+import { config } from 'src/app/services/websocket/websocket.service.spec';
 
 import { MessagesComponent } from './messages.component';
 
@@ -39,8 +42,12 @@ describe('MessagesComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [MessagesComponent],
-      imports: [RouterTestingModule, HttpClientTestingModule],
-      providers: [provideMockStore({ initialState })],
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule,
+        SocketIoModule.forRoot(config),
+      ],
+      providers: [provideMockStore({ initialState }), WebsocketService],
     }).compileComponents();
   });
 

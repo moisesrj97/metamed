@@ -3,8 +3,11 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
+import { SocketIoModule } from 'ngx-socket-io';
 import { Observable, of, throwError } from 'rxjs';
 import { DashboardComponent } from 'src/app/dashboard/dashboard.component';
+import { WebsocketService } from 'src/app/services/websocket/websocket.service';
+import { config } from 'src/app/services/websocket/websocket.service.spec';
 
 import { LoginComponent } from './login.component';
 
@@ -22,8 +25,9 @@ describe('LoginComponent', () => {
         ]),
         FormsModule,
         ReactiveFormsModule,
+        SocketIoModule.forRoot(config),
       ],
-      providers: [provideMockStore()],
+      providers: [provideMockStore(), WebsocketService],
     }).compileComponents();
   });
 

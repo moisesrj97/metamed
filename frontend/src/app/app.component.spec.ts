@@ -9,6 +9,9 @@ import { FooterComponent } from './core/footer/footer.component';
 import { LayoutComponent } from './core/layout/layout.component';
 import { routes } from './app-routing.module';
 import { of } from 'rxjs';
+import { WebsocketService } from './services/websocket/websocket.service';
+import { config } from './services/websocket/websocket.service.spec';
+import { SocketIoModule } from 'ngx-socket-io';
 
 const initialState = {
   darkMode: {
@@ -19,14 +22,19 @@ const initialState = {
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule, CoreModule],
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule,
+        CoreModule,
+        SocketIoModule.forRoot(config),
+      ],
       declarations: [
         AppComponent,
         NavbarComponent,
         FooterComponent,
         LayoutComponent,
       ],
-      providers: [provideMockStore({ initialState })],
+      providers: [provideMockStore({ initialState }), WebsocketService],
     }).compileComponents();
 
     localStorage.clear();

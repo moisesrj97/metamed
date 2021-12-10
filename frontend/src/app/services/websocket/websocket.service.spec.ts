@@ -1,12 +1,18 @@
 import { TestBed } from '@angular/core/testing';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
 import { WebsocketService } from './websocket.service';
+
+export const config: SocketIoConfig = { url: 'http://localhost:YOUR_PORT' };
 
 describe('WebsocketService', () => {
   let service: WebsocketService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [SocketIoModule.forRoot(config)],
+      providers: [WebsocketService],
+    });
     service = TestBed.inject(WebsocketService);
   });
 
