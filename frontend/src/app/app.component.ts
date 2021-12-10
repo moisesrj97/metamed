@@ -50,7 +50,6 @@ export class AppComponent implements OnInit {
               return e.refData._id + data._id;
             }
           }) as string[];
-          console.log(mappedIds);
 
           this.socket.connectToRoom(mappedIds);
 

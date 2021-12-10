@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import {
   ChatRefModel,
   PatientModel,
@@ -32,6 +33,7 @@ export class MessagesComponent implements OnInit {
     patient: '',
   };
   darkMode!: boolean;
+  chatSubscription!: Subscription;
 
   constructor(
     public route: ActivatedRoute,
@@ -56,7 +58,7 @@ export class MessagesComponent implements OnInit {
         this.userId = id;
       });
 
-    this.store
+    this.chatSubscription = this.store
       .select((state) => state.user)
       .subscribe((user) => {
         let result: PatientModel | ProfessionalModel;
@@ -72,6 +74,7 @@ export class MessagesComponent implements OnInit {
         }
 
         this.data = result?.chatRef;
+
         this.data?.messages.forEach((message) => {
           if (message.to === this.userId && message.read === false) {
             this.chatService.toggleMessage(message._id, token).subscribe(() => {
@@ -86,8 +89,6 @@ export class MessagesComponent implements OnInit {
         this.store.dispatch(loginUser({ userInfo: data }));
       });
     }, 10000); */
-
-    this.socket.getMessage().subscribe((data) => console.log(data));
   }
 
   sendMessage() {
@@ -99,5 +100,9 @@ export class MessagesComponent implements OnInit {
         this.socket.sendMessage(data);
         this.newMessage = '';
       });
+  }
+
+  ngOnDestroy(): void {
+    this.chatSubscription.unsubscribe();
   }
 }
