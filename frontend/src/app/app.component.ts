@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { UserStore } from './models/interfaces';
+import { MessageModel, UserStore } from './models/interfaces';
 import { AuthenticationService } from './services/authentication/authentication.service';
+import {
+  addMessageToChat,
+  receiveMessageToChat,
+} from './services/store/actions/chat.actions';
 import { toggleDarkMode } from './services/store/actions/darkMode.actions';
 import { loginUser } from './services/store/actions/user.actions';
 import { TokenService } from './services/token/token.service';
@@ -47,7 +51,14 @@ export class AppComponent implements OnInit {
             }
           }) as string[];
           console.log(mappedIds);
+
           this.socket.connectToRoom(mappedIds);
+
+          this.socket.getMessage().subscribe((msg) => {
+            if (msg.to === this.userInfo._id) {
+              this.store.dispatch(receiveMessageToChat({ message: msg }));
+            }
+          });
         });
     }
   }

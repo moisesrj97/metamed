@@ -6,6 +6,11 @@ export const addMessageToChat = createAction(
   props<{ message: MessageModel }>()
 );
 
+export const receiveMessageToChat = createAction(
+  '[Chat] Receive Message To Chat',
+  props<{ message: MessageModel }>()
+);
+
 export const updateMessageReadState = createAction(
   '[Chat] Update Message Read State',
   props<{ message: MessageModel }>()

@@ -1,6 +1,7 @@
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { map, withLatestFrom } from 'rxjs';
+import { map, Observable, ObservableInput, withLatestFrom } from 'rxjs';
 import { MessageModel } from 'src/app/models/interfaces';
 
 @Injectable({
@@ -16,9 +17,8 @@ export class WebsocketService {
     this.socket.emit('msgToServer', { room, msg });
   }
 
-  getMessage() {
-    this.socket.connect();
-    return this.socket.fromEvent('msgToClient');
+  getMessage(): Observable<MessageModel> {
+    return this.socket.fromEvent('msgToClient') as Observable<MessageModel>;
   }
 
   connectToRoom(arr: string[]) {
