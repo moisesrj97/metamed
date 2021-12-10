@@ -18,7 +18,6 @@ export class WebSocketGatewayChat
 
   @SubscribeMessage('msgToServer')
   handleMessage(client: Socket, payload: any): void {
-    console.log(payload, client.id);
     this.server.to(payload.room).emit('msgToClient', payload.msg);
   }
 
