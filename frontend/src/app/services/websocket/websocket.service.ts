@@ -1,14 +1,13 @@
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { map, Observable, ObservableInput, withLatestFrom } from 'rxjs';
+import { Observable } from 'rxjs';
 import { MessageModel } from 'src/app/models/interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WebsocketService {
-  constructor(private socket: Socket) {}
+  constructor(public socket: Socket) {}
 
   sendMessage(msg: MessageModel) {
     const room =
