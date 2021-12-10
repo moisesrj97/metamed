@@ -1,6 +1,7 @@
 <div class="chat-badge__container" *ngFor="let item of data">
   <div
     class="chat-badge"
+    [ngClass]="{ 'chat-badge--dark': darkMode }"
     *ngIf="item.chatRef.messages.length > 0"
     routerLink="{{ '/details/' + item.refData._id + '/messages' }}"
   >
@@ -13,14 +14,24 @@
     <p
       class="chat-badge__message"
       [ngClass]="{
+        'chat-badge__message--dark': darkMode,
         'chat-badge__message--receiver':
           item.chatRef.messages[item.chatRef.messages.length - 1].from !==
           userId,
+        'chat-badge__message--receiver--dark':
+          item.chatRef.messages[item.chatRef.messages.length - 1].from !==
+            userId && darkMode,
         'chat-badge__message--unread':
           item.chatRef.messages[item.chatRef.messages.length - 1].read ===
             false &&
           item.chatRef.messages[item.chatRef.messages.length - 1].from !==
-            userId
+            userId,
+        'chat-badge__message--unread--dark':
+          item.chatRef.messages[item.chatRef.messages.length - 1].read ===
+            false &&
+          item.chatRef.messages[item.chatRef.messages.length - 1].from !==
+            userId &&
+          darkMode
       }"
     >
       {{ item.chatRef.messages[item.chatRef.messages.length - 1].text }}

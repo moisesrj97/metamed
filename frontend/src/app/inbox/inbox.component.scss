@@ -16,6 +16,10 @@
   border: 1px solid black;
   border-radius: 250px;
   cursor: pointer;
+  &--dark {
+    background-color: #121212;
+    border-color: white;
+  }
   &__avatar {
     height: 60px;
     width: 60px;
@@ -24,6 +28,10 @@
   &__name {
     padding: 0 10px;
     color: white;
+    &--dark {
+      color: black;
+      background-color: transparent;
+    }
   }
   &__message {
     flex-grow: 1;
@@ -34,8 +42,15 @@
     background-color: white;
     border-radius: 250px;
     height: 100%;
+    &--dark {
+      background-color: #25e5ff;
+    }
     &--receiver {
       color: #0500ff;
+      &--dark {
+        color: black;
+        background-color: #cab6ff;
+      }
     }
     &--unread {
       font-weight: 700;

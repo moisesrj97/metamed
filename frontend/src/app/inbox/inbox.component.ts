@@ -14,9 +14,16 @@ import {
 export class InboxComponent implements OnInit {
   data!: PatientModel[] | ProfessionalModel[] | undefined;
   userId!: string;
-  constructor(private store: Store<{ user: UserStore }>) {}
+  darkMode!: boolean;
+  constructor(
+    private store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>
+  ) {}
 
   ngOnInit(): void {
+    this.store.select('darkMode').subscribe((res) => {
+      this.darkMode = res.darkMode;
+    });
+
     this.store
       .select((state) => state.user)
       .subscribe((user) => {
