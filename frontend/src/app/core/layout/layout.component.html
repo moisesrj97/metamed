@@ -1,5 +1,5 @@
 <app-navbar (toggleNav)="toggleNav($event)"></app-navbar>
-<main>
+<main [ngClass]="{ 'main--dark': darkMode }">
   <app-side-nav
     [open]="sideBarOpen"
     (toggleNav)="toggleNav($event)"
