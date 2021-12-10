@@ -167,6 +167,10 @@
     font-weight: 400;
     text-align: center;
     border-radius: 20px;
+    &--dark {
+      background-color: #25e6ff4d;
+      color: black;
+    }
   }
   &__delete-icon {
     width: 30px;
@@ -187,6 +191,10 @@
   font-weight: 400;
   text-align: center;
   border-radius: 20px;
+  &--dark {
+    background-color: #25e6ff4d;
+    color: black;
+  }
 }
 
 @media (max-width: 768px) {

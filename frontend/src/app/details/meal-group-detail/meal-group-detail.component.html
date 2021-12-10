@@ -49,7 +49,11 @@
     placeholder="Enter group title"
     (change)="changeTitleAndExtra()"
   />
-  <div class="popup" *ngIf="data.name.length < 3 || data.name.length > 50">
+  <div
+    class="popup"
+    [ngClass]="{ 'popup--dark': darkMode }"
+    *ngIf="data.name.length < 3 || data.name.length > 50"
+  >
     Name field should be between 3 and 50 characters
   </div>
 
@@ -70,7 +74,11 @@
     placeholder="Enter group extra data"
     (change)="changeTitleAndExtra()"
   ></textarea>
-  <div class="popup" *ngIf="data.extra.length < 3 || data.extra.length > 50">
+  <div
+    class="popup"
+    [ngClass]="{ 'popup--dark': darkMode }"
+    *ngIf="data.extra.length < 3 || data.extra.length > 50"
+  >
     Extra field should be between 3 and 50 characters
   </div>
   <h2 class="form__subtitle" [ngClass]="{ 'form__subtitle--dark': darkMode }">
@@ -95,7 +103,11 @@
         (change)="editMeal($event, item._id)"
       />
     </div>
-    <div class="popup" *ngIf="item.name.length < 3 || item.name.length > 50">
+    <div
+      class="popup"
+      [ngClass]="{ 'popup--dark': darkMode }"
+      *ngIf="item.name.length < 3 || item.name.length > 50"
+    >
       Name field should be between 3 and 50 characters
     </div>
     <div>
@@ -118,6 +130,7 @@
     </div>
     <div
       class="popup"
+      [ngClass]="{ 'popup--dark': darkMode }"
       *ngIf="item.amount.length < 3 || item.amount.length > 50"
     >
       Amount field should be between 3 and 50 characters
@@ -159,6 +172,7 @@
     </div>
     <div
       class="popup"
+      [ngClass]="{ 'popup--dark': darkMode }"
       *ngIf="
         formGroup.controls['name'].invalid && formGroup.controls['name'].touched
       "
@@ -184,6 +198,7 @@
     </div>
     <div
       class="popup"
+      [ngClass]="{ 'popup--dark': darkMode }"
       *ngIf="
         formGroup.controls['amount'].invalid &&
         formGroup.controls['amount'].touched

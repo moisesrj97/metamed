@@ -33,6 +33,7 @@
   </div>
   <div
     class="form__popup"
+    [ngClass]="{ 'form__popup--dark': darkMode }"
     *ngIf="
       formGroup.controls['email'].invalid && formGroup.controls['email'].touched
     "
@@ -56,6 +57,7 @@
   </div>
   <div
     class="form__popup"
+    [ngClass]="{ 'form__popup--dark': darkMode }"
     *ngIf="
       formGroup.controls['password'].invalid &&
       formGroup.controls['password'].touched
@@ -75,5 +77,11 @@
   >
     Log in
   </button>
-  <div class="form__popup" *ngIf="authPopup">Wrong email or password</div>
+  <div
+    class="form__popup"
+    [ngClass]="{ 'form__popup--dark': darkMode }"
+    *ngIf="authPopup"
+  >
+    Wrong email or password
+  </div>
 </form>

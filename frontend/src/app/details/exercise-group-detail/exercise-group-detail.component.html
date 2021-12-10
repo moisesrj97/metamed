@@ -54,7 +54,11 @@
     placeholder="Enter group title"
     (change)="changeTitle()"
   />
-  <div class="popup" *ngIf="data.name.length < 3 || data.name.length > 50">
+  <div
+    class="popup"
+    [ngClass]="{ 'popup--dark': darkMode }"
+    *ngIf="data.name.length < 3 || data.name.length > 50"
+  >
     Name field should be between 3 and 50 characters
   </div>
 
@@ -76,7 +80,11 @@
     placeholder="Enter group extra data"
     (change)="changeExtra()"
   ></textarea>
-  <div class="popup" *ngIf="data.extra.length < 3 || data.extra.length > 50">
+  <div
+    class="popup"
+    [ngClass]="{ 'popup--dark': darkMode }"
+    *ngIf="data.extra.length < 3 || data.extra.length > 50"
+  >
     Extra field should be between 3 and 50 characters
   </div>
   <h2 class="form__subtitle" [ngClass]="{ 'form__subtitle--dark': darkMode }">
@@ -100,7 +108,11 @@
         [(ngModel)]="item.name"
         (change)="editExercise($event, item._id, 'name')"
       />
-      <div class="popup" *ngIf="item.name.length < 3 || item.name.length > 50">
+      <div
+        class="popup"
+        [ngClass]="{ 'popup--dark': darkMode }"
+        *ngIf="item.name.length < 3 || item.name.length > 50"
+      >
         Name field should be between 3 and 50 characters
       </div>
     </div>
@@ -140,6 +152,7 @@
       />
       <div
         class="popup"
+        [ngClass]="{ 'popup--dark': darkMode }"
         *ngIf="item.amount.length < 3 || item.amount.length > 50"
       >
         Amount field should be between 3 and 50 characters
@@ -160,7 +173,7 @@
     </div>
   </div>
 
-  <div class="popup" *ngIf="fileError">
+  <div class="popup" [ngClass]="{ 'popup--dark': darkMode }" *ngIf="fileError">
     File must be jpg or png and less than 10MB
   </div>
 
@@ -186,6 +199,7 @@
     </div>
     <div
       class="popup"
+      [ngClass]="{ 'popup--dark': darkMode }"
       *ngIf="
         formGroup.controls['name'].invalid && formGroup.controls['name'].touched
       "
@@ -210,7 +224,11 @@
         (change)="fileChecker(this, $event)"
       />
     </div>
-    <div class="popup" *ngIf="fileError || !imageSrc">
+    <div
+      class="popup"
+      [ngClass]="{ 'popup--dark': darkMode }"
+      *ngIf="fileError || !imageSrc"
+    >
       File must be jpg or png and less than 10MB
     </div>
 
@@ -234,6 +252,7 @@
 
     <div
       class="popup"
+      [ngClass]="{ 'popup--dark': darkMode }"
       *ngIf="
         formGroup.controls['amount'].invalid &&
         formGroup.controls['amount'].touched

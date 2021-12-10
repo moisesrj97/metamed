@@ -33,7 +33,11 @@
     placeholder="Enter group title"
     (change)="changeTitleAndExtra()"
   />
-  <div class="popup" *ngIf="data.title.length < 3 || data.title.length > 50">
+  <div
+    class="popup"
+    [ngClass]="{ 'popup--dark': darkMode }"
+    *ngIf="data.title.length < 3 || data.title.length > 50"
+  >
     Title field should be between 3 and 50 characters
   </div>
 
@@ -57,6 +61,7 @@
   ></textarea>
   <div
     class="popup"
+    [ngClass]="{ 'popup--dark': darkMode }"
     *ngIf="data.description.length < 3 || data.description.length > 500"
   >
     Description field should be between 3 and 500 characters

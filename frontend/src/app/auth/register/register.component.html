@@ -16,6 +16,7 @@
   </div>
   <div
     class="form__popup"
+    [ngClass]="{ 'form__popup--dark': darkMode }"
     *ngIf="
       formGroup.controls['name'].invalid && formGroup.controls['name'].touched
     "
@@ -39,6 +40,7 @@
   </div>
   <div
     class="form__popup"
+    [ngClass]="{ 'form__popup--dark': darkMode }"
     *ngIf="
       formGroup.controls['surname'].invalid &&
       formGroup.controls['surname'].touched
@@ -64,6 +66,7 @@
   </div>
   <div
     class="form__popup"
+    [ngClass]="{ 'form__popup--dark': darkMode }"
     *ngIf="
       (formGroup.controls['profilePicture'].invalid &&
         formGroup.controls['profilePicture'].touched) ||
@@ -89,6 +92,7 @@
   </div>
   <div
     class="form__popup"
+    [ngClass]="{ 'form__popup--dark': darkMode }"
     *ngIf="
       formGroup.controls['email'].invalid && formGroup.controls['email'].touched
     "
@@ -112,6 +116,7 @@
   </div>
   <div
     class="form__popup"
+    [ngClass]="{ 'form__popup--dark': darkMode }"
     *ngIf="
       formGroup.controls['password'].invalid &&
       formGroup.controls['password'].touched
@@ -155,6 +160,7 @@
     </div>
     <div
       class="form__popup"
+      [ngClass]="{ 'form__popup--dark': darkMode }"
       *ngIf="
         formGroup.controls['businessName'].invalid &&
         formGroup.controls['businessName'].touched
@@ -182,6 +188,7 @@
     </div>
     <div
       class="form__popup"
+      [ngClass]="{ 'form__popup--dark': darkMode }"
       *ngIf="
         formGroup.controls['gender'].invalid &&
         formGroup.controls['gender'].touched
@@ -209,6 +216,7 @@
     </div>
     <div
       class="form__popup"
+      [ngClass]="{ 'form__popup--dark': darkMode }"
       *ngIf="
         formGroup.controls['birthDate'].invalid &&
         formGroup.controls['birthDate'].touched
@@ -231,6 +239,10 @@
   </button>
 </form>
 
-<p class="form__popup" *ngIf="registerError">
+<p
+  class="form__popup"
+  [ngClass]="{ 'form__popup--dark': darkMode }"
+  *ngIf="registerError"
+>
   Sorry, that email already exists
 </p>
