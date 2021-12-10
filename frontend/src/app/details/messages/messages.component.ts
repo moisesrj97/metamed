@@ -83,12 +83,6 @@ export class MessagesComponent implements OnInit {
           }
         });
       });
-
-    /* setInterval(() => {
-      this.authService.loginWithToken(token).subscribe((data) => {
-        this.store.dispatch(loginUser({ userInfo: data }));
-      });
-    }, 10000); */
   }
 
   sendMessage() {
