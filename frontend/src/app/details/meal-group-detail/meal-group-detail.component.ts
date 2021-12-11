@@ -11,6 +11,7 @@ import { MealService } from 'src/app/services/meal/meal.service';
 import { MealGroupService } from 'src/app/services/mealGroup/meal-group.service';
 import { deleteMealGroup } from 'src/app/services/store/actions/mealGroup.action';
 import { TokenService } from 'src/app/services/token/token.service';
+import { WebsocketService } from 'src/app/services/websocket/websocket.service';
 
 @Component({
   selector: 'app-meal-group-detail',
@@ -25,6 +26,7 @@ export class MealGroupDetailComponent implements OnInit {
   formGroup!: FormGroup;
   role!: string;
   darkMode!: boolean;
+  userId!: string;
 
   constructor(
     public route: ActivatedRoute,
@@ -33,7 +35,8 @@ export class MealGroupDetailComponent implements OnInit {
     public mealService: MealService,
     public tokenService: TokenService,
     public store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>,
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    public socket: WebsocketService
   ) {
     this.formGroup = this.fb.group({
       name: [
@@ -64,6 +67,7 @@ export class MealGroupDetailComponent implements OnInit {
 
     this.store.select('user').subscribe((data) => {
       this.role = data.role;
+      this.userId = data._id;
     });
 
     this.id = this.route.snapshot.paramMap.get('id') as string;
@@ -153,6 +157,8 @@ export class MealGroupDetailComponent implements OnInit {
             patientId: this.patientId,
           })
         );
+        this.socket.sendReload(this.userId, this.patientId);
+
         this.router.navigate(['/details/' + this.patientId + '/meal-groups']);
       });
   }

@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
         .subscribe((data: UserStore): void => {
           this.userInfo = data;
           this.store.dispatch(loginUser({ userInfo: { ...data } }));
-          listenToMessages(this, data);
+          listenToMessages(this, data, token);
 
           if (this.userInfo.role === 'Patient') {
             listenToPatientModification(this, token);

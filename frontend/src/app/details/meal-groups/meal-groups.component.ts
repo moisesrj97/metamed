@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { listenForGroupReloads } from 'src/app/helpers/listenForGroupReloads';
 import {
   MealGroupModel,
   PatientModel,
@@ -11,6 +12,7 @@ import {
 import { MealGroupService } from 'src/app/services/mealGroup/meal-group.service';
 import { addMealGroup } from 'src/app/services/store/actions/mealGroup.action';
 import { TokenService } from 'src/app/services/token/token.service';
+import { WebsocketService } from 'src/app/services/websocket/websocket.service';
 
 @Component({
   selector: 'app-meal-groups',
@@ -24,12 +26,14 @@ export class MealGroupsComponent implements OnInit {
   input: string = '';
   role!: string;
   darkMode!: boolean;
+  professionalId!: string;
 
   constructor(
     public route: ActivatedRoute,
     public store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>,
     public mealGroupService: MealGroupService,
-    public tokenService: TokenService
+    public tokenService: TokenService,
+    public socket: WebsocketService
   ) {}
 
   ngOnInit(): void {
@@ -57,6 +61,7 @@ export class MealGroupsComponent implements OnInit {
           const result = user.patients.find(
             (patient) => patient.refData._id === this.id
           ) as PatientModel;
+          this.professionalId = user._id;
 
           this.role = 'Professional';
 
@@ -73,6 +78,8 @@ export class MealGroupsComponent implements OnInit {
           this.data = result.mealGroups;
 
           processData();
+
+          listenForGroupReloads(this);
         }
       });
   }
@@ -101,6 +108,8 @@ export class MealGroupsComponent implements OnInit {
                 patientId: this.id,
               })
             );
+
+            this.socket.sendReload(this.professionalId, this.id);
           }
         });
     }

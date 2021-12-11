@@ -9,6 +9,13 @@ import { MessageModel } from 'src/app/models/interfaces';
 export class WebsocketService {
   constructor(public socket: Socket) {}
 
+  sendReload(professionalId: string, patientId: string) {
+    this.socket.emit('msgToServer', {
+      room: professionalId + patientId,
+      msg: { type: 'reload' },
+    });
+  }
+
   sendMessage(msg: MessageModel) {
     const room =
       msg.fromRole === 'Professional' ? msg.from + msg.to : msg.to + msg.from;
@@ -16,8 +23,10 @@ export class WebsocketService {
     this.socket.emit('msgToServer', { room, msg });
   }
 
-  getMessage(): Observable<MessageModel> {
-    return this.socket.fromEvent('msgToClient') as Observable<MessageModel>;
+  getMessage(): Observable<MessageModel & { type: string }> {
+    return this.socket.fromEvent('msgToClient') as Observable<
+      MessageModel & { type: string }
+    >;
   }
 
   emitPatientListModification(payload: {
