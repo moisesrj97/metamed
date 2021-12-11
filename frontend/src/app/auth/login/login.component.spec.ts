@@ -78,15 +78,36 @@ describe('LoginComponent', () => {
     });
   });
 
-  describe('When submitForm is called with valid form and its patients', () => {
+  describe('When submitForm is called with valid form and its patient', () => {
     it('Should update the form', () => {
       spyOn(component.authService, 'loginWithoutToken').and.returnValue(
         of({
           _id: '123',
           username: 'test',
-          professionals: [{ _id: '123', name: 'test' }],
+          professionals: [{ refData: { _id: '123', name: 'test' } }],
           role: 'Patient',
         } as any)
+      );
+
+      spyOn(component.socket, 'connectToRoom').and.callThrough();
+
+      spyOn(component.socket, 'getMessage').and.returnValue(
+        of({
+          _id: '123',
+          to: '123',
+          from: '123',
+        }) as any
+      );
+
+      spyOn(
+        component.socket,
+        'listenToPatientListModification'
+      ).and.returnValue(
+        of({ professionalId: '123', patientId: '123', mode: 'add' })
+      );
+
+      spyOn(component.authService, 'loginWithToken').and.returnValue(
+        of({} as any)
       );
 
       component.formGroup.controls['email'].setValue('fake@test.com');
@@ -95,7 +116,8 @@ describe('LoginComponent', () => {
 
       component.submitForm();
 
-      expect(component.authService.loginWithoutToken).toHaveBeenCalled();
+      expect(component.socket.connectToRoom).toHaveBeenCalled();
+      expect(component.socket.getMessage).toHaveBeenCalled();
     });
   });
 

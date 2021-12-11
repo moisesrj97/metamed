@@ -31,4 +31,11 @@ describe('WebsocketService', () => {
       expect(spy).toHaveBeenCalled();
     });
   });
+
+  describe('Calling listenToPatientListModification', () => {
+    it('Should return an observable', () => {
+      const response = service.listenToPatientListModification();
+      expect(response.subscribe).toBeTruthy();
+    });
+  });
 });

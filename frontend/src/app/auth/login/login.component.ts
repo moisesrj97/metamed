@@ -75,6 +75,8 @@ export class LoginComponent {
               }
             });
 
+            console.log(data.role);
+
             if (data.role === 'Patient') {
               console.log('Listening');
               this.socket
