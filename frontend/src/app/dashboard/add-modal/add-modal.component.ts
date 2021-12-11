@@ -53,6 +53,7 @@ export class AddModalComponent implements OnInit {
               patientId: this.input,
               mode: 'add',
             });
+            this.socket.connectToRoom([id + this.input]);
             this.closeModal.emit(false);
             this.input = '';
           });
