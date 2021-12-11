@@ -68,7 +68,9 @@ export class ExerciseGroupDetailComponent implements OnInit {
     this.timestamp = new Date().getTime();
 
     this.id = this.route.snapshot.paramMap.get('id') as string;
-    this.patientId = this.route.parent?.snapshot.paramMap.get('id') as string;
+
+    const parentRoute = this.route.parent as ActivatedRoute;
+    this.patientId = parentRoute.snapshot.paramMap.get('id') as string;
 
     this.store.select('user').subscribe((data) => {
       this.role = data.role;

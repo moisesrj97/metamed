@@ -55,6 +55,20 @@ describe('MealGroupDetailComponent', () => {
     spyOn(component.tokenService, 'getTokenFromLocalStorage').and.returnValue(
       'test'
     );
+    component.route = {
+      snapshot: {
+        paramMap: {
+          get: () => '123',
+        },
+      },
+      parent: {
+        snapshot: {
+          paramMap: {
+            get: () => '123',
+          },
+        },
+      },
+    } as any;
     fixture.detectChanges();
   });
 
