@@ -48,3 +48,4 @@ Thumbs.db
 ngrxActions.md
 sonar-project.properties
 .scannerwork
+cypress/
