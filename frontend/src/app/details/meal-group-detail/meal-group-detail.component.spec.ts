@@ -12,6 +12,8 @@ import { DetailsComponent } from '../details.component';
 
 import { MealGroupDetailComponent } from './meal-group-detail.component';
 
+const initialState = { user: { _id: '123' } };
+
 describe('MealGroupDetailComponent', () => {
   let component: MealGroupDetailComponent;
   let fixture: ComponentFixture<MealGroupDetailComponent>;
@@ -27,7 +29,11 @@ describe('MealGroupDetailComponent', () => {
         FormsModule,
         SocketIoModule.forRoot(config),
       ],
-      providers: [provideMockStore(), FormBuilder, WebsocketService],
+      providers: [
+        provideMockStore({ initialState }),
+        FormBuilder,
+        WebsocketService,
+      ],
     }).compileComponents();
   });
 

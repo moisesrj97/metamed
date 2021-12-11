@@ -5,12 +5,13 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { SocketIoModule } from 'ngx-socket-io';
 import { of } from 'rxjs';
-import { UserStore } from 'src/app/models/interfaces';
 import { WebsocketService } from 'src/app/services/websocket/websocket.service';
 import { config } from 'src/app/services/websocket/websocket.service.spec';
 import { DetailsComponent } from '../details.component';
 
 import { NoteDetailComponent } from './note-detail.component';
+
+const initialState = { user: { _id: '123' } };
 
 describe('NoteDetailComponent', () => {
   let component: NoteDetailComponent;
@@ -27,7 +28,11 @@ describe('NoteDetailComponent', () => {
         FormsModule,
         SocketIoModule.forRoot(config),
       ],
-      providers: [provideMockStore(), FormBuilder, WebsocketService],
+      providers: [
+        provideMockStore({ initialState }),
+        FormBuilder,
+        WebsocketService,
+      ],
     }).compileComponents();
   });
 

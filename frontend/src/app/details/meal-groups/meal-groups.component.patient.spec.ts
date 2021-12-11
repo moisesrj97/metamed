@@ -50,6 +50,9 @@ describe('MealGroupsComponent', () => {
     spyOn(component.mealGroupService, 'getMealGroup').and.returnValue(
       of({} as unknown as MealGroupModel)
     );
+    spyOn(component.socket, 'getMessage').and.returnValue(
+      of({ type: 'reload' } as any)
+    );
     fixture.detectChanges();
   });
 

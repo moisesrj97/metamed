@@ -131,6 +131,56 @@ describe('AppComponent', () => {
     });
   });
 
+  describe('If token exists with patient', () => {
+    it('Auth service should be called', () => {
+      const fixture = TestBed.createComponent(AppComponent);
+      spyOn(
+        fixture.componentInstance.authService,
+        'loginWithToken'
+      ).and.returnValue(
+        of({
+          _id: 'aaa',
+          name: 'aaa',
+          surname: 'aaa',
+          role: 'Patient',
+          email: 'aaa',
+          profilePicture: 'aaa',
+          patients: [
+            {
+              refData: {
+                _id: 'aaa',
+                name: 'aaa',
+                surname: 'aaa',
+                role: 'Patient',
+                email: 'aaa',
+                profilePicture: 'aaa',
+              },
+              chatRef: {
+                _id: 'aaa',
+                messages: [],
+                professional: '',
+                patient: '',
+              },
+              extraData: [],
+              exerciseGroups: [],
+              mealGroups: [],
+              notes: [],
+            },
+          ],
+        })
+      );
+
+      spyOn(fixture.componentInstance.socket, 'getMessage').and.returnValue(
+        of({ type: 'reload' } as unknown as MessageModel & { type: string })
+      );
+
+      fixture.detectChanges();
+      expect(
+        fixture.componentInstance.authService.loginWithToken
+      ).toHaveBeenCalled();
+    });
+  });
+
   describe('If token exists and its patient', () => {
     it('Auth service should be called', () => {
       const fixture = TestBed.createComponent(AppComponent);
