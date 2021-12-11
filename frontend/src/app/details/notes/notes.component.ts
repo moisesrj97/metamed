@@ -60,7 +60,7 @@ export class NotesComponent implements OnInit {
 
           this.role = 'Professional';
 
-          this.data = result?.notes;
+          this.data = result.notes;
 
           processData();
         } else if (user.role === 'Patient' && user.professionals) {
@@ -70,7 +70,7 @@ export class NotesComponent implements OnInit {
 
           this.role = 'Patient';
 
-          this.data = result?.notes;
+          this.data = result.notes;
 
           processData();
         }
@@ -84,21 +84,24 @@ export class NotesComponent implements OnInit {
       this.noteService
         .addNoteToPatient(this.id, this.input, token)
         .subscribe((data) => {
-          const newGroupId = data.patients
-            ?.find(
-              (patient) =>
-                patient.refData === (this.id as unknown as RefDataModel)
-            )
-            ?.notes.find((group) => ![...this.data].includes(group)) as string;
+          if (data.patients) {
+            const patient = data.patients.find(
+              (p) => p.refData === (this.id as unknown as RefDataModel)
+            ) as PatientModel;
 
-          this.fetchedData = [];
+            const newGroupId = patient.notes.find(
+              (group) => ![...this.data].includes(group)
+            ) as string;
 
-          this.store.dispatch(
-            addNote({
-              noteId: newGroupId,
-              patientId: this.id,
-            })
-          );
+            this.fetchedData = [];
+
+            this.store.dispatch(
+              addNote({
+                noteId: newGroupId,
+                patientId: this.id,
+              })
+            );
+          }
         });
     }
 

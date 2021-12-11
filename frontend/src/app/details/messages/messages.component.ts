@@ -49,7 +49,9 @@ export class MessagesComponent implements OnInit {
       this.darkMode = data.darkMode;
     });
 
-    this.id = this.route.parent?.snapshot.paramMap.get('id') as string;
+    const parentRoute = this.route.parent as ActivatedRoute;
+    this.id = parentRoute.snapshot.paramMap.get('id') as string;
+
     const token = this.tokenService.getTokenFromLocalStorage() as string;
 
     this.store
@@ -63,19 +65,19 @@ export class MessagesComponent implements OnInit {
       .subscribe((user) => {
         let result: PatientModel | ProfessionalModel;
 
-        if (user.role === 'Professional') {
-          result = user.patients?.find(
+        if (user.role === 'Professional' && user.patients) {
+          result = user.patients.find(
             (patient) => patient.refData._id === this.id
           ) as PatientModel;
-        } else {
-          result = user.professionals?.find(
+          this.data = result.chatRef;
+        } else if (user.role === 'Patient' && user.professionals) {
+          result = user.professionals.find(
             (professional) => professional.refData._id === this.id
           ) as ProfessionalModel;
+          this.data = result.chatRef;
         }
 
-        this.data = result?.chatRef;
-
-        this.data?.messages.forEach((message) => {
+        this.data.messages.forEach((message) => {
           if (message.to === this.userId && message.read === false) {
             this.chatService.toggleMessage(message._id, token).subscribe(() => {
               this.store.dispatch(updateMessageReadState({ message: message }));

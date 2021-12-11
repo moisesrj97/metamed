@@ -84,23 +84,24 @@ export class MealGroupsComponent implements OnInit {
       this.mealGroupService
         .addMealGroupToPatient(this.id, this.input, token)
         .subscribe((data) => {
-          const newGroupId = data.patients
-            ?.find(
-              (patient) =>
-                patient.refData === (this.id as unknown as RefDataModel)
-            )
-            ?.mealGroups.find(
+          if (data.patients) {
+            const patient = data.patients.find(
+              (p) => p.refData === (this.id as unknown as RefDataModel)
+            ) as PatientModel;
+
+            const newGroupId = patient.mealGroups.find(
               (group) => ![...this.data].includes(group)
             ) as string;
 
-          this.fetchedData = [];
+            this.fetchedData = [];
 
-          this.store.dispatch(
-            addMealGroup({
-              mealGroupId: newGroupId,
-              patientId: this.id,
-            })
-          );
+            this.store.dispatch(
+              addMealGroup({
+                mealGroupId: newGroupId,
+                patientId: this.id,
+              })
+            );
+          }
         });
     }
 

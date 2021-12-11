@@ -85,23 +85,24 @@ export class ExerciseGroupsComponent implements OnInit {
       this.exerciseGroupService
         .addExerciseGroupToPatient(this.id, this.input, token)
         .subscribe((data) => {
-          const newGroupId = data.patients
-            ?.find(
-              (patient) =>
-                patient.refData === (this.id as unknown as RefDataModel)
-            )
-            ?.exerciseGroups.find(
+          if (data.patients) {
+            const patient = data.patients.find(
+              (p) => p.refData === (this.id as unknown as RefDataModel)
+            ) as PatientModel;
+
+            const newGroupId = patient.exerciseGroups.find(
               (group) => ![...this.data].includes(group)
             ) as string;
 
-          this.fetchedData = [];
+            this.fetchedData = [];
 
-          this.store.dispatch(
-            addExerciseGroup({
-              exerciseGroupId: newGroupId,
-              patientId: this.id,
-            })
-          );
+            this.store.dispatch(
+              addExerciseGroup({
+                exerciseGroupId: newGroupId,
+                patientId: this.id,
+              })
+            );
+          }
         });
     }
 
