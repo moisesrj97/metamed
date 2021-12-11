@@ -4,7 +4,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 import * as mongoose from 'mongoose';
 import { S3ImageService } from '../../services/s3-image-service/s3-image-service.service';
 import { Chat, ChatSchema } from '../chat/chat.schema';
+import {
+  ExerciseGroup,
+  ExerciseGroupSchema,
+} from '../exercise-group/exerciseGroup.schema';
+import { MealGroup, MealGroupSchema } from '../meal-group/mealGroup.schema';
 import { Message, MessageSchema } from '../message/message.schema';
+import { Note, NoteSchema } from '../note/note.schema';
 import { Patient, PatientSchema } from '../patient/patient.schema';
 import { ProfessionalEntity } from './entities/professional.entity';
 import { ProfessionalController } from './professional.controller';
@@ -24,6 +30,9 @@ describe('Given ProfessionalService', () => {
                 {
                   refData: new mongoose.Types.ObjectId('f8f8f8f8f8f8'),
                   chatRef: 'f9f9f9f9f9f9',
+                  exerciseGroups: ['123'],
+                  mealGroups: ['123'],
+                  notes: ['123'],
                 },
               ],
               messages: [{ _id: '123' }],
@@ -60,6 +69,9 @@ describe('Given ProfessionalService', () => {
           { name: Patient.name, schema: PatientSchema },
           { name: Chat.name, schema: ChatSchema },
           { name: Message.name, schema: MessageSchema },
+          { name: ExerciseGroup.name, schema: ExerciseGroupSchema },
+          { name: MealGroup.name, schema: MealGroupSchema },
+          { name: Note.name, schema: NoteSchema },
         ]),
       ],
       controllers: [ProfessionalController],
@@ -82,6 +94,12 @@ describe('Given ProfessionalService', () => {
       .overrideProvider(getModelToken('Chat'))
       .useValue(mockRepository)
       .overrideProvider(getModelToken('Message'))
+      .useValue(mockRepository)
+      .overrideProvider(getModelToken('ExerciseGroup'))
+      .useValue(mockRepository)
+      .overrideProvider(getModelToken('MealGroup'))
+      .useValue(mockRepository)
+      .overrideProvider(getModelToken('Note'))
       .useValue(mockRepository)
       .compile();
 
@@ -117,6 +135,9 @@ describe('Given ProfessionalService', () => {
           {
             refData: new mongoose.Types.ObjectId('f8f8f8f8f8f8'),
             chatRef: 'f9f9f9f9f9f9',
+            exerciseGroups: ['123'],
+            mealGroups: ['123'],
+            notes: ['123'],
           },
         ],
         messages: [

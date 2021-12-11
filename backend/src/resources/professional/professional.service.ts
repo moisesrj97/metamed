@@ -18,6 +18,12 @@ import updateProfessionalDto from './dto/updateProfessional.dto';
 import { isProfessional } from '../../helpers/isProfessional';
 import validateJwt, { JwtInterface } from '../../helpers/validateJwt';
 import { Message, MessageDocument } from '../message/message.schema';
+import {
+  ExerciseGroup,
+  ExerciseGroupDocument,
+} from '../exercise-group/exerciseGroup.schema';
+import { MealGroup, MealGroupDocument } from '../meal-group/mealGroup.schema';
+import { Note, NoteDocument } from '../note/note.schema';
 
 @Injectable()
 export class ProfessionalService {
@@ -30,6 +36,12 @@ export class ProfessionalService {
     private chatModel: Model<ChatDocument>,
     @InjectModel(Message.name)
     private messageModel: Model<MessageDocument>,
+    @InjectModel(ExerciseGroup.name)
+    private exerciseGroupModel: Model<ExerciseGroupDocument>,
+    @InjectModel(MealGroup.name)
+    private mealGroupModel: Model<MealGroupDocument>,
+    @InjectModel(Note.name)
+    private noteModel: Model<NoteDocument>,
     private s3ImageService: S3ImageService,
   ) {}
 
@@ -238,6 +250,8 @@ export class ProfessionalService {
       },
     });
 
+    console.log(professional.patients, patientId);
+
     const chat = await this.chatModel
       .findById(
         professional.patients.find(
@@ -255,6 +269,30 @@ export class ProfessionalService {
         (patient) => patient.refData._id.toString() === patientId,
       ).chatRef,
     );
+
+    console.log(professional.patients);
+
+    const patientBeingRemoved = professional.patients.find(
+      (patient) => patient.refData._id.toString() === patientId,
+    );
+
+    console.log(patientBeingRemoved);
+
+    for (let i = 0; i < patientBeingRemoved.exerciseGroups.length; i++) {
+      await this.exerciseGroupModel.findByIdAndDelete(
+        patientBeingRemoved.exerciseGroups[i],
+      );
+    }
+
+    for (let i = 0; i < patientBeingRemoved.mealGroups.length; i++) {
+      await this.mealGroupModel.findByIdAndDelete(
+        patientBeingRemoved.mealGroups[i],
+      );
+    }
+
+    for (let i = 0; i < patientBeingRemoved.notes.length; i++) {
+      await this.noteModel.findByIdAndDelete(patientBeingRemoved.notes[i]);
+    }
 
     const result = await this.professionalModel
       .findByIdAndUpdate(
