@@ -39,7 +39,9 @@ export class NoteDetailComponent implements OnInit {
     });
 
     this.id = this.route.snapshot.paramMap.get('id') as string;
-    this.patientId = this.route.parent?.snapshot.paramMap.get('id') as string;
+
+    const parentRoute = this.route.parent as ActivatedRoute;
+    this.patientId = parentRoute.snapshot.paramMap.get('id') as string;
 
     this.noteService.getNote(this.id, token).subscribe((data) => {
       this.data = data;

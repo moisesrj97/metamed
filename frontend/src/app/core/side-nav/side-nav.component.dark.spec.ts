@@ -23,16 +23,16 @@ describe('SideNavComponent', () => {
   let initialState = {
     user: {
       _id: '123',
-      role: 'Patient',
+      role: 'Professional',
       patients: [
         {
           _id: '123',
-          chatRef: { _id: '123', messages: [{ read: false, to: '123' }] },
+          chatRef: { _id: '123', messages: [{ read: true, to: '123' }] },
         },
       ],
     },
     darkMode: {
-      darkMode: true,
+      darkMode: false,
     },
   };
 
@@ -61,7 +61,7 @@ describe('SideNavComponent', () => {
   describe('When there aren´t unread messages', () => {
     it('should create with icon unmarked', () => {
       expect(component.menuItems[2].imagePath).toBe(
-        '../../../assets/images/messagesDark.png'
+        '../../../assets/images/messages.png'
       );
     });
   });

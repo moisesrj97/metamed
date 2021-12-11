@@ -62,10 +62,9 @@ describe('SideNavComponent', () => {
     it('should create', () => {
       expect(component).toBeTruthy();
       expect(
-        [
-          '../../../assets/images/messagesNotification.png',
-          '../../../assets/images/messagesNotificationDark.png',
-        ].includes(component.menuItems[2].imagePath)
+        ['../../../assets/images/messagesNotificationDark.png'].includes(
+          component.menuItems[2].imagePath
+        )
       ).toBeTrue();
     });
   });

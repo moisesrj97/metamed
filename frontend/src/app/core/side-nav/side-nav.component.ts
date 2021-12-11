@@ -78,6 +78,24 @@ export class SideNavComponent implements OnInit {
           this.isRendered = true;
         }
       });
+
+    this.store
+      .select((state) => state.darkMode.darkMode)
+      .subscribe((mode) => {
+        this.darkMode = mode;
+        this.menuItems.forEach((item, index) => {
+          if (mode) {
+            this.menuItems[index].imagePath = this.menuItems[
+              index
+            ].imagePath.replace('.png', 'Dark.png');
+          } else {
+            this.menuItems[index].imagePath = this.menuItems[
+              index
+            ].imagePath.replace('Dark.png', '.png');
+          }
+        });
+      });
+
     this.store
       .select((state) => state.user)
       .subscribe((user) => {
@@ -105,23 +123,6 @@ export class SideNavComponent implements OnInit {
       .subscribe((role) => {
         this.menuItems[1].label =
           role === 'Patient' ? 'My professionals' : 'My patients';
-      });
-
-    this.store
-      .select((state) => state.darkMode.darkMode)
-      .subscribe((mode) => {
-        this.darkMode = mode;
-        this.menuItems.forEach((item, index) => {
-          if (mode) {
-            this.menuItems[index].imagePath = this.menuItems[
-              index
-            ].imagePath.replace('.png', 'Dark.png');
-          } else {
-            this.menuItems[index].imagePath = this.menuItems[
-              index
-            ].imagePath.replace('Dark.png', '.png');
-          }
-        });
       });
   }
 
