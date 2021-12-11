@@ -11,6 +11,7 @@ import { UserStore } from 'src/app/models/interfaces';
 import { PatientManagmentService } from 'src/app/services/patientManagment/patient-managment.service';
 import { loginUser } from 'src/app/services/store/actions/user.actions';
 import { TokenService } from 'src/app/services/token/token.service';
+import { WebsocketService } from 'src/app/services/websocket/websocket.service';
 
 @Component({
   selector: 'app-add-modal',
@@ -26,7 +27,8 @@ export class AddModalComponent implements OnInit {
   constructor(
     public patientManagmentService: PatientManagmentService,
     public tokenService: TokenService,
-    public store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>
+    public store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>,
+    public socket: WebsocketService
   ) {
     this.closeModal = new EventEmitter();
   }
@@ -46,7 +48,13 @@ export class AddModalComponent implements OnInit {
           .addPatientToList(id, this.input, token)
           .subscribe((newStore) => {
             this.store.dispatch(loginUser({ userInfo: newStore }));
+            this.socket.emitPatientListModification({
+              professionalId: id,
+              patientId: this.input,
+              mode: 'add',
+            });
             this.closeModal.emit(false);
+            this.input = '';
           });
       });
   }
