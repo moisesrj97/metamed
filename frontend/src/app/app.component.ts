@@ -55,6 +55,20 @@ export class AppComponent implements OnInit {
               this.store.dispatch(receiveMessageToChat({ message: msg }));
             }
           });
+
+          if (this.userInfo.role === 'Patient') {
+            this.socket.listenToPatientListModification().subscribe((data) => {
+              if (data.patientId === this.userInfo._id) {
+                console.log(data);
+                this.authService
+                  .loginWithToken(token)
+                  .subscribe((data: UserStore): void => {
+                    this.userInfo = data;
+                    this.store.dispatch(loginUser({ userInfo: { ...data } }));
+                  });
+              }
+            });
+          }
         });
     }
   }
