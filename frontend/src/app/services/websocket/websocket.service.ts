@@ -20,6 +20,18 @@ export class WebsocketService {
     return this.socket.fromEvent('msgToClient') as Observable<MessageModel>;
   }
 
+  emitPatientListModification(payload: {
+    professionalId: string;
+    patientId: string;
+    mode: string;
+  }) {
+    this.socket.emit('modifyPatientEmission', payload);
+  }
+
+  listenToPatientListModification(): Observable<any> {
+    return this.socket.fromEvent('patientListModification');
+  }
+
   connectToRoom(arr: string[]) {
     this.socket.emit('joinRoom', arr);
   }

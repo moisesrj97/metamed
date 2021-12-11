@@ -35,7 +35,7 @@ export class WebSocketGatewayChat
     this.logger.log(
       `Professional ${payload.professionalId} has ${payload.mode} ${payload.patientId}`,
     );
-    this.server.emit('emitPatientAddition', payload);
+    this.server.emit('patientListModification', payload);
   }
 
   afterInit(server: Server) {
