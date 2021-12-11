@@ -38,6 +38,7 @@ export class AppComponent implements OnInit {
         .subscribe((data: UserStore): void => {
           this.userInfo = data;
           this.store.dispatch(loginUser({ userInfo: { ...data } }));
+
           const otherUsers =
             data.role === 'Professional' ? 'patients' : 'professionals';
           const mappedIds = data[otherUsers]?.map((e) => {
@@ -57,22 +58,25 @@ export class AppComponent implements OnInit {
           });
 
           if (this.userInfo.role === 'Patient') {
-            this.socket.listenToPatientListModification().subscribe((data) => {
-              if (data.patientId === this.userInfo._id) {
-                console.log(data);
-                this.authService
-                  .loginWithToken(token)
-                  .subscribe((data: UserStore): void => {
-                    this.userInfo = data;
-                    this.store.dispatch(loginUser({ userInfo: { ...data } }));
-                  });
-                if (data.mode === 'add') {
-                  this.socket.connectToRoom([
-                    data.professionalId + data.patientId,
-                  ]);
+            this.socket
+              .listenToPatientListModification()
+              .subscribe((socketData) => {
+                if (socketData.patientId === this.userInfo._id) {
+                  this.authService
+                    .loginWithToken(token)
+                    .subscribe((loginData: UserStore): void => {
+                      this.userInfo = loginData;
+                      this.store.dispatch(
+                        loginUser({ userInfo: { ...loginData } })
+                      );
+                    });
+                  if (socketData.mode === 'add') {
+                    this.socket.connectToRoom([
+                      socketData.professionalId + socketData.patientId,
+                    ]);
+                  }
                 }
-              }
-            });
+              });
           }
         });
     }
