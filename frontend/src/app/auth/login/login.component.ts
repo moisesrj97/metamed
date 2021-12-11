@@ -62,7 +62,6 @@ export class LoginComponent {
             listenToMessages(this, loginData);
 
             if (loginData.role === 'Patient') {
-              console.log('Listening');
               const token =
                 this.tokenService.getTokenFromLocalStorage() as string;
 
