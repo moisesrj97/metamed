@@ -19,8 +19,8 @@ export function listenToMessages(that: any, data: UserStore, token: string) {
     if (msg.type && data.role === 'Patient') {
       that.authService
         .loginWithToken(token)
-        .subscribe((data: UserStore): void => {
-          that.store.dispatch(loginUser({ userInfo: data }));
+        .subscribe((newData: UserStore): void => {
+          that.store.dispatch(loginUser({ userInfo: newData }));
         });
     }
 

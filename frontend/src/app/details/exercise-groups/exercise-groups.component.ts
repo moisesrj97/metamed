@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 import { listenForGroupReloads } from 'src/app/helpers/listenForGroupReloads';
 import {
   ExerciseGroupModel,
-  MessageModel,
   PatientModel,
   ProfessionalModel,
   RefDataModel,
