@@ -56,6 +56,21 @@ describe('WebSocketGateway', () => {
     });
   });
 
+  describe('When handleAddPatient', () => {
+    test('logger should be called', () => {
+      gateway.server = {
+        to: jest.fn().mockReturnValue({
+          emit: jest.fn() as any,
+        }) as any,
+        emit: jest.fn() as any,
+      } as Server;
+
+      gateway.handleAddPatient({} as any, {} as any);
+
+      expect(gateway.server.emit).toHaveBeenCalled();
+    });
+  });
+
   describe('When handleMessage is executed', () => {
     it('Server to should be called with roomId', () => {
       gateway.server = {
