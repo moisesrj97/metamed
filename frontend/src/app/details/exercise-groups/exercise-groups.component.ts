@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { listenForGroupReloads } from 'src/app/helpers/listenForGroupReloads';
 import {
   ExerciseGroupModel,
+  MessageModel,
   PatientModel,
   ProfessionalModel,
   RefDataModel,
@@ -11,6 +13,7 @@ import {
 import { ExerciseGroupService } from 'src/app/services/exerciseGroup/exercise-group.service';
 import { addExerciseGroup } from 'src/app/services/store/actions/exerciseGroup.actions';
 import { TokenService } from 'src/app/services/token/token.service';
+import { WebsocketService } from 'src/app/services/websocket/websocket.service';
 
 @Component({
   selector: 'app-exercise-groups',
@@ -24,12 +27,14 @@ export class ExerciseGroupsComponent implements OnInit {
   input: string = '';
   role!: string;
   darkMode!: boolean;
+  professionalId!: string;
 
   constructor(
     public route: ActivatedRoute,
     public store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>,
     public exerciseGroupService: ExerciseGroupService,
-    public tokenService: TokenService
+    public tokenService: TokenService,
+    public socket: WebsocketService
   ) {}
 
   ngOnInit(): void {
@@ -59,6 +64,7 @@ export class ExerciseGroupsComponent implements OnInit {
           const result = user.patients.find(
             (patient) => patient.refData._id === this.id
           ) as PatientModel;
+          this.professionalId = user._id;
 
           this.role = 'Professional';
           this.data = result.exerciseGroups;
@@ -74,6 +80,8 @@ export class ExerciseGroupsComponent implements OnInit {
           this.data = result.exerciseGroups;
 
           processData();
+
+          listenForGroupReloads(this);
         }
       });
   }
@@ -102,6 +110,8 @@ export class ExerciseGroupsComponent implements OnInit {
                 patientId: this.id,
               })
             );
+
+            this.socket.sendReload(this.professionalId, this.id);
           }
         });
     }

@@ -58,8 +58,10 @@ export class LoginComponent {
           next: (loginData: any) => {
             this.store.dispatch(loginUser({ userInfo: { ...loginData } }));
             this.userInfo = loginData;
+            const token =
+              this.tokenService.getTokenFromLocalStorage() as string;
 
-            listenToMessages(this, loginData);
+            listenToMessages(this, loginData, token);
 
             if (loginData.role === 'Patient') {
               const token =
