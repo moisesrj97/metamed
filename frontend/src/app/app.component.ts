@@ -66,6 +66,11 @@ export class AppComponent implements OnInit {
                     this.userInfo = data;
                     this.store.dispatch(loginUser({ userInfo: { ...data } }));
                   });
+                if (data.mode === 'add') {
+                  this.socket.connectToRoom([
+                    data.professionalId + data.patientId,
+                  ]);
+                }
               }
             });
           }
