@@ -6,6 +6,7 @@ import { UserStore } from 'src/app/models/interfaces';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { receiveMessageToChat } from 'src/app/services/store/actions/chat.actions';
 import { loginUser } from 'src/app/services/store/actions/user.actions';
+import { TokenService } from 'src/app/services/token/token.service';
 import { WebsocketService } from 'src/app/services/websocket/websocket.service';
 
 @Component({
@@ -27,7 +28,8 @@ export class LoginComponent {
     }>,
     private router: Router,
     private fb: FormBuilder,
-    public socket: WebsocketService
+    public socket: WebsocketService,
+    public tokenService: TokenService
   ) {
     this.formGroup = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -72,6 +74,31 @@ export class LoginComponent {
                 this.store.dispatch(receiveMessageToChat({ message: msg }));
               }
             });
+
+            if (data.role === 'Patient') {
+              console.log('Listening');
+              this.socket
+                .listenToPatientListModification()
+                .subscribe((emissionData) => {
+                  if (emissionData.patientId === data._id) {
+                    console.log(emissionData);
+                    const token =
+                      this.tokenService.getTokenFromLocalStorage() as string;
+                    this.authService
+                      .loginWithToken(token)
+                      .subscribe((data: UserStore): void => {
+                        this.store.dispatch(
+                          loginUser({ userInfo: { ...data } })
+                        );
+                      });
+                    if (emissionData.mode === 'add') {
+                      this.socket.connectToRoom([
+                        emissionData.professionalId + emissionData.patientId,
+                      ]);
+                    }
+                  }
+                });
+            }
 
             this.router.navigate(['/dashboard']);
           },
