@@ -33,6 +33,9 @@
 }
 
 @media (max-width: 768px) {
+  :host {
+    width: 90%;
+  }
   .card {
     flex-direction: row;
     width: 100%;
