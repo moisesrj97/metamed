@@ -48,7 +48,8 @@ export class InfoComponent implements OnInit {
       this.darkMode = state.darkMode;
     });
 
-    this.id = this.route.parent?.snapshot.paramMap.get('id') as string;
+    const parentRoute = this.route.parent as ActivatedRoute;
+    this.id = parentRoute.snapshot.paramMap.get('id') as string;
 
     this.store
       .select((state) => state.user._id)
@@ -59,12 +60,14 @@ export class InfoComponent implements OnInit {
     this.store
       .select((state) => state.user.patients)
       .subscribe((patients) => {
-        const result = patients?.find(
-          (patient) => patient.refData._id === this.id
-        ) as PatientModel;
-
-        this.data.refData = result?.refData;
-        this.data.extraData = result?.extraData;
+        if (patients) {
+          console.log(patients[0]);
+          const result = patients.find(
+            (patient) => patient.refData._id === this.id
+          ) as PatientModel;
+          this.data.refData = result.refData;
+          this.data.extraData = result.extraData;
+        }
       });
   }
 

@@ -15,7 +15,10 @@ describe('InfoComponent', () => {
   let component: InfoComponent;
   let fixture: ComponentFixture<InfoComponent>;
   let initialState = {
-    user: { _id: '', patients: [{ refData: { _id: 'test' }, extraData: [] }] },
+    user: {
+      _id: '123',
+      patients: [{ refData: { _id: '123' }, extraData: [] }],
+    },
   };
   let store: MockStore;
 
@@ -38,11 +41,26 @@ describe('InfoComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(InfoComponent);
     component = fixture.componentInstance;
+    component.route = {
+      snapshot: {
+        paramMap: {
+          get: () => '123',
+        },
+      },
+      parent: {
+        snapshot: {
+          paramMap: {
+            get: () => '123',
+          },
+        },
+      },
+    } as any;
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+    expect(component.data.extraData).toEqual([]);
   });
 
   describe('When addExtraData is called', () => {

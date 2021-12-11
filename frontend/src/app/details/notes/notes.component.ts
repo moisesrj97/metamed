@@ -37,11 +37,13 @@ export class NotesComponent implements OnInit {
       this.darkMode = data.darkMode;
     });
 
-    this.id = this.route.parent?.snapshot.paramMap.get('id') as string;
+    const parentRoute = this.route.parent as ActivatedRoute;
+    this.id = parentRoute.snapshot.paramMap.get('id') as string;
+
     const token = this.tokenService.getTokenFromLocalStorage() as string;
 
     const processData = () => {
-      this.data?.forEach((group) => {
+      this.data.forEach((group) => {
         this.noteService.getNote(group, token).subscribe((data) => {
           this.fetchedData.push(data);
         });
@@ -51,8 +53,8 @@ export class NotesComponent implements OnInit {
     this.store
       .select((state) => state.user)
       .subscribe((user) => {
-        if (user.role === 'Professional') {
-          const result = user.patients?.find(
+        if (user.role === 'Professional' && user.patients) {
+          const result = user.patients.find(
             (patient) => patient.refData._id === this.id
           ) as PatientModel;
 
@@ -61,8 +63,8 @@ export class NotesComponent implements OnInit {
           this.data = result?.notes;
 
           processData();
-        } else {
-          const result = user.professionals?.find(
+        } else if (user.role === 'Patient' && user.professionals) {
+          const result = user.professionals.find(
             (professional) => professional.refData._id === this.id
           ) as ProfessionalModel;
 
