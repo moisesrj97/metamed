@@ -3,8 +3,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
+import { SocketIoModule } from 'ngx-socket-io';
 import { of } from 'rxjs';
 import { UserStore } from 'src/app/models/interfaces';
+import { WebsocketService } from 'src/app/services/websocket/websocket.service';
+import { config } from 'src/app/services/websocket/websocket.service.spec';
 import { DetailsComponent } from '../details.component';
 
 import { ExerciseGroupDetailComponent } from './exercise-group-detail.component';
@@ -31,8 +34,13 @@ describe('ExerciseGroupDetailComponent', () => {
           { path: 'exercise-groups/:id', component: DetailsComponent },
         ]),
         FormsModule,
+        SocketIoModule.forRoot(config),
       ],
-      providers: [provideMockStore({ initialState }), FormBuilder],
+      providers: [
+        provideMockStore({ initialState }),
+        FormBuilder,
+        WebsocketService,
+      ],
     }).compileComponents();
   });
 

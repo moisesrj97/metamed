@@ -3,8 +3,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { SocketIoModule } from 'ngx-socket-io';
 import { of } from 'rxjs';
 import { MealGroupModel, UserStore } from 'src/app/models/interfaces';
+import { WebsocketService } from 'src/app/services/websocket/websocket.service';
+import { config } from 'src/app/services/websocket/websocket.service.spec';
 
 import { MealGroupsComponent } from './meal-groups.component';
 
@@ -27,8 +30,12 @@ describe('MealGroupsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [MealGroupsComponent],
-      imports: [RouterTestingModule, HttpClientTestingModule],
-      providers: [provideMockStore({ initialState })],
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule,
+        SocketIoModule.forRoot(config),
+      ],
+      providers: [provideMockStore({ initialState }), WebsocketService],
     }).compileComponents();
 
     store = TestBed.inject(MockStore);

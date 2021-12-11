@@ -121,7 +121,7 @@ describe('AppComponent', () => {
       );
 
       spyOn(fixture.componentInstance.socket, 'getMessage').and.returnValue(
-        of({ to: 'aaa' } as unknown as MessageModel)
+        of({ to: 'aaa' } as unknown as MessageModel & { type: string })
       );
 
       fixture.detectChanges();
