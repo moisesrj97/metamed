@@ -6,7 +6,6 @@ import { listenToMessages } from 'src/app/helpers/listenToMessages';
 import { listenToPatientModification } from 'src/app/helpers/listenToPatientModification';
 import { UserStore } from 'src/app/models/interfaces';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import { receiveMessageToChat } from 'src/app/services/store/actions/chat.actions';
 import { loginUser } from 'src/app/services/store/actions/user.actions';
 import { TokenService } from 'src/app/services/token/token.service';
 import { WebsocketService } from 'src/app/services/websocket/websocket.service';
