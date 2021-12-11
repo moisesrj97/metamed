@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { listenToMessages } from 'src/app/helpers/listenToMessages';
+import { listenToPatientModification } from 'src/app/helpers/listenToPatientModification';
 import { UserStore } from 'src/app/models/interfaces';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { receiveMessageToChat } from 'src/app/services/store/actions/chat.actions';
@@ -19,6 +21,7 @@ export class LoginComponent {
   roles: string[] = ['professional', 'patient'];
   authPopup: boolean = false;
   darkMode!: boolean;
+  userInfo!: UserStore;
 
   constructor(
     public authService: AuthenticationService,
@@ -55,49 +58,16 @@ export class LoginComponent {
         .subscribe({
           next: (loginData: any) => {
             this.store.dispatch(loginUser({ userInfo: { ...loginData } }));
+            this.userInfo = loginData;
 
-            const otherUsers =
-              loginData.role === 'Professional' ? 'patients' : 'professionals';
-            const mappedIds = loginData[otherUsers]?.map((e: any) => {
-              if (loginData.role === 'Professional') {
-                return loginData._id + e.refData._id;
-              } else {
-                return e.refData._id + loginData._id;
-              }
-            }) as string[];
-
-            this.socket.connectToRoom(mappedIds);
-
-            this.socket.getMessage().subscribe((msg) => {
-              console.log(msg, loginData._id);
-              if (msg.to === loginData._id) {
-                this.store.dispatch(receiveMessageToChat({ message: msg }));
-              }
-            });
+            listenToMessages(this, loginData);
 
             if (loginData.role === 'Patient') {
               console.log('Listening');
-              this.socket
-                .listenToPatientListModification()
-                .subscribe((emissionData) => {
-                  if (emissionData.patientId === loginData._id) {
-                    console.log(emissionData);
-                    const token =
-                      this.tokenService.getTokenFromLocalStorage() as string;
-                    this.authService
-                      .loginWithToken(token)
-                      .subscribe((data: UserStore): void => {
-                        this.store.dispatch(
-                          loginUser({ userInfo: { ...data } })
-                        );
-                      });
-                    if (emissionData.mode === 'add') {
-                      this.socket.connectToRoom([
-                        emissionData.professionalId + emissionData.patientId,
-                      ]);
-                    }
-                  }
-                });
+              const token =
+                this.tokenService.getTokenFromLocalStorage() as string;
+
+              listenToPatientModification(this, token);
             }
 
             this.router.navigate(['/dashboard']);

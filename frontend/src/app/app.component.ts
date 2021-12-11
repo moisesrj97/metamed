@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { listenToMessages } from './helpers/listenToMessages';
+import { listenToPatientModification } from './helpers/listenToPatientModification';
 import { UserStore } from './models/interfaces';
 import { AuthenticationService } from './services/authentication/authentication.service';
-import { receiveMessageToChat } from './services/store/actions/chat.actions';
 import { toggleDarkMode } from './services/store/actions/darkMode.actions';
 import { loginUser } from './services/store/actions/user.actions';
 import { TokenService } from './services/token/token.service';
@@ -38,45 +39,10 @@ export class AppComponent implements OnInit {
         .subscribe((data: UserStore): void => {
           this.userInfo = data;
           this.store.dispatch(loginUser({ userInfo: { ...data } }));
-
-          const otherUsers =
-            data.role === 'Professional' ? 'patients' : 'professionals';
-          const mappedIds = data[otherUsers]?.map((e) => {
-            if (data.role === 'Professional') {
-              return data._id + e.refData._id;
-            } else {
-              return e.refData._id + data._id;
-            }
-          }) as string[];
-
-          this.socket.connectToRoom(mappedIds);
-
-          this.socket.getMessage().subscribe((msg) => {
-            if (msg.to === this.userInfo._id) {
-              this.store.dispatch(receiveMessageToChat({ message: msg }));
-            }
-          });
+          listenToMessages(this, data);
 
           if (this.userInfo.role === 'Patient') {
-            this.socket
-              .listenToPatientListModification()
-              .subscribe((socketData) => {
-                if (socketData.patientId === this.userInfo._id) {
-                  this.authService
-                    .loginWithToken(token)
-                    .subscribe((loginData: UserStore): void => {
-                      this.userInfo = loginData;
-                      this.store.dispatch(
-                        loginUser({ userInfo: { ...loginData } })
-                      );
-                    });
-                  if (socketData.mode === 'add') {
-                    this.socket.connectToRoom([
-                      socketData.professionalId + socketData.patientId,
-                    ]);
-                  }
-                }
-              });
+            listenToPatientModification(this, token);
           }
         });
     }
