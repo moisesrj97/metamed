@@ -2,9 +2,12 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { SocketIoModule } from 'ngx-socket-io';
 import { of } from 'rxjs';
 import { DashboardComponent } from 'src/app/dashboard/dashboard.component';
 import { UserStore } from 'src/app/models/interfaces';
+import { WebsocketService } from 'src/app/services/websocket/websocket.service';
+import { config } from 'src/app/services/websocket/websocket.service.spec';
 
 import { InfoComponent } from './info.component';
 
@@ -24,8 +27,9 @@ describe('InfoComponent', () => {
           { path: 'dashboard', component: DashboardComponent },
         ]),
         HttpClientTestingModule,
+        SocketIoModule.forRoot(config),
       ],
-      providers: [provideMockStore({ initialState })],
+      providers: [provideMockStore({ initialState }), WebsocketService],
     }).compileComponents();
 
     store = TestBed.inject(MockStore);

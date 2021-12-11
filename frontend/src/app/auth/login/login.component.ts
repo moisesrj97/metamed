@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { listenToMessages } from 'src/app/helpers/listenToMessages';
+import { listenToPatientModification } from 'src/app/helpers/listenToPatientModification';
 import { UserStore } from 'src/app/models/interfaces';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import { receiveMessageToChat } from 'src/app/services/store/actions/chat.actions';
 import { loginUser } from 'src/app/services/store/actions/user.actions';
+import { TokenService } from 'src/app/services/token/token.service';
 import { WebsocketService } from 'src/app/services/websocket/websocket.service';
 
 @Component({
@@ -18,6 +20,7 @@ export class LoginComponent {
   roles: string[] = ['professional', 'patient'];
   authPopup: boolean = false;
   darkMode!: boolean;
+  userInfo!: UserStore;
 
   constructor(
     public authService: AuthenticationService,
@@ -27,7 +30,8 @@ export class LoginComponent {
     }>,
     private router: Router,
     private fb: FormBuilder,
-    public socket: WebsocketService
+    public socket: WebsocketService,
+    public tokenService: TokenService
   ) {
     this.formGroup = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -51,27 +55,19 @@ export class LoginComponent {
           this.formGroup.value.role
         )
         .subscribe({
-          next: (data: any) => {
-            this.store.dispatch(loginUser({ userInfo: { ...data } }));
+          next: (loginData: any) => {
+            this.store.dispatch(loginUser({ userInfo: { ...loginData } }));
+            this.userInfo = loginData;
 
-            const otherUsers =
-              data.role === 'Professional' ? 'patients' : 'professionals';
-            const mappedIds = data[otherUsers]?.map((e: any) => {
-              if (data.role === 'Professional') {
-                return data._id + e.refData._id;
-              } else {
-                return e.refData._id + data._id;
-              }
-            }) as string[];
+            listenToMessages(this, loginData);
 
-            this.socket.connectToRoom(mappedIds);
+            if (loginData.role === 'Patient') {
+              console.log('Listening');
+              const token =
+                this.tokenService.getTokenFromLocalStorage() as string;
 
-            this.socket.getMessage().subscribe((msg) => {
-              console.log(msg, data._id);
-              if (msg.to === data._id) {
-                this.store.dispatch(receiveMessageToChat({ message: msg }));
-              }
-            });
+              listenToPatientModification(this, token);
+            }
 
             this.router.navigate(['/dashboard']);
           },

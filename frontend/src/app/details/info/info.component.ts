@@ -13,6 +13,7 @@ import {
   updatePatientExtraDataFromProfessional,
 } from 'src/app/services/store/actions/user.actions';
 import { TokenService } from 'src/app/services/token/token.service';
+import { WebsocketService } from 'src/app/services/websocket/websocket.service';
 
 @Component({
   selector: 'app-info',
@@ -38,7 +39,8 @@ export class InfoComponent implements OnInit {
     private router: Router,
     private store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>,
     public patientManageService: PatientManagmentService,
-    public tokenService: TokenService
+    public tokenService: TokenService,
+    public socket: WebsocketService
   ) {}
 
   ngOnInit(): void {
@@ -117,6 +119,11 @@ export class InfoComponent implements OnInit {
       .removePatientFromList(this.professionalId, this.id, token)
       .subscribe((newState) => {
         this.store.dispatch(deleteUserFromProfessional({ patientId: this.id }));
+        this.socket.emitPatientListModification({
+          professionalId: this.professionalId,
+          patientId: this.id,
+          mode: 'delete',
+        });
         this.router.navigate(['/dashboard']);
       });
   }
