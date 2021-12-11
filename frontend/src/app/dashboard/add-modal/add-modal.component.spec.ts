@@ -1,8 +1,11 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { SocketIoModule } from 'ngx-socket-io';
 import { of } from 'rxjs';
 import { UserStore } from 'src/app/models/interfaces';
+import { WebsocketService } from 'src/app/services/websocket/websocket.service';
+import { config } from 'src/app/services/websocket/websocket.service.spec';
 
 import { AddModalComponent } from './add-modal.component';
 
@@ -81,8 +84,8 @@ describe('AddModalComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AddModalComponent],
-      imports: [HttpClientTestingModule],
-      providers: [provideMockStore({ initialState })],
+      imports: [HttpClientTestingModule, SocketIoModule.forRoot(config)],
+      providers: [provideMockStore({ initialState }), WebsocketService],
     }).compileComponents();
 
     store = TestBed.inject(MockStore);

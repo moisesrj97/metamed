@@ -27,6 +27,17 @@ export class WebSocketGatewayChat
     client.join(payload);
   }
 
+  @SubscribeMessage('modifyPatientEmission')
+  handleAddPatient(
+    client: Socket,
+    payload: { professionalId: string; patientId: string; mode: string },
+  ): void {
+    this.logger.log(
+      `Professional ${payload.professionalId} has ${payload.mode} ${payload.patientId}`,
+    );
+    this.server.emit('patientListModification', payload);
+  }
+
   afterInit(server: Server) {
     this.logger.log('Init');
   }

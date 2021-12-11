@@ -1,11 +1,14 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { SocketIoModule } from 'ngx-socket-io';
 import {
   PatientModel,
   ProfessionalModel,
   UserStore,
 } from '../models/interfaces';
+import { WebsocketService } from '../services/websocket/websocket.service';
+import { config } from '../services/websocket/websocket.service.spec';
 import { AddModalComponent } from './add-modal/add-modal.component';
 import { CardComponent } from './card/card.component';
 
@@ -92,8 +95,8 @@ describe('DashboardComponent', () => {
         AddModalComponent,
         SearchComponent,
       ],
-      providers: [provideMockStore({ initialState })],
-      imports: [HttpClientTestingModule],
+      providers: [provideMockStore({ initialState }), WebsocketService],
+      imports: [HttpClientTestingModule, SocketIoModule.forRoot(config)],
     }).compileComponents();
 
     store = TestBed.inject(MockStore);

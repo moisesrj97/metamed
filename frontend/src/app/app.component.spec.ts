@@ -170,6 +170,13 @@ describe('AppComponent', () => {
         })
       );
 
+      spyOn(
+        fixture.componentInstance.socket,
+        'listenToPatientListModification'
+      ).and.returnValue(
+        of({ professionalId: 'aaa', patientId: 'aaa', mode: 'add' })
+      );
+
       fixture.detectChanges();
       expect(
         fixture.componentInstance.authService.loginWithToken

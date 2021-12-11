@@ -180,7 +180,18 @@ export class ProfessionalService {
       )
       .populate({
         path: 'patients',
-        populate: 'refData',
+        populate: [
+          {
+            path: 'refData',
+            select: ['name', 'surname', 'profilePicture'],
+          },
+          {
+            path: 'chatRef',
+            populate: {
+              path: 'messages',
+            },
+          },
+        ],
       });
   }
 
