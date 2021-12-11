@@ -53,36 +53,34 @@ export class LoginComponent {
           this.formGroup.value.role
         )
         .subscribe({
-          next: (data: any) => {
-            this.store.dispatch(loginUser({ userInfo: { ...data } }));
+          next: (loginData: any) => {
+            this.store.dispatch(loginUser({ userInfo: { ...loginData } }));
 
             const otherUsers =
-              data.role === 'Professional' ? 'patients' : 'professionals';
-            const mappedIds = data[otherUsers]?.map((e: any) => {
-              if (data.role === 'Professional') {
-                return data._id + e.refData._id;
+              loginData.role === 'Professional' ? 'patients' : 'professionals';
+            const mappedIds = loginData[otherUsers]?.map((e: any) => {
+              if (loginData.role === 'Professional') {
+                return loginData._id + e.refData._id;
               } else {
-                return e.refData._id + data._id;
+                return e.refData._id + loginData._id;
               }
             }) as string[];
 
             this.socket.connectToRoom(mappedIds);
 
             this.socket.getMessage().subscribe((msg) => {
-              console.log(msg, data._id);
-              if (msg.to === data._id) {
+              console.log(msg, loginData._id);
+              if (msg.to === loginData._id) {
                 this.store.dispatch(receiveMessageToChat({ message: msg }));
               }
             });
 
-            console.log(data.role);
-
-            if (data.role === 'Patient') {
+            if (loginData.role === 'Patient') {
               console.log('Listening');
               this.socket
                 .listenToPatientListModification()
                 .subscribe((emissionData) => {
-                  if (emissionData.patientId === data._id) {
+                  if (emissionData.patientId === loginData._id) {
                     console.log(emissionData);
                     const token =
                       this.tokenService.getTokenFromLocalStorage() as string;
