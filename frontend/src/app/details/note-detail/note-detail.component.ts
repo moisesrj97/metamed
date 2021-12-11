@@ -5,6 +5,7 @@ import { NoteModel, UserStore } from 'src/app/models/interfaces';
 import { NoteService } from 'src/app/services/note/note.service';
 import { deleteNote } from 'src/app/services/store/actions/note.actions';
 import { TokenService } from 'src/app/services/token/token.service';
+import { WebsocketService } from 'src/app/services/websocket/websocket.service';
 
 @Component({
   selector: 'app-note-detail',
@@ -18,13 +19,15 @@ export class NoteDetailComponent implements OnInit {
   editing: boolean = false;
   role!: string;
   darkMode!: boolean;
+  userId!: string;
 
   constructor(
     public route: ActivatedRoute,
     public router: Router,
     public noteService: NoteService,
     public tokenService: TokenService,
-    public store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>
+    public store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>,
+    public socket: WebsocketService
   ) {}
 
   ngOnInit(): void {
@@ -36,6 +39,7 @@ export class NoteDetailComponent implements OnInit {
 
     this.store.select('user').subscribe((data) => {
       this.role = data.role;
+      this.userId = data._id;
     });
 
     this.id = this.route.snapshot.paramMap.get('id') as string;
@@ -67,6 +71,8 @@ export class NoteDetailComponent implements OnInit {
         this.store.dispatch(
           deleteNote({ noteId: this.id, patientId: this.patientId })
         );
+        this.socket.sendReload(this.userId, this.patientId);
+
         this.router.navigate(['/details/' + this.patientId + '/notes']);
       });
   }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { listenForGroupReloads } from 'src/app/helpers/listenForGroupReloads';
 import {
   UserStore,
   PatientModel,
@@ -11,6 +12,7 @@ import {
 import { NoteService } from 'src/app/services/note/note.service';
 import { addNote } from 'src/app/services/store/actions/note.actions';
 import { TokenService } from 'src/app/services/token/token.service';
+import { WebsocketService } from 'src/app/services/websocket/websocket.service';
 
 @Component({
   selector: 'app-notes',
@@ -24,12 +26,14 @@ export class NotesComponent implements OnInit {
   input: string = '';
   role!: string;
   darkMode!: boolean;
+  professionalId!: string;
 
   constructor(
     public route: ActivatedRoute,
     public store: Store<{ user: UserStore; darkMode: { darkMode: boolean } }>,
     public noteService: NoteService,
-    public tokenService: TokenService
+    public tokenService: TokenService,
+    public socket: WebsocketService
   ) {}
 
   ngOnInit(): void {
@@ -57,6 +61,7 @@ export class NotesComponent implements OnInit {
           const result = user.patients.find(
             (patient) => patient.refData._id === this.id
           ) as PatientModel;
+          this.professionalId = user._id;
 
           this.role = 'Professional';
 
@@ -73,6 +78,8 @@ export class NotesComponent implements OnInit {
           this.data = result.notes;
 
           processData();
+
+          listenForGroupReloads(this);
         }
       });
   }
@@ -101,6 +108,8 @@ export class NotesComponent implements OnInit {
                 patientId: this.id,
               })
             );
+
+            this.socket.sendReload(this.professionalId, this.id);
           }
         });
     }
