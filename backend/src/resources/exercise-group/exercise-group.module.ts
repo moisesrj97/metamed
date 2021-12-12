@@ -8,6 +8,9 @@ import {
   Professional,
   ProfessionalSchema,
 } from '../professional/professional.schema';
+import { ExerciseService } from '../exercise/exercise.service';
+import { S3ImageService } from 'src/services/s3-image-service/s3-image-service.service';
+import { Exercise, ExerciseSchema } from '../exercise/exercise.schema';
 
 @Module({
   imports: [
@@ -15,9 +18,10 @@ import {
       { name: Professional.name, schema: ProfessionalSchema },
       { name: Patient.name, schema: PatientSchema },
       { name: ExerciseGroup.name, schema: ExerciseGroupSchema },
+      { name: Exercise.name, schema: ExerciseSchema },
     ]),
   ],
   controllers: [ExerciseGroupController],
-  providers: [ExerciseGroupService],
+  providers: [ExerciseGroupService, ExerciseService, S3ImageService],
 })
 export class ExerciseGroupModule {}
