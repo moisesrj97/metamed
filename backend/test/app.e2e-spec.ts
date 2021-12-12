@@ -15,7 +15,7 @@ describe('AppController (e2e)', () => {
   let initialChatLength: number;
   let initialMessageRef: string;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
@@ -24,7 +24,7 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  afterEach(async () => {
+  afterAll(async () => {
     await app.close();
   });
 
@@ -118,10 +118,8 @@ describe('AppController (e2e)', () => {
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
       );
     expect(response.status).toBe(200);
-    console.log(response.body.patients[0].chatRef);
     initialChatLength = response.body.patients[0].chatRef.messages.length;
     initialChatRef = response.body.patients[0].chatRef._id;
-    console.log(initialChatLength);
     expect(response.body._id).toBe('61a4f4a93d6cc562f1fb52a9');
   });
 
@@ -138,7 +136,6 @@ describe('AppController (e2e)', () => {
       );
     expect(response.status).toBe(201);
     createdExerciseGroupId = response.body.patients[0].exerciseGroups[0];
-    console.log(createdExerciseGroupId);
     expect(response.body._id).toBe('61a4f4a93d6cc562f1fb52a9');
   });
 
@@ -243,7 +240,6 @@ describe('AppController (e2e)', () => {
       );
     expect(response.status).toBe(201);
     createdMealGroupId = response.body.patients[0].mealGroups[0];
-    console.log(createdMealGroupId);
     expect(response.body._id).toBe('61a4f4a93d6cc562f1fb52a9');
   });
 
@@ -337,7 +333,6 @@ describe('AppController (e2e)', () => {
       );
     expect(response.status).toBe(201);
     createdNoteId = response.body.patients[0].notes[0];
-    console.log(createdNoteId);
     expect(response.body._id).toBe('61a4f4a93d6cc562f1fb52a9');
   });
 
@@ -376,7 +371,6 @@ describe('AppController (e2e)', () => {
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
       );
     initialMessageRef = response.body._id;
-    console.log(response.body.messages);
     expect(response.status).toBe(200);
     expect(response.body.text).toBe('Hello World');
   });
