@@ -8,6 +8,9 @@ import {
 import { ExerciseGroupService } from './exercise-group.service';
 import { ExerciseGroup, ExerciseGroupSchema } from './exerciseGroup.schema';
 import * as mongoose from 'mongoose';
+import { Exercise, ExerciseSchema } from '../exercise/exercise.schema';
+import { ExerciseService } from '../exercise/exercise.service';
+import { S3ImageService } from '../../services/s3-image-service/s3-image-service.service';
 
 describe('Given ExerciseGroupService', () => {
   let service: ExerciseGroupService;
@@ -38,12 +41,24 @@ describe('Given ExerciseGroupService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [ExerciseGroupService],
+      providers: [
+        ExerciseGroupService,
+        ExerciseService,
+        {
+          provide: S3ImageService,
+          useValue: {
+            uploadFile: jest.fn(),
+            deleteFile: jest.fn(),
+            updateFile: jest.fn(),
+          },
+        },
+      ],
       imports: [
         MongooseModule.forFeature([
           { name: Patient.name, schema: PatientSchema },
           { name: Professional.name, schema: ProfessionalSchema },
           { name: ExerciseGroup.name, schema: ExerciseGroupSchema },
+          { name: Exercise.name, schema: ExerciseSchema },
         ]),
       ],
     })
@@ -52,6 +67,8 @@ describe('Given ExerciseGroupService', () => {
       .overrideProvider(getModelToken('Professional'))
       .useValue(professionalMockRepository)
       .overrideProvider(getModelToken('ExerciseGroup'))
+      .useValue(exerciseGroupMockRepository)
+      .overrideProvider(getModelToken('Exercise'))
       .useValue(exerciseGroupMockRepository)
       .compile();
 

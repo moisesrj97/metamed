@@ -115,7 +115,6 @@ describe('MealGroupDetailComponent', () => {
   describe('When addmeal is called with good conditions', () => {
     it('mealService.createmealInmealGroup should be called', () => {
       component.formGroup.setValue({ name: 'testo', amount: 'testo' });
-      console.log(component.formGroup.status);
       spyOn(component.mealService, 'createMealInMealGroup').and.returnValue(
         of({
           _id: '123',

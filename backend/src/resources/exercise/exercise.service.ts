@@ -112,6 +112,12 @@ export class ExerciseService {
       { new: true },
     );
 
+    const exerciseToDelete = await this.exerciseModel.findById(id);
+
+    await this.s3ImageService.deleteFile(exerciseToDelete.image);
+
+    await this.exerciseModel.findByIdAndDelete(id);
+
     return { message: 'Exercise removed successfully from groups' };
   }
 }

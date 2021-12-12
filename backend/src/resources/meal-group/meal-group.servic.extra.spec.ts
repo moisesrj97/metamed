@@ -8,6 +8,8 @@ import {
 import { MealGroupService } from './meal-group.service';
 import { MealGroup, MealGroupSchema } from './mealGroup.schema';
 import * as mongoose from 'mongoose';
+import { Meal, MealSchema } from '../meal/meal.schema';
+import { MealService } from '../meal/meal.service';
 
 describe('Given MealGroupService', () => {
   let service: MealGroupService;
@@ -34,16 +36,18 @@ describe('Given MealGroupService', () => {
       _id: 'f2f2f2f2f2f2',
       author: 'f8f8f8f8f8f8',
     }),
+    findByIdAndRemove: jest.fn(),
   };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [MealGroupService],
+      providers: [MealGroupService, MealService],
       imports: [
         MongooseModule.forFeature([
           { name: Patient.name, schema: PatientSchema },
           { name: Professional.name, schema: ProfessionalSchema },
           { name: MealGroup.name, schema: MealGroupSchema },
+          { name: Meal.name, schema: MealSchema },
         ]),
       ],
     })
@@ -52,6 +56,8 @@ describe('Given MealGroupService', () => {
       .overrideProvider(getModelToken('Professional'))
       .useValue(professionalMockRepository)
       .overrideProvider(getModelToken('MealGroup'))
+      .useValue(mealGroupMockRepository)
+      .overrideProvider(getModelToken('Meal'))
       .useValue(mealGroupMockRepository)
       .compile();
 

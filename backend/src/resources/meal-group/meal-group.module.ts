@@ -8,15 +8,18 @@ import {
   ProfessionalSchema,
 } from '../professional/professional.schema';
 import { MealGroup, MealGroupSchema } from './mealGroup.schema';
+import { MealService } from '../meal/meal.service';
+import { Meal, MealSchema } from '../meal/meal.schema';
 
 @Module({
   controllers: [MealGroupController],
-  providers: [MealGroupService],
+  providers: [MealGroupService, MealService],
   imports: [
     MongooseModule.forFeature([
       { name: Professional.name, schema: ProfessionalSchema },
       { name: Patient.name, schema: PatientSchema },
       { name: MealGroup.name, schema: MealGroupSchema },
+      { name: Meal.name, schema: MealSchema },
     ]),
   ],
 })

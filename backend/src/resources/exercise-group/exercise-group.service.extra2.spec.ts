@@ -1,5 +1,8 @@
 import { getModelToken, MongooseModule } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
+import { S3ImageService } from '../../services/s3-image-service/s3-image-service.service';
+import { Exercise, ExerciseSchema } from '../exercise/exercise.schema';
+import { ExerciseService } from '../exercise/exercise.service';
 import { Patient, PatientSchema } from '../patient/patient.schema';
 import {
   Professional,
@@ -34,12 +37,24 @@ describe('Given ExerciseGroupService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [ExerciseGroupService],
+      providers: [
+        ExerciseGroupService,
+        ExerciseService,
+        {
+          provide: S3ImageService,
+          useValue: {
+            uploadFile: jest.fn(),
+            deleteFile: jest.fn(),
+            updateFile: jest.fn(),
+          },
+        },
+      ],
       imports: [
         MongooseModule.forFeature([
           { name: Patient.name, schema: PatientSchema },
           { name: Professional.name, schema: ProfessionalSchema },
           { name: ExerciseGroup.name, schema: ExerciseGroupSchema },
+          { name: Exercise.name, schema: ExerciseSchema },
         ]),
       ],
     })
@@ -48,6 +63,8 @@ describe('Given ExerciseGroupService', () => {
       .overrideProvider(getModelToken('Professional'))
       .useValue(professionalMockRepository)
       .overrideProvider(getModelToken('ExerciseGroup'))
+      .useValue(exerciseGroupMockRepository)
+      .overrideProvider(getModelToken('Exercise'))
       .useValue(exerciseGroupMockRepository)
       .compile();
 

@@ -8,6 +8,7 @@ import { Model } from 'mongoose';
 import { isAuthor } from '../../helpers/isAuthor';
 import { isProfessional } from '../../helpers/isProfessional';
 import validateJwt, { JwtInterface } from '../../helpers/validateJwt';
+import { MealService } from '../meal/meal.service';
 import {
   Professional,
   ProfessionalDocument,
@@ -23,6 +24,7 @@ export class MealGroupService {
     private professionalModel: Model<ProfessionalDocument>,
     @InjectModel(MealGroup.name)
     private mealGroupModel: Model<MealGroupDocument>,
+    private mealService: MealService,
   ) {}
 
   async create(createMealGroupDto: CreateMealGroupDto, token: string) {
@@ -112,6 +114,12 @@ export class MealGroupService {
 
     isProfessional(decodedToken);
     await isAuthor(decodedToken, id, this.mealGroupModel);
+
+    const groupToRemove = await this.mealGroupModel.findById(id);
+
+    for (let i = 0; i < groupToRemove.meals.length; i++) {
+      this.mealService.remove(token, groupToRemove.meals[i].toString(), id);
+    }
 
     await this.mealGroupModel.findByIdAndDelete(id);
 

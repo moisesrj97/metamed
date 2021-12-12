@@ -15,6 +15,7 @@ import {
 } from '../professional/professional.schema';
 import { isProfessional } from '../../helpers/isProfessional';
 import { isAuthor } from '../../helpers/isAuthor';
+import { ExerciseService } from '../exercise/exercise.service';
 
 @Injectable()
 export class ExerciseGroupService {
@@ -23,6 +24,7 @@ export class ExerciseGroupService {
     private professionalModel: Model<ProfessionalDocument>,
     @InjectModel(ExerciseGroup.name)
     private exerciseGroupModel: Model<ExerciseGroupDocument>,
+    private exerciseService: ExerciseService,
   ) {}
 
   async getById(id: string, token: string) {
@@ -112,6 +114,16 @@ export class ExerciseGroupService {
 
     isProfessional(decodedToken);
     await isAuthor(decodedToken, id, this.exerciseGroupModel);
+
+    const exerciseGroupToDelete = await this.exerciseGroupModel.findById(id);
+
+    for (let i = 0; i < exerciseGroupToDelete.exercises.length; i++) {
+      this.exerciseService.remove(
+        token,
+        exerciseGroupToDelete.exercises[i].toString(),
+        id,
+      );
+    }
 
     await this.exerciseGroupModel.findByIdAndDelete(id);
 
