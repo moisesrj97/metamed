@@ -261,8 +261,6 @@ export class ProfessionalService {
       },
     });
 
-    console.log(professional.patients, patientId);
-
     const chat = await this.chatModel
       .findById(
         professional.patients.find(
@@ -281,13 +279,9 @@ export class ProfessionalService {
       ).chatRef,
     );
 
-    console.log(professional.patients);
-
     const patientBeingRemoved = professional.patients.find(
       (patient) => patient.refData._id.toString() === patientId,
     );
-
-    console.log(patientBeingRemoved);
 
     for (let i = 0; i < patientBeingRemoved.exerciseGroups.length; i++) {
       await this.exerciseGroupModel.findByIdAndDelete(
