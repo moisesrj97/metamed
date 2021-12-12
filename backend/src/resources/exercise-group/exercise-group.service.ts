@@ -15,7 +15,6 @@ import {
 } from '../professional/professional.schema';
 import { isProfessional } from '../../helpers/isProfessional';
 import { isAuthor } from '../../helpers/isAuthor';
-import { Exercise, ExerciseDocument } from '../exercise/exercise.schema';
 import { ExerciseService } from '../exercise/exercise.service';
 
 @Injectable()
