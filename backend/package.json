@@ -6,8 +6,8 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "prebuild": "cross-env NODE_ENV=development rimraf dist",
-    "build": "cross-env NODE_ENV=development nest build",
+    "prebuild": "rimraf dist",
+    "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "cross-env NODE_ENV=development nest start --watch",
@@ -32,6 +32,7 @@
     "@types/mongodb": "^4.0.7",
     "aws-sdk": "^2.1038.0",
     "bcryptjs": "^2.4.3",
+    "class-validator": "^0.13.2",
     "cross-env": "^7.0.3",
     "express-validator": "^6.13.0",
     "jsonwebtoken": "^8.5.1",
