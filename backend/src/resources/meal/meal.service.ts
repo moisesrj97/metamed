@@ -86,6 +86,8 @@ export class MealService {
     isProfessional(response);
     await isAuthor(response, id, this.mealModel);
 
+    await this.mealModel.findByIdAndDelete(id);
+
     await this.mealGroupModel.findByIdAndUpdate(groupId, {
       $pull: {
         meals: id,
