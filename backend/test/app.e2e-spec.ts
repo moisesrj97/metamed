@@ -277,7 +277,7 @@ describe('AppController (e2e)', () => {
 
   it('/meal/createdMealId (DELETE)', async () => {
     const response = await request(app.getHttpServer())
-      .delete('/meal/' + createdMealId + '/' + createdMealId)
+      .delete('/meal/' + createdMealId + '/' + createdMealGroupId)
       .set(
         'Authorization',
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
