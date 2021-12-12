@@ -9,7 +9,7 @@ import {
   ProfessionalSchema,
 } from '../professional/professional.schema';
 import { ExerciseService } from '../exercise/exercise.service';
-import { S3ImageService } from 'src/services/s3-image-service/s3-image-service.service';
+import { S3ImageService } from '../../services/s3-image-service/s3-image-service.service';
 import { Exercise, ExerciseSchema } from '../exercise/exercise.schema';
 
 @Module({
