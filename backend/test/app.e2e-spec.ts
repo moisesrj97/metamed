@@ -40,17 +40,17 @@ describe('AppController (e2e)', () => {
       .post('/login/token')
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       );
 
     expect(response.status).toBe(201);
-    expect(response.body.id).toBe('61a4f4a93d6cc562f1fb52a9');
+    expect(response.body.id).toBe('61a5e91586cbdaaefb9dccd6');
   });
 
   it('/login/professional/ (POST)', async () => {
     const response = await request(app.getHttpServer())
       .post('/login/professional/')
-      .send({ email: ' string', password: ' string' });
+      .send({ email: ' string2', password: ' string' });
 
     expect(response.status).toBe(201);
     expect(response.text.length).toBeGreaterThan(1);
@@ -79,9 +79,9 @@ describe('AppController (e2e)', () => {
     expect(response.body.name).toBe('test');
   });
 
-  it('/professional/61a4f4a93d6cc562f1fb52a9 (PATCH)', async () => {
+  it('/professional/61a5e91586cbdaaefb9dccd6 (PATCH)', async () => {
     const response = await request(app.getHttpServer())
-      .patch('/professional/61a4f4a93d6cc562f1fb52a9')
+      .patch('/professional/61a5e91586cbdaaefb9dccd6')
       .send({
         name: 'test',
         surname: 'test',
@@ -91,36 +91,36 @@ describe('AppController (e2e)', () => {
       })
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       );
     expect(response.status).toBe(200);
-    expect(response.body._id).toBe('61a4f4a93d6cc562f1fb52a9');
+    expect(response.body._id).toBe('61a5e91586cbdaaefb9dccd6');
     expect(response.body.name).toBe('test');
   });
 
-  it('/professional/61a4f4a93d6cc562f1fb52a9/patients (POST)', async () => {
+  it('/professional/61a5e91586cbdaaefb9dccd6/patients (POST)', async () => {
     const response = await request(app.getHttpServer())
-      .post('/professional/61a4f4a93d6cc562f1fb52a9/patients/')
+      .post('/professional/61a5e91586cbdaaefb9dccd6/patients/')
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       )
       .send({ patientId: '61a661fd036917e975f253b0' });
     expect(response.status).toBe(201);
     expect(response.body.patients).toHaveLength(1);
   });
 
-  it('/professional/61a4f4a93d6cc562f1fb52a9 (GET)', async () => {
+  it('/professional/61a5e91586cbdaaefb9dccd6 (GET)', async () => {
     const response = await request(app.getHttpServer())
-      .get('/professional/61a4f4a93d6cc562f1fb52a9')
+      .get('/professional/61a5e91586cbdaaefb9dccd6')
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       );
     expect(response.status).toBe(200);
     initialChatLength = response.body.patients[0].chatRef.messages.length;
     initialChatRef = response.body.patients[0].chatRef._id;
-    expect(response.body._id).toBe('61a4f4a93d6cc562f1fb52a9');
+    expect(response.body._id).toBe('61a5e91586cbdaaefb9dccd6');
   });
 
   it('/exercise-group/ (POST)', async () => {
@@ -132,11 +132,11 @@ describe('AppController (e2e)', () => {
       })
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       );
     expect(response.status).toBe(201);
     createdExerciseGroupId = response.body.patients[0].exerciseGroups[0];
-    expect(response.body._id).toBe('61a4f4a93d6cc562f1fb52a9');
+    expect(response.body._id).toBe('61a5e91586cbdaaefb9dccd6');
   });
 
   it('/exercise/ (POST)', async () => {
@@ -144,7 +144,7 @@ describe('AppController (e2e)', () => {
       .post('/exercise/')
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       )
       .field('exerciseGroupId', createdExerciseGroupId)
       .field('name', 'test')
@@ -162,7 +162,7 @@ describe('AppController (e2e)', () => {
       .patch('/exercise/' + createdExerciseId)
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       )
       .field(
         'imageUrl',
@@ -181,7 +181,7 @@ describe('AppController (e2e)', () => {
       .delete('/exercise/' + createdExerciseId + '/' + createdExerciseGroupId)
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       );
     expect(response.status).toBe(200);
     expect(response.body.message).toBe(
@@ -194,7 +194,7 @@ describe('AppController (e2e)', () => {
       .get('/exercise-group/' + createdExerciseGroupId)
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       );
     expect(response.status).toBe(200);
     expect(response.body._id).toBe(createdExerciseGroupId);
@@ -205,7 +205,7 @@ describe('AppController (e2e)', () => {
       .patch('/exercise-group/' + createdExerciseGroupId)
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       )
       .send({ name: 'test', extra: 'test' });
     expect(response.status).toBe(200);
@@ -221,7 +221,7 @@ describe('AppController (e2e)', () => {
       )
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       );
     expect(response.status).toBe(200);
     expect(response.body.patients[0].exerciseGroups).toHaveLength(0);
@@ -236,11 +236,11 @@ describe('AppController (e2e)', () => {
       })
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       );
     expect(response.status).toBe(201);
     createdMealGroupId = response.body.patients[0].mealGroups[0];
-    expect(response.body._id).toBe('61a4f4a93d6cc562f1fb52a9');
+    expect(response.body._id).toBe('61a5e91586cbdaaefb9dccd6');
   });
 
   it('/meal/ (POST)', async () => {
@@ -253,7 +253,7 @@ describe('AppController (e2e)', () => {
       })
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       );
     createdMealId = response.body._id;
     expect(response.status).toBe(201);
@@ -269,7 +269,7 @@ describe('AppController (e2e)', () => {
       })
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       );
     expect(response.status).toBe(200);
     expect(response.body.name).toBe('sample meal2');
@@ -280,7 +280,7 @@ describe('AppController (e2e)', () => {
       .delete('/meal/' + createdMealId + '/' + createdMealId)
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       );
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Meal removed successfully from groups');
@@ -291,7 +291,7 @@ describe('AppController (e2e)', () => {
       .get('/meal-group/' + createdMealGroupId)
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       );
     expect(response.status).toBe(200);
     expect(response.body._id).toBe(createdMealGroupId);
@@ -302,7 +302,7 @@ describe('AppController (e2e)', () => {
       .patch('/meal-group/' + createdMealGroupId)
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       )
       .send({ name: 'test', extra: 'test' });
     expect(response.status).toBe(200);
@@ -314,7 +314,7 @@ describe('AppController (e2e)', () => {
       .delete('/meal-group/' + createdMealGroupId + '/61a661fd036917e975f253b0')
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       );
     expect(response.status).toBe(200);
     expect(response.body.patients[0].mealGroups).toHaveLength(0);
@@ -329,11 +329,11 @@ describe('AppController (e2e)', () => {
       })
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       );
     expect(response.status).toBe(201);
     createdNoteId = response.body.patients[0].notes[0];
-    expect(response.body._id).toBe('61a4f4a93d6cc562f1fb52a9');
+    expect(response.body._id).toBe('61a5e91586cbdaaefb9dccd6');
   });
 
   it('/note/createdId (PATCH)', async () => {
@@ -341,7 +341,7 @@ describe('AppController (e2e)', () => {
       .patch('/note/' + createdNoteId)
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       )
       .send({ title: 'test', description: 'test' });
     expect(response.status).toBe(200);
@@ -353,7 +353,7 @@ describe('AppController (e2e)', () => {
       .delete('/note/' + createdNoteId + '/61a661fd036917e975f253b0')
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       );
     expect(response.status).toBe(200);
     expect(response.body.patients[0].notes).toHaveLength(0);
@@ -368,7 +368,7 @@ describe('AppController (e2e)', () => {
       })
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       );
     initialMessageRef = response.body._id;
     expect(response.status).toBe(200);
@@ -380,20 +380,20 @@ describe('AppController (e2e)', () => {
       .patch('/message/' + initialMessageRef)
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       );
     expect(response.status).toBe(200);
     expect(response.body.read).toBe(true);
   });
 
-  it('/professional/61a4f4a93d6cc562f1fb52a9/patients/61a661fd036917e975f253b0 (PATCH)', async () => {
+  it('/professional/61a5e91586cbdaaefb9dccd6/patients/61a661fd036917e975f253b0 (PATCH)', async () => {
     const response = await request(app.getHttpServer())
       .patch(
-        '/professional/61a4f4a93d6cc562f1fb52a9/patients/61a661fd036917e975f253b0',
+        '/professional/61a5e91586cbdaaefb9dccd6/patients/61a661fd036917e975f253b0',
       )
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       )
       .send({ allExtraDataUpdated: [{ key: 'weight', value: '120kg' }] });
     expect(response.status).toBe(200);
@@ -401,14 +401,14 @@ describe('AppController (e2e)', () => {
     expect(response.body.patients[0].extraData[0].key).toBe('weight');
   });
 
-  it('/professional/61a4f4a93d6cc562f1fb52a9/patients/61a661fd036917e975f253b0 (DELETE)', async () => {
+  it('/professional/61a5e91586cbdaaefb9dccd6/patients/61a661fd036917e975f253b0 (DELETE)', async () => {
     const response = await request(app.getHttpServer())
       .delete(
-        '/professional/61a4f4a93d6cc562f1fb52a9/patients/61a661fd036917e975f253b0',
+        '/professional/61a5e91586cbdaaefb9dccd6/patients/61a661fd036917e975f253b0',
       )
       .set(
         'Authorization',
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE0ZjRhOTNkNmNjNTYyZjFmYjUyYTkiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.ggjkRc90jNu_XfDNBuvHlfNt08ghAOgaggighcPubGc',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiUHJvZmVzc2lvbmFsIiwiaWQiOiI2MWE1ZTkxNTg2Y2JkYWFlZmI5ZGNjZDYiLCJuYW1lIjoiYWFhYSIsImVhbWlsIjoiYWFhIiwiaWF0IjoxNTE2MjM5MDIyfQ.O7WoV9qIJL4VoA7aXhHskOCUZE6KYEx4O5Y95h7mIQI',
       );
     expect(response.status).toBe(200);
     expect(response.body.patients).toHaveLength(0);
