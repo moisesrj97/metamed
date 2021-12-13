@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ExerciseModel } from 'src/app/models/interfaces';
+import { environment } from 'src/environments/environment';
 
 export interface CreateExerciseDto {
   name: string;
@@ -21,7 +22,7 @@ export interface UpdateExerciseDto {
   providedIn: 'root',
 })
 export class ExerciseService {
-  baseUrl: string = 'http://localhost:3000/exercise';
+  baseUrl: string = `${environment.backendUrl}exercise`;
   constructor(private httpClient: HttpClient) {}
 
   createExerciseInExerciseGroup(

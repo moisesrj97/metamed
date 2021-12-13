@@ -2,14 +2,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { mergeMap, Observable } from 'rxjs';
 import { UserStore } from 'src/app/models/interfaces';
+import { environment } from 'src/environments/environment';
 import { TokenService } from '../token/token.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  baseUrl: string = 'http://localhost:3000/login/';
-  getUrl: string = 'http://localhost:3000/';
+  baseUrl: string = `${environment.backendUrl}login/`;
+  getUrl: string = `${environment.backendUrl}`;
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 
   loginWithoutToken(
