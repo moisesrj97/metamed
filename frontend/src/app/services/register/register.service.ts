@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserStore } from 'src/app/models/interfaces';
+import { environment } from 'src/environments/environment';
 
 export interface RegisterProfessionalFormData {
   name: string;
@@ -44,7 +45,7 @@ export class RegisterService {
     );
 
     return this.httpClient.post(
-      'http://localhost:3000/professional',
+      `${environment.backendUrl}professional`,
       multipartFormData
     ) as Observable<UserStore>;
   }
@@ -64,7 +65,7 @@ export class RegisterService {
     );
 
     return this.httpClient.post(
-      'http://localhost:3000/patient',
+      `${environment.backendUrl}patient`,
       multipartFormData
     ) as Observable<UserStore>;
   }

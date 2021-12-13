@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MealModel } from 'src/app/models/interfaces';
+import { environment } from 'src/environments/environment';
 
 export interface CreateMealDto {
   name: string;
@@ -18,7 +19,7 @@ export interface UpdateMealDto {
   providedIn: 'root',
 })
 export class MealService {
-  baseUrl: string = 'http://localhost:3000/meal';
+  baseUrl: string = `${environment.backendUrl}meal`;
   constructor(private httpClient: HttpClient) {}
 
   createMealInMealGroup(

@@ -2,12 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MealGroupModel, UserStore } from 'src/app/models/interfaces';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MealGroupService {
-  baseUrl: string = 'http://localhost:3000/meal-group';
+  baseUrl: string = `${environment.backendUrl}meal-group`;
   constructor(private httpClient: HttpClient) {}
 
   addMealGroupToPatient(

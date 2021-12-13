@@ -2,12 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ExerciseGroupModel, UserStore } from 'src/app/models/interfaces';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExerciseGroupService {
-  baseUrl: string = 'http://localhost:3000/exercise-group';
+  baseUrl: string = `${environment.backendUrl}exercise-group`;
   constructor(private httpClient: HttpClient) {}
 
   addExerciseGroupToPatient(
