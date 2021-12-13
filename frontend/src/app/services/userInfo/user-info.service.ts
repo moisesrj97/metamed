@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserStore } from 'src/app/models/interfaces';
+import { environment } from 'src/environments/environment';
 
 interface UpdateUserInfoDto {
   name: string;
@@ -43,7 +44,7 @@ export class UserInfoService {
     }
 
     return this.httpClient.patch(
-      `http://localhost:3000/${role}/${id}`,
+      `${environment.backendUrl}${role}/${id}`,
       multipartFormData,
       {
         headers: new HttpHeaders().set('Authorization', `Bearer ${token}`),

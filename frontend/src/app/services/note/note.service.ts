@@ -2,12 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { NoteModel, UserStore } from 'src/app/models/interfaces';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NoteService {
-  baseUrl: string = 'http://localhost:3000/note';
+  baseUrl: string = `${environment.backendUrl}note`;
   constructor(private httpClient: HttpClient) {}
 
   addNoteToPatient(

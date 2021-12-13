@@ -2,12 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ExtraDataModel, UserStore } from 'src/app/models/interfaces';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PatientManagmentService {
-  baseUrl = 'http://localhost:3000/professional';
+  baseUrl = `${environment.backendUrl}professional`;
   constructor(private httpClient: HttpClient) {}
 
   addPatientToList(
