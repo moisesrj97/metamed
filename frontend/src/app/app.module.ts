@@ -13,7 +13,7 @@ import { CoreModule } from './core/core.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { darkModeReducer } from './services/store/darkMode.reducer';
 
-const config: SocketIoConfig = { url: 'http://localhost:3080', options: {} };
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
   declarations: [AppComponent],
