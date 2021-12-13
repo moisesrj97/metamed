@@ -12,6 +12,9 @@ Backend: Node/NestJS/MongoDB
 #### For running backend
 
 `cd backend`
+
+Fill in the `.env.development.sample` file with your credentials and remove the `sample`.
+
 `npm run start:dev`
 
 #### For running frontend
