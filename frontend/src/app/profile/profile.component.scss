@@ -85,7 +85,7 @@
     color: #ff0000;
     font-size: 1.2rem;
     box-sizing: border-box;
-    border-radius: 25px;
+    border-radius: 10px;
     padding: 10px 15px;
     margin-top: 30px;
     cursor: pointer;
@@ -126,7 +126,7 @@
     padding: 5px 20px;
     font-size: 1rem;
     border: 1px solid #2e21ff;
-    border-radius: 25px;
+    border-radius: 10px;
     &--dark {
       background-color: transparent;
       color: white;
@@ -139,7 +139,7 @@
     min-height: 80px;
     font-size: 1rem;
     border: 1px solid #2e21ff;
-    border-radius: 25px;
+    border-radius: 10px;
     padding: 5px 20px;
   }
   &__group {
