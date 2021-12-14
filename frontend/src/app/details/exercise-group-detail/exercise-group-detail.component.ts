@@ -177,6 +177,7 @@ export class ExerciseGroupDetailComponent implements OnInit {
                 updateExercise(data);
                 this.fileError = false;
                 this.imageSrc = undefined;
+                this.timestamp = new Date().getTime();
               });
           case 'name':
           case 'amount':
