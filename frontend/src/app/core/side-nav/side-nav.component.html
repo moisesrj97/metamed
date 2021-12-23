@@ -6,7 +6,11 @@
   <div class="side-nav__close">
     <img
       class="side-nav__close-icon"
-      src="../../../assets/images/close-icon.png"
+      [src]="
+        darkMode
+          ? '../../../assets/images/close-iconDark.png'
+          : '../../../assets/images/close-icon.png'
+      "
       alt="Close icon"
       (click)="closeNav()"
     />

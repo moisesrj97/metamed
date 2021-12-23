@@ -4,7 +4,11 @@
 >
   <div class="navbar__mobile-toggle" (click)="openNav()">
     <img
-      src="../../../assets/images/hamburguer.png"
+      [src]="
+        darkMode
+          ? '../../../assets/images/hamburguerDark.png'
+          : '../../../assets/images/hamburguer.png'
+      "
       alt="Toggle"
       class="navbar__mobile-toggle-icon"
     />
