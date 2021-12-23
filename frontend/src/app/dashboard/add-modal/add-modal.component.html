@@ -23,6 +23,13 @@
       >
         Add patient
       </button>
+      <div
+        class="popup"
+        [ngClass]="{ 'popup--dark': darkMode }"
+        *ngIf="idError"
+      >
+        Id is not valid
+      </div>
     </div>
   </div>
 </div>

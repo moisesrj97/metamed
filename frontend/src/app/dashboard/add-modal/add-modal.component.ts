@@ -23,6 +23,7 @@ export class AddModalComponent implements OnInit {
   @Output() closeModal: EventEmitter<boolean>;
   input: string = '';
   darkMode!: boolean;
+  idError: boolean = false;
 
   constructor(
     public patientManagmentService: PatientManagmentService,
@@ -46,16 +47,25 @@ export class AddModalComponent implements OnInit {
       .subscribe((id) => {
         this.patientManagmentService
           .addPatientToList(id, this.input, token)
-          .subscribe((newStore) => {
-            this.store.dispatch(loginUser({ userInfo: newStore }));
-            this.socket.emitPatientListModification({
-              professionalId: id,
-              patientId: this.input,
-              mode: 'add',
-            });
-            this.socket.connectToRoom([id + this.input]);
-            this.closeModal.emit(false);
-            this.input = '';
+          .subscribe({
+            next: (newStore) => {
+              this.store.dispatch(loginUser({ userInfo: newStore }));
+              this.socket.emitPatientListModification({
+                professionalId: id,
+                patientId: this.input,
+                mode: 'add',
+              });
+              this.socket.connectToRoom([id + this.input]);
+              this.closeModal.emit(false);
+              this.input = '';
+            },
+            error: () => {
+              this.idError = true;
+              this.input = '';
+              setTimeout(() => {
+                this.idError = false;
+              }, 2000);
+            },
           });
       });
   }
